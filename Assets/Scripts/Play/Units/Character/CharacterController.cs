@@ -287,8 +287,8 @@ public class CharacterController : Unit
     {
         listMonsters.ForEach(monster =>
             {
-                int dmg = AttackDamageCalculate(swordAtkValue, nearPoint, monster.transform.position.z, 0.9f, 1.1f);
-                monster.ReceiveDamage(dmg);
+                //int dmg = AttackDamageCalculate(swordAtkValue, nearPoint, monster.transform.position.z, 0.9f, 1.1f);
+                //monster.ReceiveDamage(dmg);
             });
     }
 
@@ -296,8 +296,8 @@ public class CharacterController : Unit
     {
         listMonsters.ForEach(monster =>
             {
-                int dmg = AttackDamageCalculate(bowAtkValue, middlePoint, monster.transform.position.z, 0.75f, 1.5f);
-                monster.ReceiveDamage(dmg);
+                //int dmg = AttackDamageCalculate(bowAtkValue, middlePoint, monster.transform.position.z, 0.75f, 1.5f);
+                //monster.ReceiveDamage(dmg);
             });
     }
 
@@ -305,8 +305,8 @@ public class CharacterController : Unit
     {
         listMonsters.ForEach(monster =>
             {
-                int dmg = AttackDamageCalculate(wandAtkValue, farPoint, monster.transform.position.z, 0.8f, 1.2f);
-                monster.ReceiveDamage(dmg);
+                //int dmg = AttackDamageCalculate(wandAtkValue, farPoint, monster.transform.position.z, 0.8f, 1.2f);
+                //monster.ReceiveDamage(dmg);
             });
     }
 

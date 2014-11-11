@@ -40,7 +40,6 @@ public abstract class Monster : Unit
 
     #region Variable
     protected Rigidbody thisRigidbody;
-    protected RangeType thisRangeType;
 
     int hp;
     protected int atkValue;
@@ -71,20 +70,9 @@ public abstract class Monster : Unit
             if (Hp <= 0)
             {
                 listMonsters.Remove(this);
-                thisTransform.position = new Vector3(-1000f, -1000f);
-                thisRigidbody.useGravity = false;
-                thisRigidbody.isKinematic = true;
+                Destroy(gameObject);
             }
         }
-    }
-    #endregion
-
-    #region Enum Type
-    public enum RangeType
-    {
-        Near,
-        Middle,
-        Far
     }
     #endregion
 
@@ -116,15 +104,6 @@ public abstract class Monster : Unit
         thisTransform.position = genPos;
         thisRigidbody.useGravity = true;
         thisRigidbody.isKinematic = false;
-
-        float thisPosZ = thisTransform.position.z;
-
-        if (thisPosZ == nearPoint)
-            thisRangeType = RangeType.Near;
-        else if (thisPosZ == middlePoint)
-            thisRangeType = RangeType.Middle;
-        else if (thisPosZ == farPoint)
-            thisRangeType = RangeType.Far;
     }
 
     protected void SetLocalPositionReceiveDamageParticle(Vector3 slashParticleLocalPosition,

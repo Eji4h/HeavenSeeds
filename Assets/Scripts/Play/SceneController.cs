@@ -19,8 +19,6 @@ public class SceneController : MonoBehaviour
 
     static List<Monster> listMonsters = new List<Monster>(5);
 
-    static float nearPoint = 10f, middlePoint = 20f, farPoint = 30f;
-
     static MagicFieldController magicFieldController;
 
     static TurnController turnController;
@@ -69,21 +67,6 @@ public class SceneController : MonoBehaviour
     public static List<Monster> ListMonsters
     {
         get { return listMonsters; }
-    }
-
-    public static float NearPoint
-    {
-        get { return nearPoint; }
-    }
-
-    public static float MiddlePoint
-    {
-        get { return middlePoint; }
-    }
-
-    public static float FarPoint
-    {
-        get { return farPoint; }
     }
 
     public static MagicFieldController MagicFieldController
@@ -164,7 +147,7 @@ public class SceneController : MonoBehaviour
                 break;
         }
 
-        Monster boss = Instantiate(Resources.Load<Monster>(bossPath), Vector3.forward * middlePoint + Vector3.up,
+        Monster boss = Instantiate(Resources.Load<Monster>(bossPath), Vector3.forward * 20f + Vector3.up,
             Quaternion.AngleAxis(180, Vector3.up)) as Monster;
 
         Instantiate(Resources.Load(sceneSetPath));

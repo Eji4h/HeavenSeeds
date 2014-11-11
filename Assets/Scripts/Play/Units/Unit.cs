@@ -18,9 +18,6 @@ public abstract class Unit : MonoBehaviour
 
     protected static List<CharacterController> listCharacterControllerIsFall = new List<CharacterController>(5);
 
-    protected static float nearPoint,
-        middlePoint, farPoint;
-
     protected static MagicFieldController magicFieldController;
     protected static TurnController turnController;
     #endregion
@@ -36,10 +33,6 @@ public abstract class Unit : MonoBehaviour
 
         randomNumSecurity = Random.Range(0, 1000);
         listMonsters = SceneController.ListMonsters;
-
-        nearPoint = SceneController.NearPoint;
-        middlePoint = SceneController.MiddlePoint;
-        farPoint = SceneController.FarPoint;
 
         magicFieldController = SceneController.MagicFieldController;
         turnController = SceneController.TurnController;

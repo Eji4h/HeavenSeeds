@@ -165,48 +165,49 @@ public class BossKhchsingh : Boss
     IEnumerator Move()
     {
         percentMove -= 10f;
-        switch (thisRangeType)
-        {
-            case RangeType.Near:
-                thisAnimation.CrossFade("Jump");
-                isImmortal = true;
-                thisRigidbody.AddForce(0, 500000f, 500000f);
-                yield return new WaitForSeconds(0.5f);
+        //switch (thisRangeType)
+        //{
+        //    case RangeType.Near:
+        //        thisAnimation.CrossFade("Jump");
+        //        isImmortal = true;
+        //        thisRigidbody.AddForce(0, 500000f, 500000f);
+        //        yield return new WaitForSeconds(0.5f);
 
-                while (thisTransform.position.y > 0.125f)
-                    yield return null;
+        //        while (thisTransform.position.y > 0.125f)
+        //            yield return null;
 
-                isImmortal = false;
-                ReuseGameObject(fallGameObjectParticle, new Vector3(0f, 0.1f, 0f), false);
+        //        isImmortal = false;
+        //        ReuseGameObject(fallGameObjectParticle, new Vector3(0f, 0.1f, 0f), false);
 
-                thisRangeType = RangeType.Far;
-                break;
-            case RangeType.Middle:
-                {
-                    thisAnimation.CrossFade("Walk");
-                    while (thisTransform.position.z > nearPoint)
-                    {
-                        thisTransform.Translate(Vector3.forward * speed * Time.deltaTime);
-                        yield return null;
-                    }
+        //        thisRangeType = RangeType.Far;
+        //        break;
+        //    case RangeType.Middle:
+        //        {
+        //            thisAnimation.CrossFade("Walk");
+        //            while (thisTransform.position.z > nearPoint)
+        //            {
+        //                thisTransform.Translate(Vector3.forward * speed * Time.deltaTime);
+        //                yield return null;
+        //            }
 
-                    thisRangeType = RangeType.Near;
-                    break;
-                }
-            case RangeType.Far:
-                {
-                    thisAnimation.CrossFade("Walk");
-                    while (thisTransform.position.z > middlePoint)
-                    {
-                        thisTransform.Translate(Vector3.forward * speed * Time.deltaTime);
-                        yield return null;
-                    }
+        //            thisRangeType = RangeType.Near;
+        //            break;
+        //        }
+        //    case RangeType.Far:
+        //        {
+        //            thisAnimation.CrossFade("Walk");
+        //            while (thisTransform.position.z > middlePoint)
+        //            {
+        //                thisTransform.Translate(Vector3.forward * speed * Time.deltaTime);
+        //                yield return null;
+        //            }
 
-                    thisRangeType = RangeType.Middle;
-                    break;
-                }
-        }
+        //            thisRangeType = RangeType.Middle;
+        //            break;
+        //        }
+        //}
         EndTurn();
+        yield return null;
     }
 
     #region Attack Method
@@ -251,7 +252,7 @@ public class BossKhchsingh : Boss
         for (int i = 0; i < ordinateNumber; i++)
         {
             Monster monster = (Instantiate(listOrdinatePrefab[i % 2],
-                new Vector3(((i + 0.5f) - ordinateNumber * 0.5f) * 7.5f, 1f, nearPoint),
+                new Vector3(((i + 0.5f) - ordinateNumber * 0.5f) * 7.5f, 1f, 10f),
                 Quaternion.AngleAxis(180, Vector3.up))) as Monster;
         }
         EndTurn();
@@ -314,7 +315,7 @@ public class BossKhchsingh : Boss
 
         isImmortal = false;
 
-        thisRangeType = RangeType.Far;
+        //thisRangeType = RangeType.Far;
         EndTurn();
     }
 
@@ -384,20 +385,20 @@ public class BossKhchsingh : Boss
         percentMove += 10f;
         List<BossKhchsinghState> listRangeState;
 
-        switch(thisRangeType)
-        {
-            case RangeType.Near:
-                listRangeState = listNearRangeState;
-                break;
-            case RangeType.Middle:
-                listRangeState = listMiddleRangeState;
-                break;
-            default:
-                listRangeState = listFarRangeState;
-                break;
-        }
+        //switch(thisRangeType)
+        //{
+        //    case RangeType.Near:
+        //        listRangeState = listNearRangeState;
+        //        break;
+        //    case RangeType.Middle:
+        //        listRangeState = listMiddleRangeState;
+        //        break;
+        //    default:
+        //        listRangeState = listFarRangeState;
+        //        break;
+        //}
 
-        bossKhchsinghState = listRangeState[Random.Range(0, listRangeState.Count)];
+        //bossKhchsinghState = listRangeState[Random.Range(0, listRangeState.Count)];
         StartCoroutine(bossKhchsinghState.ToString());
         //StartCoroutine(RemoveAndReAddStateToListRange(listRangeState, bossKhchsinghState));
     }
