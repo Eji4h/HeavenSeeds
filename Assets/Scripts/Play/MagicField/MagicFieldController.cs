@@ -13,6 +13,15 @@ public enum CharacterActionState
 
 public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 {
+    #region EnumType
+    public enum MagicFieldState
+    {
+        WaitingCommand,
+        WaitingRotation,
+        WaitingMonsterTurn
+    }
+    #endregion
+
     #region Variable
     Camera uiCamera;
 
@@ -47,15 +56,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     CharacterActionState chaActionState;
     bool randomChaActionState = false;
     int randomChaActionStateCount = 0;
-    #endregion
-
-    #region EnumType
-    public enum MagicFieldState
-    {
-        WaitingCommand,
-        WaitingRotation,
-        WaitingMonsterTurn
-    }
     #endregion
 
     #region Properties

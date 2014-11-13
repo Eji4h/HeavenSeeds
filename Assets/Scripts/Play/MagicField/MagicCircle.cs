@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 public class MagicCircle : MonoAndCoroutinePauseBehaviour
 {
+    #region Struct
+    struct RotationCircleArguments
+    {
+        public int indexChange;
+        public float timePerMove;
+    }
+    #endregion
+
     #region Variable
     Transform thisTransform;
 
@@ -50,15 +58,6 @@ public class MagicCircle : MonoAndCoroutinePauseBehaviour
     public bool NowRotate
     {
         get { return nowRotate; }
-    }
-
-    #endregion
-
-    #region Struct
-    struct RotationCircleArguments
-    {
-        public int indexChange;
-        public float timePerMove;
     }
     #endregion
 

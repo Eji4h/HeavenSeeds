@@ -11,7 +11,6 @@ public class ElementBarController : MonoBehaviour
 
     delegate IEnumerator ElementAttackBehaviour();
     ElementAttackBehaviour elementAttackBehaviour;
-
     #endregion
 
     #region Properties

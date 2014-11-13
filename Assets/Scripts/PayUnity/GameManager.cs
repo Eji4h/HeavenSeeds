@@ -26,6 +26,7 @@ namespace PayUnity
         }
         #endregion
 
+        #region Pause
         bool pause = false;
 
         public bool Pause
@@ -46,5 +47,6 @@ namespace PayUnity
             }
             yield return new WaitForEndOfFrame();
         }
+        #endregion
     }
 }

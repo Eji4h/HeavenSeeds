@@ -4,10 +4,59 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public abstract class CharacterStatus : MonoBehaviour
 {
-    #region Static
+    #region EnumType
+    protected enum GrowRateType
+    {
+        Main,
+        Secondary,
+        Third,
+        Bad
+    }
+    #endregion
+
+    #region Struct
+    struct TierDetail
+    {
+        public readonly int initNextLvExp,
+            increaseNextLvExp,
+            maxLv;
+
+        public readonly int growRateMain,
+            growRateSecondary,
+            growRateThird,
+            growRateBad,
+            growRateHp;
+
+        public TierDetail(int initNextLvExp, int increaseNextLvExp, int maxLv,
+            int growRateMain, int growRateSecondary, int growRateThird,
+            int growRateBad, int growRateHp)
+        {
+            this.initNextLvExp = initNextLvExp;
+            this.increaseNextLvExp = increaseNextLvExp;
+            this.maxLv = maxLv;
+
+            this.growRateMain = growRateMain;
+            this.growRateSecondary = growRateSecondary;
+            this.growRateThird = growRateThird;
+            this.growRateBad = growRateBad;
+            this.growRateHp = growRateHp;
+        }
+    }
+    #endregion
+
+    #region Static Variable
     static TierDetail tierLv1,
         tierLv2,
         tierLv3;
+    #endregion
+
+    #region Static Method
+    public static void SetInitTier()
+    {
+        tierLv1 = new TierDetail(200, 100, 10, 6, 5, 4, 3, 50);
+        tierLv2 = new TierDetail(300, 150, 15, 7, 6, 5, 4, 55);
+        tierLv3 = new TierDetail(400, 200, 20, 8, 7, 6, 5, 60);
+    }
     #endregion
 
     #region Variable
@@ -46,11 +95,9 @@ public abstract class CharacterStatus : MonoBehaviour
         hp;
 
     string characterName;
-
     #endregion
 
     #region Properties
-
     public int Lv
     {
         get { return lv; }
@@ -100,55 +147,7 @@ public abstract class CharacterStatus : MonoBehaviour
     }
     #endregion
 
-    #region Struct
-    struct TierDetail
-    {
-        public readonly int initNextLvExp,
-            increaseNextLvExp,
-            maxLv;
-
-        public readonly int growRateMain,
-            growRateSecondary,
-            growRateThird,
-            growRateBad,
-            growRateHp;
-
-        public TierDetail(int initNextLvExp, int increaseNextLvExp, int maxLv,
-            int growRateMain, int growRateSecondary, int growRateThird,
-            int growRateBad, int growRateHp)
-        {
-            this.initNextLvExp = initNextLvExp;
-            this.increaseNextLvExp = increaseNextLvExp;
-            this.maxLv = maxLv;
-
-            this.growRateMain = growRateMain;
-            this.growRateSecondary = growRateSecondary;
-            this.growRateThird = growRateThird;
-            this.growRateBad = growRateBad;
-            this.growRateHp = growRateHp;
-        }
-    }
-    #endregion
-
-    #region EnumType
-
-    protected enum GrowRateType
-    {
-        Main,
-        Secondary,
-        Third,
-        Bad
-    }
-
-    #endregion
-
-    public static void SetInitTier()
-    {
-        tierLv1 = new TierDetail(200, 100, 10, 6, 5, 4, 3, 50);
-        tierLv2 = new TierDetail(300, 150, 15, 7, 6, 5, 4, 55);
-        tierLv3 = new TierDetail(400, 200, 20, 8, 7, 6, 5, 60);
-    }
-
+    #region Method
     protected abstract void SetInitValue();
 
     protected void SetInitValue(string characterName,
@@ -423,4 +422,5 @@ public abstract class CharacterStatus : MonoBehaviour
         scrollValue = initValueScroll + (lv -1) * increaseValuePerLvScroll;
         hp = initHp + (lv - 1) * increaseHpPerLv;
     }
+    #endregion
 }

@@ -9,13 +9,6 @@ public class HpPopUp : MonoBehaviour
     static Transform allHpPopUpParentTransform;
     #endregion
 
-    #region Variable
-    UILabel thisLabel;
-    TweenAlpha thisTweenAlpha;
-    TweenPosition thisTweenPosition;
-    TweenScale thisTweenScale;
-    #endregion
-
     #region Static Method
     public static void SetCamera()
     {
@@ -23,6 +16,13 @@ public class HpPopUp : MonoBehaviour
         uiCamara = SceneController.UICamera;
         allHpPopUpParentTransform = GameObject.Find("AllHpPopUp").transform;
     }
+    #endregion
+
+    #region Variable
+    UILabel thisLabel;
+    TweenAlpha thisTweenAlpha;
+    TweenPosition thisTweenPosition;
+    TweenScale thisTweenScale;
     #endregion
 
     // Use this for initialization

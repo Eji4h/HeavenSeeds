@@ -33,11 +33,9 @@ public abstract class Monster : Unit
     Vector3 slashParticleLocalPosition,
         arrowHitParticleLocalPosition,
         spellParticleLocalPosition;
-
     #endregion
 
     #region Properties
-
     public virtual int Hp
     {
         get { return hp / randomNumSecurity; }
@@ -47,6 +45,8 @@ public abstract class Monster : Unit
                 hp = MaxHp * randomNumSecurity;
             else
                 hp = value * randomNumSecurity;
+
+            UIController.MonsterHpBar.Value = Hp;
 
             if (Hp <= 0)
             {

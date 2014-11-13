@@ -19,6 +19,8 @@ public class CharacterController : Unit
             else
                 CharacterController.sumHp = value * randomNumSecurity;
 
+            UIController.PlayerHpBar.Value = SumHp;
+
             if (CharacterController.SumHp <= 0)
                 ;
         }
@@ -122,7 +124,6 @@ public class CharacterController : Unit
     #endregion
 
     #region Properties
-
     public bool AtkIsPlay
     {
         get { return atkIsPlay; }
