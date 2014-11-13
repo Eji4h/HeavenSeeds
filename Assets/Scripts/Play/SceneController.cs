@@ -9,15 +9,14 @@ public class SceneController : MonoBehaviour
     static Camera mainCamera,
         uiCamera;
 
-    static string monsterPath;
-
     static CharacterController swordCharacterController,
         bowCharacterController,
         wandCharacterController,
         shieldCharacterController,
         scrollCharacterController;
 
-    static List<Monster> listMonsters = new List<Monster>(5);
+    static Monster currentMonster;
+    static Queue<Monster> QueueMonster = new Queue<Monster>(3);
 
     static MagicFieldController magicFieldController;
 
@@ -33,10 +32,6 @@ public class SceneController : MonoBehaviour
     public static Camera UICamera
     {
         get { return SceneController.uiCamera; }
-    }
-    public static string MonsterPath
-    {
-        get { return SceneController.monsterPath; }
     }
 
     public static CharacterController SwordCharacterController
@@ -64,9 +59,9 @@ public class SceneController : MonoBehaviour
         get { return scrollCharacterController; }
     }
 
-    public static List<Monster> ListMonsters
+    public static Monster CurrentMonster
     {
-        get { return listMonsters; }
+        get { return SceneController.currentMonster; }
     }
 
     public static MagicFieldController MagicFieldController
@@ -80,9 +75,17 @@ public class SceneController : MonoBehaviour
     }
     #endregion
 
+    #region Static Method
+    public static void NextMonsterQueue()
+    {
+        currentMonster = QueueMonster.Dequeue();
+        Unit.Monster = currentMonster;
+    }
+    #endregion
+
     void Awake()
     {
-        listMonsters.Clear();
+        QueueMonster.Clear();
         SetCameraObjects();
         SetMagicFieldController();
         SetCharacters();
@@ -97,14 +100,18 @@ public class SceneController : MonoBehaviour
         Monster.SetInit();
         CharacterController.SetInit();
         int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
-        monsterPath = "Prefabs/Monsters/Scene" + sceneSelected;
-        string bossPath = monsterPath,
+        string monsterPath = "Prefabs/Monsters/Scene" + sceneSelected,
             sceneSetPath = "Prefabs/Scenes/SceneSet" + sceneSelected;
+        List<Monster> listMonster = new List<Monster>(5);
+
+        Instantiate(Resources.Load(sceneSetPath));
 
         switch (sceneSelected)
         {
             case 1:
-                bossPath += "/BossKhchsingh";
+                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/DuRongKraiSorn"));
+                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/PayakKraiSorn"));
+                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/BossKhchsingh"));
                 break;
             case 2:
 
@@ -143,15 +150,19 @@ public class SceneController : MonoBehaviour
 
                 break;
             default:
-                bossPath += "/BossKhchsingh";
+                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/DuRongKraiSorn"));
+                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/PayakKraiSorn"));
+                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/BossKhchsingh"));
                 break;
         }
 
-        Monster boss = Instantiate(Resources.Load<Monster>(bossPath), Vector3.forward * 20f + Vector3.up,
+        NextMonsterQueue();
+    }
+
+    Monster InstantiateMonster(string path)
+    {
+        return Instantiate(Resources.Load<Monster>(path), Vector3.forward * 20f + Vector3.up,
             Quaternion.AngleAxis(180, Vector3.up)) as Monster;
-
-        Instantiate(Resources.Load(sceneSetPath));
-
     }
 
     void SetCameraObjects()

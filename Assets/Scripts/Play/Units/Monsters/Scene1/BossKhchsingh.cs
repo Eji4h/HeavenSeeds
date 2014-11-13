@@ -84,11 +84,6 @@ public class BossKhchsingh : Boss
 
         speed = normalSpeed;
 
-        string monsterPath = SceneController.MonsterPath;
-
-        listOrdinatePrefab.Add(Resources.Load<Monster>(monsterPath + "/DuRongKraiSorn"));
-        listOrdinatePrefab.Add(Resources.Load<Monster>(monsterPath + "/PayakKraiSorn"));
-
         listNearRangeState.Add(BossKhchsinghState.ThrashTrunk3Time);
         listNearRangeState.Add(BossKhchsinghState.Trample);
 

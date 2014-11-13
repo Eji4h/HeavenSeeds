@@ -9,24 +9,6 @@ public abstract class Monster : Unit
     static GameObject slashParticlePrefab,
         arrowHitParticlePrefab,
         spellParticlePrefab;
-
-    static int monsterEndCount = 0;
-    #endregion
-
-    #region Static Properties
-    public static int MonsterEndCount
-    {
-        get { return Monster.monsterEndCount; }
-        set
-        {
-            Monster.monsterEndCount = value;
-            if (monsterEndCount >= listMonsters.Count)
-            {
-                turnController.TurnChange();
-                monsterEndCount = 0;
-            }
-        }
-    }
     #endregion
 
     #region Static Method
@@ -40,10 +22,9 @@ public abstract class Monster : Unit
 
     #region Variable
     protected Rigidbody thisRigidbody;
+    protected int hp, attackDamageBase;
 
-    int hp;
-    protected int atkValue;
-    protected float speed;
+    ElementType weaknessElement;
 
     GameObject slashParticle,
         arrowHitParticle,
@@ -69,7 +50,7 @@ public abstract class Monster : Unit
 
             if (Hp <= 0)
             {
-                listMonsters.Remove(this);
+                SceneController.NextMonsterQueue();
                 Destroy(gameObject);
             }
         }
@@ -79,9 +60,8 @@ public abstract class Monster : Unit
     protected override void Awake()
     {
         base.Awake();
-        listMonsters.Add(this);
         thisRigidbody = rigidbody;
-        atkValue = PlayerPrefs.GetInt(name + "AtkValue", 100);
+        attackDamageBase = PlayerPrefs.GetInt(name + "AttackDamageBase", 100);
 
         slashParticle = Instantiate(slashParticlePrefab, Vector3.zero, Quaternion.AngleAxis(180f, Vector3.up)) as GameObject;
         arrowHitParticle = Instantiate(arrowHitParticlePrefab, Vector3.zero, Quaternion.identity) as GameObject;
@@ -131,8 +111,8 @@ public abstract class Monster : Unit
 
     protected virtual void EndTurn()
     {
-        MonsterEndCount++;
         thisAnimation.CrossFade("Idle");
+        turnController.TurnChange();
     }
 
     public virtual void ShowParticleReceiveDamage(CharacterActionState chaActionState)

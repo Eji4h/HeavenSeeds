@@ -285,29 +285,29 @@ public class CharacterController : Unit
 
     void SwordAttack()
     {
-        listMonsters.ForEach(monster =>
-            {
+        //listMonsters.ForEach(monster =>
+            //{
                 //int dmg = AttackDamageCalculate(swordAtkValue, nearPoint, monster.transform.position.z, 0.9f, 1.1f);
                 //monster.ReceiveDamage(dmg);
-            });
+            //});
     }
 
     void BowAttack()
     {
-        listMonsters.ForEach(monster =>
-            {
+        //listMonsters.ForEach(monster =>
+            //{
                 //int dmg = AttackDamageCalculate(bowAtkValue, middlePoint, monster.transform.position.z, 0.75f, 1.5f);
                 //monster.ReceiveDamage(dmg);
-            });
+            //});
     }
 
     void WandAttack()
     {
-        listMonsters.ForEach(monster =>
-            {
+        //listMonsters.ForEach(monster =>
+            //{
                 //int dmg = AttackDamageCalculate(wandAtkValue, farPoint, monster.transform.position.z, 0.8f, 1.2f);
                 //monster.ReceiveDamage(dmg);
-            });
+            //});
     }
 
     void ShieldDefence()
@@ -327,10 +327,7 @@ public class CharacterController : Unit
 
     void MonsterListShowParticleReceiveDamage()
     {
-        listMonsters.ForEach(monster =>
-            {
-                monster.ShowParticleReceiveDamage(chaActionState);
-            });
+        monster.ShowParticleReceiveDamage(chaActionState);
     }
 
     public void SetToFall(int turnFall)

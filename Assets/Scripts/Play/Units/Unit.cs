@@ -8,7 +8,8 @@ public abstract class Unit : MonoBehaviour
     #region Static Variable
     protected static int randomNumSecurity;
 
-    protected static List<Monster> listMonsters;
+    protected static Monster monster;
+
     protected static List<CharacterController> listCharacterController = new List<CharacterController>(5);
     protected static CharacterController swordCharacterController,
         bowCharacterController,
@@ -22,6 +23,14 @@ public abstract class Unit : MonoBehaviour
     protected static TurnController turnController;
     #endregion
 
+    #region Static Properties
+    public static Monster Monster
+    {
+        get { return Unit.monster; }
+        set { Unit.monster = value; }
+    }
+    #endregion
+
     #region Static Method
     public static void SetInit()
     {
@@ -32,7 +41,7 @@ public abstract class Unit : MonoBehaviour
         scrollCharacterController = SceneController.ScrollCharacterController;
 
         randomNumSecurity = Random.Range(0, 1000);
-        listMonsters = SceneController.ListMonsters;
+        monster = SceneController.CurrentMonster;
 
         magicFieldController = SceneController.MagicFieldController;
         turnController = SceneController.TurnController;

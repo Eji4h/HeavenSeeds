@@ -19,10 +19,7 @@ public class TurnController : MonoBehaviour
         if (playerTurn)
             SceneController.MagicFieldController.ChangeStateToWaitingCommand();
         else
-            SceneController.ListMonsters.ForEach(monster =>
-                {
-                    monster.StartState();
-                });
+            SceneController.CurrentMonster.StartState();
         //playerTurn = !playerTurn;
     }
 }
