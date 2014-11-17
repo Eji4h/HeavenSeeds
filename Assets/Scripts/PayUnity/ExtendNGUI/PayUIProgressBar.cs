@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class CalculateUIProgressBar : UIProgressBar
+public class PayUIProgressBar : UIProgressBar
 {
     #region Variable
     float maxValue,
@@ -12,7 +13,10 @@ public class CalculateUIProgressBar : UIProgressBar
     public float Value
     {
         get { return value; }
-        set { this.value = value * multiplyValue; }
+        set 
+        {
+            this.value = value * multiplyValue;
+        }
     }
 
     public float MaxValue

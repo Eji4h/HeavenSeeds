@@ -14,8 +14,8 @@ public class CharacterController : Unit
         get { return CharacterController.sumHp / randomNumSecurity; }
         set 
         {
-            if (value > MaxSumHp)
-                CharacterController.sumHp = MaxSumHp * randomNumSecurity;
+            if (value > GetMaxSumHp)
+                CharacterController.sumHp = GetMaxSumHp * randomNumSecurity;
             else
                 CharacterController.sumHp = value * randomNumSecurity;
 
@@ -26,15 +26,18 @@ public class CharacterController : Unit
         }
     }
 
-    public static int MaxSumHp
+    public static int GetMaxSumHp
     {
         get { return CharacterController.maxSumHp /randomNumSecurity; }
+    }
+    static int SetMaxSumHp
+    {
         set { CharacterController.maxSumHp = value * randomNumSecurity; }
     }
     #endregion
 
     #region Static Method
-    public static void SetInit()
+    public static new void SetInit()
     {
         swordCharacterController = SceneController.SwordCharacterController;
         bowCharacterController = SceneController.BowCharacterController;
@@ -42,12 +45,14 @@ public class CharacterController : Unit
         shieldCharacterController = SceneController.ShieldCharacterController;
         scrollCharacterController = SceneController.ScrollCharacterController;
 
-        MaxSumHp = swordCharacterController.MaxHp +
+        SetMaxSumHp = swordCharacterController.MaxHp +
             bowCharacterController.MaxHp +
             wandCharacterController.MaxHp +
             shieldCharacterController.MaxHp +
             scrollCharacterController.MaxHp;
-        SumHp = MaxSumHp;
+
+        UIController.PlayerHpBar.MaxValue = GetMaxSumHp;
+        SumHp = GetMaxSumHp;
 
         listCharacterController.Clear();
         listCharacterController.Add(swordCharacterController);
@@ -97,6 +102,7 @@ public class CharacterController : Unit
     #endregion
 
     #region Variable
+    CharacterStatus characterStatus;
     bool atkIsPlay = false;
     CharacterActionState chaActionState;
     string actionStr,
@@ -107,6 +113,7 @@ public class CharacterController : Unit
     delegate void ActionFinishMethod();
     ActionFinishMethod actionFinishMethod;
 
+	int useCost;
 
     //Status
     int swordAtkValue = 100,
@@ -160,12 +167,22 @@ public class CharacterController : Unit
         }
     }
     #endregion
+    public void SetStatus()
+    {
+        MaxHp = characterStatus.Hp;
+    }
+
+    protected override void Awake()
+    {
+        characterStatus = GetComponent<CharacterStatus>();
+        base.Awake();
+    }
 
     // Use this for initialization
     protected override void Start()
     {
-        base.Start();
         thisAnimation.Play(idleStr);
+        base.Start();
     }
 
     public void SetWeapon(CharacterActionState chaActionState, GameObject weaponGameObject)
@@ -270,18 +287,6 @@ public class CharacterController : Unit
             yield return new WaitForSeconds(1f);
         }
         turnController.TurnChange();
-    }
-
-    int AttackDamageCalculate(int weaponAttackPoint, float targetPointPosZ, float monPosZ, 
-        float minimumDmgMultiply, float maximumDmgMultiply)
-    {
-        float maxDistanceDmg = 20f;
-        float distance = (monPosZ > targetPointPosZ) ?
-            monPosZ - targetPointPosZ : targetPointPosZ - monPosZ;
-
-        float dmgBase = weaponAttackPoint * (maxDistanceDmg - distance) / maxDistanceDmg;
-
-        return DamageProbabilityDistribution(dmgBase, minimumDmgMultiply, maximumDmgMultiply);
     }
 
     void SwordAttack()

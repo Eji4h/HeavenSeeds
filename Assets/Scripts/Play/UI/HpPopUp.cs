@@ -5,7 +5,6 @@ public class HpPopUp : MonoBehaviour
 {
     #region Static
     static Camera mainCamera, uiCamara;
-    static float upperPosYTween = 100f;
     static Transform allHpPopUpParentTransform;
     #endregion
 

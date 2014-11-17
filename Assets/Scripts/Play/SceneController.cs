@@ -16,7 +16,7 @@ public class SceneController : MonoBehaviour
         scrollCharacterController;
 
     static Monster currentMonster;
-    static Queue<Monster> QueueMonster = new Queue<Monster>(3);
+    static Queue<Monster> queueMonster = new Queue<Monster>(3);
 
     static MagicFieldController magicFieldController;
 
@@ -78,27 +78,36 @@ public class SceneController : MonoBehaviour
     #region Static Method
     public static void NextMonsterQueue()
     {
-        currentMonster = QueueMonster.Dequeue();
-        Unit.Monster = currentMonster;
+        if (queueMonster.Count > 0)
+        {
+            currentMonster = queueMonster.Dequeue();
+            Unit.Monster = currentMonster;
+            currentMonster.gameObject.SetActive(true);
+        }
     }
     #endregion
 
     void Awake()
     {
-        QueueMonster.Clear();
+        Unit.GenRandomNumSecurity();
+        queueMonster.Clear();
         SetCameraObjects();
-        SetMagicFieldController();
         SetCharacters();
+        SetMagicFieldController();
         SetTurnController();
-        MagicPoint.SetInit();
     }
 
     // Use this for initialization
     void Start()
     {
+        UIController.SetInit();
+        MagicPoint.SetInit();
         Unit.SetInit();
         Monster.SetInit();
         CharacterController.SetInit();
+
+        magicFieldController.SetCharacterCost(0, 0, 0, 0, 0);
+
         int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
         string monsterPath = "Prefabs/Monsters/Scene" + sceneSelected,
             sceneSetPath = "Prefabs/Scenes/SceneSet" + sceneSelected;
@@ -109,9 +118,9 @@ public class SceneController : MonoBehaviour
         switch (sceneSelected)
         {
             case 1:
-                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/DuRongKraiSorn"));
-                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/PayakKraiSorn"));
-                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/BossKhchsingh"));
+                listMonster.Add(InstantiateMonster(monsterPath + "/DuRongKraiSorn"));
+                listMonster.Add(InstantiateMonster(monsterPath + "/PayakKraiSorn"));
+                listMonster.Add(InstantiateMonster(monsterPath + "/BossKhchsingh"));
                 break;
             case 2:
 
@@ -149,12 +158,13 @@ public class SceneController : MonoBehaviour
             case 13:
 
                 break;
-            default:
-                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/DuRongKraiSorn"));
-                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/PayakKraiSorn"));
-                QueueMonster.Enqueue(InstantiateMonster(monsterPath + "/BossKhchsingh"));
-                break;
         }
+
+        listMonster.ForEach(monster =>
+            {
+                monster.gameObject.SetActive(false);
+                queueMonster.Enqueue(monster);
+            });
 
         NextMonsterQueue();
     }
@@ -242,6 +252,12 @@ public class SceneController : MonoBehaviour
         wandCharacterController.SetWeapon(CharacterActionState.WandAction, wandWeaponGameObject);
         shieldCharacterController.SetWeapon(CharacterActionState.ShieldAction, shieldWeaponGameObject);
         scrollCharacterController.SetWeapon(CharacterActionState.ScrollAction, scrollWeaponGameObject);
+
+        swordCharacterController.SetStatus();
+        bowCharacterController.SetStatus();
+        wandCharacterController.SetStatus();
+        shieldCharacterController.SetStatus();
+        scrollCharacterController.SetStatus();
     }
 
     void SetTurnController()

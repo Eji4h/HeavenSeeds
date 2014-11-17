@@ -23,6 +23,21 @@ public class BossKhchsingh : Monster
 
     #region Variable
     BossKhchsinghState bossKhchsinghState;
+    float minimumDmgMultiply = 0.9f,
+        maximumDmgMultiply = 1.1f;
+
+    bool isImmortal = false;
+
+    GameObject maddenSparkGameObjectParticle,
+        maddenReleaseGameObjectParticle,
+        chargeGameObjectParticle,
+        fallGameObjectParticle,
+        thrashTrunkHitGameObjectParticle,
+        treeBrokeGameObjectParticle,
+        groundSlamGameObjectParticle,
+        ultimateGameObjectParticle;
+
+    GameObject treeForThrowGameObject;
     #endregion
 
     #region Properties
@@ -30,9 +45,18 @@ public class BossKhchsingh : Monster
     #endregion
 
     #region Method
+
+    // Use this for initialization
+    protected override void Start()
+    {
+
+    }
+
+
+
     public override void StartState()
     {
-        
+
     }
     #endregion
 }

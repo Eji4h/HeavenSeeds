@@ -386,8 +386,7 @@ public abstract class CharacterStatus : MonoBehaviour
         }
     }
 
-    // Use this for initialization
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         SetInitValue();
         SetGrowRate();
@@ -419,8 +418,13 @@ public abstract class CharacterStatus : MonoBehaviour
         bowValue = initValueBow + (lv - 1) * increaseValuePerLvBow;
         wandValue = initValueWand + (lv - 1) * increaseValuePerLvWand;
         shiedlValue = initValueShield + (lv - 1) * increaseValuePerLvShield;
-        scrollValue = initValueScroll + (lv -1) * increaseValuePerLvScroll;
+        scrollValue = initValueScroll + (lv - 1) * increaseValuePerLvScroll;
         hp = initHp + (lv - 1) * increaseHpPerLv;
+    }
+
+    // Use this for initialization
+    protected virtual void Start()
+    {
     }
     #endregion
 }

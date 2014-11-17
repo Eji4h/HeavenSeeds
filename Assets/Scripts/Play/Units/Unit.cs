@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PlayerPrefs = PreviewLabs.PlayerPrefs;
+using PayUnity;
 
 public abstract class Unit : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public abstract class Unit : MonoBehaviour
     #endregion
 
     #region Static Method
+    public static void GenRandomNumSecurity()
+    {
+        randomNumSecurity = Random.Range(0, 1000);
+    }
+
     public static void SetInit()
     {
         swordCharacterController = SceneController.SwordCharacterController;
@@ -40,7 +46,6 @@ public abstract class Unit : MonoBehaviour
         shieldCharacterController = SceneController.ShieldCharacterController;
         scrollCharacterController = SceneController.ScrollCharacterController;
 
-        randomNumSecurity = Random.Range(0, 1000);
         monster = SceneController.CurrentMonster;
 
         magicFieldController = SceneController.MagicFieldController;
@@ -67,7 +72,7 @@ public abstract class Unit : MonoBehaviour
     #endregion
 
     #region Properties
-    public int MaxHp
+    protected virtual int MaxHp
     {
         get { return maxHp / randomNumSecurity; }
         set { maxHp = value * randomNumSecurity; }
@@ -88,20 +93,7 @@ public abstract class Unit : MonoBehaviour
     protected int DamageProbabilityDistribution(float dmgBase, 
         float minimumDmgMultiply, float maximumDmgMultiply)
     {
-        if (dmgBase > 0f)
-        {
-            int divide = 3;
-            float dmgBaseMod = dmgBase / divide,
-                dmgMinimumMod = dmgBaseMod * minimumDmgMultiply,
-                dmgMaximumMod = dmgBaseMod * maximumDmgMultiply,
-                resultDmg = 0f;
-
-            for (int i = 0; i < divide; i++)
-                resultDmg += Random.Range(dmgMinimumMod, dmgMaximumMod);
-
-            return Mathf.RoundToInt(resultDmg);
-        }
-        return 0;
+        return OftenMethod.ProbabilityDistribution(dmgBase, minimumDmgMultiply, maximumDmgMultiply, 3);
     }
 
     protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, bool parent)

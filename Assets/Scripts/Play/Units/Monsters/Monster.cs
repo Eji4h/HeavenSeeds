@@ -26,6 +26,8 @@ public abstract class Monster : Unit
 
     ElementType weaknessElement;
 
+    protected bool isImmortal = false;
+
     GameObject slashParticle,
         arrowHitParticle,
         spellParticle;
@@ -36,6 +38,15 @@ public abstract class Monster : Unit
     #endregion
 
     #region Properties
+    protected override int MaxHp
+    {
+        get { return base.MaxHp; }
+        set
+        {
+            base.MaxHp = value;
+            UIController.MonsterHpBar.MaxValue = MaxHp;
+        }
+    }
     public virtual int Hp
     {
         get { return hp / randomNumSecurity; }
@@ -74,13 +85,14 @@ public abstract class Monster : Unit
 
     protected override void Start()
     {
-        base.Start();
+        UIController.MonsterHpBar.MaxValue = MaxHp;
+        Hp = MaxHp;
         SetGen(thisTransform.position);
+        base.Start();
     }
 
     public void SetGen(Vector3 genPos)
     {
-        Hp = MaxHp;
         thisTransform.position = genPos;
         thisRigidbody.useGravity = true;
         thisRigidbody.isKinematic = false;
@@ -97,8 +109,11 @@ public abstract class Monster : Unit
 
     public virtual void ReceiveDamage(int dmg)
     {
-        UIController.ShowHpPopUp(dmg, thisTransform.position, true);
-        Hp -= dmg;
+        if (!isImmortal)
+        {
+            UIController.ShowHpPopUp(dmg, thisTransform.position, true);
+            Hp -= dmg;
+        }
     }
 
     public virtual void ReceiveHeal(int heal)

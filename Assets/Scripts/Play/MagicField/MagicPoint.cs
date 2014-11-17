@@ -147,8 +147,7 @@ public class MagicPoint : MonoBehaviour
                 break;
         }
 
-        Transform targetTransform = elementBarController.transform,
-            targetParentTransform = elementBarController.transform.parent;
+        Transform targetParentTransform = elementBarController.transform.parent;
 
         thisTransform.parent = null;
         elementBarController.transform.parent = null;

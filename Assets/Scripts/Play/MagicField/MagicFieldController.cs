@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public enum CharacterActionState
 {
@@ -39,11 +40,25 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     MagicCircle magicCircleOut, magicCircleIn;
     MagicPoint magicPointCenter;
 
-    float defaultTimePerMove = 1f,
-        timePerMove = 1f;
+    float timePerMove = 1f;
     int magicCircleOutIndexChangePerMove = 3,
         magicCircleInIndexChangePerMove = -1;
     bool normalDirectionalRotation = true;
+
+    MagicFieldState mgFieldState;
+    CharacterActionState chaActionState;
+
+    int cost,
+        incomeCost;
+
+	int swordCost, 
+		bowCost, 
+		wandCost, 
+		shieldCost, 
+		scrollCost;
+
+    bool randomChaActionState = false;
+    int randomChaActionStateCount = 0;
 
     GameObject selectedFxAnimation,
         swordFxAnimation,
@@ -51,14 +66,20 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         wandFxAnimation,
         shieldFxAnimation,
         scrollFxAnimation;
-
-    MagicFieldState mgFieldState;
-    CharacterActionState chaActionState;
-    bool randomChaActionState = false;
-    int randomChaActionStateCount = 0;
     #endregion
 
     #region Properties
+    public MagicFieldState MgFieldState
+    {
+        get { return mgFieldState; }
+        set 
+        {
+            StopAllCoroutines();
+            mgFieldState = value;
+            StartCoroutine(mgFieldState.ToString());
+        }
+    }
+
     public CharacterActionState ChaActionState
     {
         get { return chaActionState; }
@@ -102,7 +123,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             //selectedFxAnimation.SetActive(false);
             if (randomChaActionState && randomChaActionStateCount > 0)
                 RandomChaActionStateCount--;
-            mgFieldState = MagicFieldState.WaitingRotation;
+            MgFieldState = MagicFieldState.WaitingRotation;
             //selectedFxAnimation.SetActive(true);
             magicCircleOut.RotateCircle(normalDirectionalRotation ?
                 magicCircleOutIndexChangePerMove : -magicCircleOutIndexChangePerMove, timePerMove);
@@ -121,7 +142,27 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 randomChaActionState = false;
         }
     }
+
+    public int Cost
+    {
+        get { return cost; }
+        set 
+        { 
+            cost = value;
+            UIController.ManaLabel.text = cost.ToString();
+        }
+    }
     #endregion
+
+    public void SetCharacterCost(int swordCostChange, int bowCostChange, 
+        int wandCostChange, int shieldCostChange, int scrollCostChange)
+    {
+        swordCost = 7 + swordCostChange;
+        bowCost = 8 + bowCostChange;
+        wandCost = 9 + wandCostChange;
+        shieldCost = 20 + shieldCostChange;
+        scrollCost = 13 + scrollCostChange;
+    }
 
     // Use this for initialization
     void Start()
@@ -147,7 +188,10 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         magicCircleOut.SetMagicPoint(magicPointsOut);
         magicCircleIn.SetMagicPoint(magicPointsIn);
 
-        StartCoroutine(MagicFieldFSM());
+        Cost = PlayerPrefs.GetInt("startCost", 50);
+        incomeCost = PlayerPrefs.GetInt("incomeCost", 10);
+
+        MgFieldState = MagicFieldState.WaitingCommand;
     }
 
     void SetMagicPointsUpstairs()
@@ -165,13 +209,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     public void ChangeStateToWaitingCommand()
     {
-        mgFieldState = MagicFieldState.WaitingCommand;
-    }
-
-    IEnumerator MagicFieldFSM()
-    {
-        for (; ; )
-            yield return StartCoroutine(mgFieldState.ToString());
+        MgFieldState = MagicFieldState.WaitingCommand;
     }
 
     #region Waiting Command Method
@@ -186,15 +224,35 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             if (Input.GetMouseButton(0))
                 CheckRayHitMagicPoint(Input.mousePosition);
             if (Input.GetKey(KeyCode.S))
-                ChaActionState = CharacterActionState.SwordAction;
+            {
+                for (int i = 0; i < 5; i++)
+                    listMagicPointsUpstairs[swordPointNumSet[i]].IsSelected = true;
+                CheckSelectedMagicPoint();
+            }
             else if (Input.GetKey(KeyCode.B))
-                ChaActionState = CharacterActionState.BowAction;
+            {
+                for (int i = 0; i < 5; i++)
+                    listMagicPointsUpstairs[bowPointNumSet[i]].IsSelected = true;
+                CheckSelectedMagicPoint();
+            }
             else if (Input.GetKey(KeyCode.W))
-                ChaActionState = CharacterActionState.WandAction;
+            {
+                for (int i = 0; i < 5; i++)
+                    listMagicPointsUpstairs[wandPointNumSet[i]].IsSelected = true;
+                CheckSelectedMagicPoint();
+            }
             else if (Input.GetKey(KeyCode.D))
-                ChaActionState = CharacterActionState.ShieldAction;
+            {
+                for (int i = 0; i < 5; i++)
+                    listMagicPointsUpstairs[shieldPointNumSet[i]].IsSelected = true;
+                CheckSelectedMagicPoint();
+            }
             else if (Input.GetKey(KeyCode.F))
-                ChaActionState = CharacterActionState.ScrollAction;
+            {
+                for (int i = 0; i < 5; i++)
+                    listMagicPointsUpstairs[scrollPointNumSet[i]].IsSelected = true;
+                CheckSelectedMagicPoint();
+            }
 #else
             if (Input.touchCount > 0)
                 foreach (Touch touch in Input.touches)
@@ -228,34 +286,57 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     {
         if (CheckCompletePointNumSet(swordPointNumSet))
         {
-            print("Sword");
-            ChaActionState = CharacterActionState.SwordAction;
+            if (cost >= swordCost)
+            {
+                Cost -= swordCost;
+                print("Sword");
+                ChaActionState = CharacterActionState.SwordAction;
+                return;
+            }
         }
         else if (CheckCompletePointNumSet(bowPointNumSet))
         {
-            print("Bow");
-            ChaActionState = CharacterActionState.BowAction;
+            if (cost >= bowCost)
+            {
+                Cost -= bowCost;
+                print("Bow");
+                ChaActionState = CharacterActionState.BowAction;
+                return;
+            }
         }
         else if (CheckCompletePointNumSet(wandPointNumSet))
         {
-            print("Wand");
-            ChaActionState = CharacterActionState.WandAction;
+            if (cost >= wandCost)
+            {
+                Cost -= wandCost;
+                print("Wand");
+                ChaActionState = CharacterActionState.WandAction;
+                return;
+            }
         }
         else if (CheckCompletePointNumSet(shieldPointNumSet))
         {
-            print("Shield");
-            ChaActionState = CharacterActionState.ShieldAction;
+            if (cost >= shieldCost)
+            {
+                Cost -= shieldCost;
+                print("Shield");
+                ChaActionState = CharacterActionState.ShieldAction;
+                return;
+            }
         }
         else if (CheckCompletePointNumSet(scrollPointNumSet))
         {
-            print("Scroll");
-            ChaActionState = CharacterActionState.ScrollAction;
+            if (cost >= scrollCost)
+            {
+                Cost -= scrollCost;
+                print("Scroll");
+                ChaActionState = CharacterActionState.ScrollAction;
+                return;
+            }
         }
-        else if (isSelectedCount > 5)
+        if (isSelectedCount > 5)
         {
-            ResetMagicPointIsSelected();
-            mgFieldState = MagicFieldState.WaitingCommand;
-            StartCoroutine(mgFieldState.ToString());
+            MgFieldState = MagicFieldState.WaitingCommand;
         }
     }
 
@@ -292,7 +373,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     {
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
-        mgFieldState = MagicFieldState.WaitingMonsterTurn;
     }
     #endregion
 
@@ -324,46 +404,48 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             magicPoint.collider2D.enabled = enabled);
     }
 
-    public void DisableColliderMagicPoint(float timeDisable)
-    {
-        StartCoroutine(DelayMagicPointColliderToEnabled(timeDisable));
-    }
+    //public void DisableColliderMagicPoint(float timeDisable)
+    //{
+    //    StartCoroutine(DelayMagicPointColliderToEnabled(timeDisable));
+    //}
 
-    IEnumerator DelayMagicPointColliderToEnabled(float timeDisable)
-    {
-        SetMagicPointCollider(false);
-        yield return new WaitForSeconds(timeDisable);
-        SetMagicPointCollider(true);
-    }
+    //IEnumerator DelayMagicPointColliderToEnabled(float timeDisable)
+    //{
+    //    SetMagicPointCollider(false);
+    //    yield return new WaitForSeconds(timeDisable);
+    //    SetMagicPointCollider(true);
+    //}
     #endregion
-    #region MagicCircle TimePerMove Controller
-    public void TimePerMoveSlowdown(float slowdownMultiply, float timeSlow)
-    {
-        if (slowdownMultiply < 1f)
-        {
-            timePerMove *= slowdownMultiply;
-            StartCoroutine(DelayToDefaultTimePerMove(timeSlow));
-        }
-    }
 
-    IEnumerator DelayToDefaultTimePerMove(float timeSlow)
-    {
-        yield return new WaitForSeconds(timeSlow);
-        timePerMove = defaultTimePerMove;
-    }
-    #endregion
+    //#region MagicCircle TimePerMove Controller
+    //public void TimePerMoveSlowdown(float slowdownMultiply, float timeSlow)
+    //{
+    //    if (slowdownMultiply < 1f)
+    //    {
+    //        timePerMove *= slowdownMultiply;
+    //        StartCoroutine(DelayToDefaultTimePerMove(timeSlow));
+    //    }
+    //}
+
+    //IEnumerator DelayToDefaultTimePerMove(float timeSlow)
+    //{
+    //    yield return new WaitForSeconds(timeSlow);
+    //    timePerMove = defaultTimePerMove;
+    //}
+    //#endregion
+
     #region Random Character Action Controller
-    public void RandomChaActionState(float timeRandom)
-    {
-        randomChaActionState = true;
-        StartCoroutine(DelayToDefaultTimePerMove(timeRandom));
-    }
+    //public void RandomChaActionState(float timeRandom)
+    //{
+    //    randomChaActionState = true;
+    //    StartCoroutine(DelayToNotRandomChaActionState(timeRandom));
+    //}
 
-    IEnumerator DelayToNotRandomChaActionState(float timeRandom)
-    {
-        yield return new WaitForSeconds(timeRandom);
-        randomChaActionState = false;
-    }
+    //IEnumerator DelayToNotRandomChaActionState(float timeRandom)
+    //{
+    //    yield return new WaitForSeconds(timeRandom);
+    //    randomChaActionState = false;
+    //}
 
     public void RandomChaActionState(int randomCount)
     {
@@ -371,6 +453,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         randomChaActionStateCount = randomCount;
     }
     #endregion
+
     #region RotateMagicCircle Controller
     public void RotateMagicCircle(int indexMagicCircleOutChange, int indexMagicCircleInChange)
     {
@@ -383,7 +466,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             indexMagicCircleOutChange : -indexMagicCircleOutChange, timePerMove);
         magicCircleIn.RotateCircle(normalDirectionalRotation ?
             indexMagicCircleInChange : -indexMagicCircleInChange, timePerMove);
-        mgFieldState = MagicFieldState.WaitingRotation;
+        MgFieldState = MagicFieldState.WaitingRotation;
     }
     #endregion
 }

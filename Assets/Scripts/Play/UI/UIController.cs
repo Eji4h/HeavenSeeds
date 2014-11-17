@@ -8,21 +8,34 @@ public class UIController : MonoBehaviour
     static int hpPopUpCurrentIndex = 0,
         hpPopUpCount = 20;
 
-    static CalculateUIProgressBar playerHpBar,
+    static PayUIProgressBar playerHpBar,
         monsterHpBar;
+
+    static UILabel manaLabel;
     #endregion
 
     #region Static Properties
-    public static CalculateUIProgressBar PlayerHpBar
+    public static void SetInit()
+    {
+        playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<PayUIProgressBar>();
+        monsterHpBar = GameObject.Find("MonsterHpBar").GetComponent<PayUIProgressBar>();
+        manaLabel = GameObject.Find("ManaLabel").GetComponent<UILabel>();
+    }
+    public static PayUIProgressBar PlayerHpBar
     {
         get { return UIController.playerHpBar; }
         set { UIController.playerHpBar = value; }
     }
 
-    public static CalculateUIProgressBar MonsterHpBar
+    public static PayUIProgressBar MonsterHpBar
     {
         get { return UIController.monsterHpBar; }
         set { UIController.monsterHpBar = value; }
+    }
+    public static UILabel ManaLabel
+    {
+        get { return UIController.manaLabel; }
+        set { UIController.manaLabel = value; }
     }
     #endregion
 
@@ -36,9 +49,6 @@ public class UIController : MonoBehaviour
 
         for (int i = 0; i < hpPopUpCount; i++)
             hpPopUpArray[i] = Instantiate(hpPopUpPrefab) as HpPopUp;
-
-        playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<CalculateUIProgressBar>();
-        monsterHpBar = GameObject.Find("MonsterHpBar").GetComponent<CalculateUIProgressBar>();
     }
 
     public static void ShowHpPopUp(int value, Vector3 targetPos, bool isDmg)
