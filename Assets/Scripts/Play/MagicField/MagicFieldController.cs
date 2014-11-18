@@ -289,7 +289,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             if (cost >= swordCost)
             {
                 Cost -= swordCost;
-                print("Sword");
                 ChaActionState = CharacterActionState.SwordAction;
                 return;
             }
@@ -299,7 +298,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             if (cost >= bowCost)
             {
                 Cost -= bowCost;
-                print("Bow");
                 ChaActionState = CharacterActionState.BowAction;
                 return;
             }
@@ -309,7 +307,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             if (cost >= wandCost)
             {
                 Cost -= wandCost;
-                print("Wand");
                 ChaActionState = CharacterActionState.WandAction;
                 return;
             }
@@ -319,7 +316,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             if (cost >= shieldCost)
             {
                 Cost -= shieldCost;
-                print("Shield");
                 ChaActionState = CharacterActionState.ShieldAction;
                 return;
             }
@@ -329,7 +325,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             if (cost >= scrollCost)
             {
                 Cost -= scrollCost;
-                print("Scroll");
                 ChaActionState = CharacterActionState.ScrollAction;
                 return;
             }

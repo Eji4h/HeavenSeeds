@@ -379,7 +379,6 @@ public class CharacterController : Unit
             //yield return new WaitForSeconds(0.6f);
 
             iActionBehaviour.Action();
-            print("Atk");
             atkIsPlay = false;
 
             while (thisAnimation.isPlaying)

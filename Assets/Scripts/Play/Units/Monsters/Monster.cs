@@ -109,7 +109,6 @@ public abstract class Monster : Unit
 
     public virtual void ReceiveDamage(int dmg)
     {
-        print("Damage : " + dmg);
         if (!isImmortal)
         {
             UIController.ShowHpPopUp(dmg, thisTransform.position, true);
