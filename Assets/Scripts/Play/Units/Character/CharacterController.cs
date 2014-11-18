@@ -383,7 +383,7 @@ public class CharacterController : Unit
             thisAnimation.Play(actionStr);
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
-            MonsterListShowParticleReceiveDamage();
+            MonsterShowParticleReceiveDamage();
             yield return new WaitForSeconds(timeAfterMonsterListShowParticleReceiveDamage);
 
             //yield return new WaitForSeconds(0.6f);
@@ -400,49 +400,7 @@ public class CharacterController : Unit
         turnController.TurnChange();
     }
 
-    void SwordAttack()
-    {
-        //listMonsters.ForEach(monster =>
-            //{
-                //int dmg = AttackDamageCalculate(swordAtkValue, nearPoint, monster.transform.position.z, 0.9f, 1.1f);
-                //monster.ReceiveDamage(dmg);
-            //});
-    }
-
-    void BowAttack()
-    {
-        //listMonsters.ForEach(monster =>
-            //{
-                //int dmg = AttackDamageCalculate(bowAtkValue, middlePoint, monster.transform.position.z, 0.75f, 1.5f);
-                //monster.ReceiveDamage(dmg);
-            //});
-    }
-
-    void WandAttack()
-    {
-        //listMonsters.ForEach(monster =>
-            //{
-                //int dmg = AttackDamageCalculate(wandAtkValue, farPoint, monster.transform.position.z, 0.8f, 1.2f);
-                //monster.ReceiveDamage(dmg);
-            //});
-    }
-
-    void ShieldDefence()
-    {
-        StartCoroutine(TimeDefence(2f));
-    }
-
-    void ScrollBuff()
-    {
-
-    }
-
-    IEnumerator TimeDefence(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
-
-    void MonsterListShowParticleReceiveDamage()
+    void MonsterShowParticleReceiveDamage()
     {
         monster.ShowParticleReceiveDamage(chaActionState);
     }

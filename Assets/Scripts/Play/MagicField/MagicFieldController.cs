@@ -292,6 +292,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 ChaActionState = CharacterActionState.SwordAction;
                 return;
             }
+            else
+                MgFieldState = MagicFieldState.WaitingCommand;
         }
         else if (CheckCompletePointNumSet(bowPointNumSet))
         {
@@ -301,6 +303,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 ChaActionState = CharacterActionState.BowAction;
                 return;
             }
+            else
+                MgFieldState = MagicFieldState.WaitingCommand;
         }
         else if (CheckCompletePointNumSet(wandPointNumSet))
         {
@@ -310,6 +314,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 ChaActionState = CharacterActionState.WandAction;
                 return;
             }
+            else
+                MgFieldState = MagicFieldState.WaitingCommand;
         }
         else if (CheckCompletePointNumSet(shieldPointNumSet))
         {
@@ -319,6 +325,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 ChaActionState = CharacterActionState.ShieldAction;
                 return;
             }
+            else
+                MgFieldState = MagicFieldState.WaitingCommand;
         }
         else if (CheckCompletePointNumSet(scrollPointNumSet))
         {
@@ -328,8 +336,10 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 ChaActionState = CharacterActionState.ScrollAction;
                 return;
             }
+            else
+                MgFieldState = MagicFieldState.WaitingCommand;
         }
-        if (isSelectedCount > 5)
+        else if (isSelectedCount > 5)
         {
             MgFieldState = MagicFieldState.WaitingCommand;
         }

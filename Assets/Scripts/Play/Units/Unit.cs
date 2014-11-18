@@ -98,6 +98,7 @@ public abstract class Unit : MonoBehaviour
     protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, 
         bool parent, Transform parentTransform)
     {
+        print("Name : " + name);
         Transform gameObjectTransform = gameObject.transform;
 
         gameObjectTransform.parent = parentTransform;
