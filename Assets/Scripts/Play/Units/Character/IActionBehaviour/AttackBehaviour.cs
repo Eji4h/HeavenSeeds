@@ -18,7 +18,7 @@ public class AttackBehaviour : IActionBehaviour
     {
         int dmg = Mathf.RoundToInt(OftenMethod.ProbabilityDistribution(
             atkValue, minimumDmgMultiply, maximumDmgMultiply, 3) *
-            CharacterController.GetAtkPercentIncrease);
+            (1f + CharacterController.GetAtkPercentIncrease));
         SceneController.CurrentMonster.ReceiveDamage(dmg);
     }
 }

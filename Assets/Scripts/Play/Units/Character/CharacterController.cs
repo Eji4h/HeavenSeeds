@@ -177,6 +177,7 @@ public class CharacterController : Unit
 
     #region Variable
     CharacterStatus characterStatus;
+    GameObject weaponGameObject;
     bool atkIsPlay = false;
     CharacterActionState chaActionState;
     string actionStr,
@@ -235,22 +236,43 @@ public class CharacterController : Unit
     #endregion
     public void SetStatus()
     {
-        switch(chaActionState)
+        switch (chaActionState)
         {
             case CharacterActionState.SwordAction:
-
+                {
+                    AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
+                    iActionBehaviour = new AttackBehaviour(characterStatus.SwordValue,
+                        attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
+                }
                 break;
             case CharacterActionState.BowAction:
-
+                {
+                    AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
+                    iActionBehaviour = new AttackBehaviour(characterStatus.BowValue,
+                        attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
+                }
                 break;
             case CharacterActionState.WandAction:
-
+                {
+                    AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
+                    iActionBehaviour = new AttackBehaviour(characterStatus.WandValue,
+                        attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
+                }
                 break;
             case CharacterActionState.ShieldAction:
-
+                {
+                    DefenceWeapon defenceWeapon = weaponGameObject.GetComponent<DefenceWeapon>();
+                    iActionBehaviour = new DefenceBehaviour(defenceWeapon.barrierHp,
+                        characterStatus.ShiedlValue);
+                }
                 break;
             case CharacterActionState.ScrollAction:
-
+                {
+                    HealAndBuffWeapon healAndBuffWeapon = weaponGameObject.GetComponent<HealAndBuffWeapon>();
+                    iActionBehaviour = new HealAndBuffBehaviour(characterStatus.ScrollValue,
+                        healAndBuffWeapon.atkPercentIncrease, healAndBuffWeapon.barrierHpPercentIncrease,
+                        healAndBuffWeapon.healPercentIncrease);
+                }
                 break;
         }
         MaxHp = characterStatus.Hp;
@@ -272,6 +294,7 @@ public class CharacterController : Unit
     public void SetWeapon(CharacterActionState chaActionState, GameObject weaponGameObject)
     {
         this.chaActionState = chaActionState;
+        this.weaponGameObject = weaponGameObject;
         
         actionStr = chaActionState.ToString();
 
@@ -294,7 +317,6 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 180f, 0f);
-                //actionFinishMethod = SwordAttack;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.1f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0.65f;
@@ -304,7 +326,6 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 0f, 0f);
-                //actionFinishMethod = BowAttack;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0f;
@@ -314,7 +335,6 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 0f, 0f);
-                //actionFinishMethod = WandAttack;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0.75f;
@@ -324,7 +344,6 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.2f;
                 weaponTransform.localRotation = Quaternion.Euler(75f, 180f, 90f);
-                //actionFinishMethod = ShieldDefence;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0f;
@@ -334,7 +353,6 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(-60f, 0f, 105f);
-                //actionFinishMethod = ScrollBuff;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0f;
@@ -360,7 +378,7 @@ public class CharacterController : Unit
 
             //yield return new WaitForSeconds(0.6f);
 
-            //actionFinishMethod();
+            iActionBehaviour.Action();
             print("Atk");
             atkIsPlay = false;
 
