@@ -5,17 +5,22 @@ using System.Collections.Generic;
 public class CharacterController : Unit
 {
     #region Static Variable
-    static int sumHp, maxSumHp;
+    static int sumHp, maxSumHp,
+        barrierHp;
+    static float blockPercentPerTimeDefence;
+    static float atkPercentIncrease,
+        barrierHpPercentIncrease,
+        healPercentIncrease;
     #endregion
 
     #region Static Properties
-    public static int SumHp
+    static int SumHp
     {
         get { return CharacterController.sumHp / randomNumSecurity; }
         set 
         {
-            if (value > GetMaxSumHp)
-                CharacterController.sumHp = GetMaxSumHp * randomNumSecurity;
+            if (value > MaxSumHp)
+                CharacterController.sumHp = MaxSumHp * randomNumSecurity;
             else
                 CharacterController.sumHp = value * randomNumSecurity;
 
@@ -26,14 +31,50 @@ public class CharacterController : Unit
         }
     }
 
-    public static int GetMaxSumHp
+    static int MaxSumHp
     {
-        get { return CharacterController.maxSumHp /randomNumSecurity; }
-    }
-    static int SetMaxSumHp
-    {
+        get { return CharacterController.maxSumHp / randomNumSecurity; }
         set { CharacterController.maxSumHp = value * randomNumSecurity; }
     }
+
+    static int BarrierHp
+    {
+        get { return CharacterController.barrierHp / randomNumSecurity; }
+        set { CharacterController.barrierHp = value * randomNumSecurity; }
+    }
+
+    static float BlockPercentPerTimeDefence
+    {
+        get { return CharacterController.blockPercentPerTimeDefence / randomNumSecurity; }
+        set { CharacterController.blockPercentPerTimeDefence = value * randomNumSecurity; }
+    }
+
+    static float AtkPercentIncrease
+    {
+        get { return CharacterController.atkPercentIncrease / randomNumSecurity; }
+        set { CharacterController.atkPercentIncrease = value * randomNumSecurity; }
+    }
+    public static float GetAtkPercentIncrease
+    {
+        get { return CharacterController.atkPercentIncrease / randomNumSecurity; }
+    }
+
+    static float BarrierHpPercentIncrease
+    {
+        get { return CharacterController.barrierHpPercentIncrease / randomNumSecurity; }
+        set { CharacterController.barrierHpPercentIncrease = value * randomNumSecurity; }
+    }
+
+    static float HealPercentIncrease
+    {
+        get { return CharacterController.healPercentIncrease / randomNumSecurity; }
+        set { CharacterController.healPercentIncrease = value * randomNumSecurity; }
+    }
+
+    public static float GetHealPercentIncrease
+    {
+        get { return CharacterController.healPercentIncrease / randomNumSecurity; }
+    } 
     #endregion
 
     #region Static Method
@@ -45,14 +86,14 @@ public class CharacterController : Unit
         shieldCharacterController = SceneController.ShieldCharacterController;
         scrollCharacterController = SceneController.ScrollCharacterController;
 
-        SetMaxSumHp = swordCharacterController.MaxHp +
+        MaxSumHp = swordCharacterController.MaxHp +
             bowCharacterController.MaxHp +
             wandCharacterController.MaxHp +
             shieldCharacterController.MaxHp +
             scrollCharacterController.MaxHp;
 
-        UIController.PlayerHpBar.MaxValue = GetMaxSumHp;
-        SumHp = GetMaxSumHp;
+        UIController.PlayerHpBar.MaxValue = MaxSumHp;
+        SumHp = MaxSumHp;
 
         listCharacterController.Clear();
         listCharacterController.Add(swordCharacterController);
@@ -64,24 +105,57 @@ public class CharacterController : Unit
 
     public static void ReceiveDamage(int dmg)
     {
-        SumHp -= dmg;
-        UIController.ShowHpPopUp(dmg, swordCharacterController.thisTransform.position, true);
-        listCharacterController.ForEach(characterController =>
+        if(BarrierHp > 0)
+        {
+            int blockDmg = Mathf.RoundToInt(dmg * BlockPercentPerTimeDefence);
+            if (BarrierHp > blockDmg)
+                BarrierHp -= blockDmg;
+            else
             {
-                if (!characterController.AtkIsPlay)
+                blockDmg = BarrierHp;
+                BarrierHp = 0;
+            }
+            dmg -= blockDmg;
+        }
+        if (dmg > 0)
+        {
+            SumHp -= dmg;
+            UIController.ShowHpPopUp(dmg, swordCharacterController.thisTransform.position, true);
+            listCharacterController.ForEach(characterController =>
                 {
-                    characterController.thisAnimation.Stop();
-                    characterController.thisAnimation.Play(characterController.hurtStr);
-                    characterController.thisAnimation.CrossFadeQueued(characterController.IsFall ?
-                        characterController.fallStr : characterController.idleStr);
-                }
-            });
+                    if (!characterController.AtkIsPlay)
+                    {
+                        characterController.thisAnimation.Stop();
+                        characterController.thisAnimation.Play(characterController.hurtStr);
+                        characterController.thisAnimation.CrossFadeQueued(characterController.IsFall ?
+                            characterController.fallStr : characterController.idleStr);
+                    }
+                });
+        }
     }
 
     public static void ReceiveHeal(int heal)
     {
-        SumHp += heal;
+        SumHp += Mathf.RoundToInt(heal * (1f + HealPercentIncrease));
         UIController.ShowHpPopUp(heal, swordCharacterController.thisTransform.position, false);
+    }
+
+    public static void BarrierDefence(int barrierHp, float blockPercentPerTimeDefence)
+    {
+        BarrierHp = Mathf.RoundToInt(barrierHp * (1f + BarrierHpPercentIncrease));
+        BlockPercentPerTimeDefence = blockPercentPerTimeDefence;
+    }
+
+    public static void GetBuff(float atkPercentIncrease, 
+        float barrierHpPercentIncrease, 
+        float healPercentIncrease)
+    {
+        AtkPercentIncrease = atkPercentIncrease;
+        BarrierHpPercentIncrease = barrierHpPercentIncrease;
+        HealPercentIncrease = healPercentIncrease;
+
+        if (BarrierHp > 0)
+            BarrierHp *= Mathf.RoundToInt(1f + BarrierHpPercentIncrease);
     }
 
     public static void TurnEffectDecrease()
@@ -110,17 +184,9 @@ public class CharacterController : Unit
         hurtStr, 
         fallStr;
 
-    delegate void ActionFinishMethod();
-    ActionFinishMethod actionFinishMethod;
+    IActionBehaviour iActionBehaviour;
 
 	int useCost;
-
-    //Status
-    int swordAtkValue = 100,
-        bowAtkValue = 100,
-        wandAtkValue = 100,
-        shieldDefValue = 100,
-        scrollHealValue = 100;
 
     //Action Time
     float timeBeforeMonsterListShowParticleReceiveDamage,
@@ -169,6 +235,24 @@ public class CharacterController : Unit
     #endregion
     public void SetStatus()
     {
+        switch(chaActionState)
+        {
+            case CharacterActionState.SwordAction:
+
+                break;
+            case CharacterActionState.BowAction:
+
+                break;
+            case CharacterActionState.WandAction:
+
+                break;
+            case CharacterActionState.ShieldAction:
+
+                break;
+            case CharacterActionState.ScrollAction:
+
+                break;
+        }
         MaxHp = characterStatus.Hp;
     }
 
@@ -210,7 +294,7 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 180f, 0f);
-                actionFinishMethod = SwordAttack;
+                //actionFinishMethod = SwordAttack;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.1f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0.65f;
@@ -220,7 +304,7 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 0f, 0f);
-                actionFinishMethod = BowAttack;
+                //actionFinishMethod = BowAttack;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0f;
@@ -230,7 +314,7 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 0f, 0f);
-                actionFinishMethod = WandAttack;
+                //actionFinishMethod = WandAttack;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0.75f;
@@ -240,7 +324,7 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.2f;
                 weaponTransform.localRotation = Quaternion.Euler(75f, 180f, 90f);
-                actionFinishMethod = ShieldDefence;
+                //actionFinishMethod = ShieldDefence;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0f;
@@ -250,7 +334,7 @@ public class CharacterController : Unit
                 weaponTransform.parent = holdHandTransform;
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(-60f, 0f, 105f);
-                actionFinishMethod = ScrollBuff;
+                //actionFinishMethod = ScrollBuff;
 
                 timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
                 timeAfterMonsterListShowParticleReceiveDamage = 0f;
@@ -276,7 +360,7 @@ public class CharacterController : Unit
 
             //yield return new WaitForSeconds(0.6f);
 
-            actionFinishMethod();
+            //actionFinishMethod();
             print("Atk");
             atkIsPlay = false;
 

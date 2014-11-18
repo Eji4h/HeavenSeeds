@@ -90,12 +90,6 @@ public abstract class Unit : MonoBehaviour
     {
     }
 
-    protected int DamageProbabilityDistribution(float dmgBase, 
-        float minimumDmgMultiply, float maximumDmgMultiply)
-    {
-        return OftenMethod.ProbabilityDistribution(dmgBase, minimumDmgMultiply, maximumDmgMultiply, 3);
-    }
-
     protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, bool parent)
     {
         ReuseGameObject(gameObject, localPosition, parent, thisTransform);
