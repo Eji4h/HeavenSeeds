@@ -11,6 +11,8 @@ public class CharacterController : Unit
     static float atkPercentIncrease,
         barrierHpPercentIncrease,
         healPercentIncrease;
+
+    static GameObject barrierGameObject;
     #endregion
 
     #region Static Properties
@@ -40,7 +42,11 @@ public class CharacterController : Unit
     static int BarrierHp
     {
         get { return CharacterController.barrierHp / randomNumSecurity; }
-        set { CharacterController.barrierHp = value * randomNumSecurity; }
+        set
+        {
+            CharacterController.barrierHp = value * randomNumSecurity;
+            barrierGameObject.SetActive(BarrierHp > 0);
+        }
     }
 
     static float BlockPercentPerTimeDefence
@@ -101,6 +107,10 @@ public class CharacterController : Unit
         listCharacterController.Add(wandCharacterController);
         listCharacterController.Add(shieldCharacterController);
         listCharacterController.Add(scrollCharacterController);
+
+        barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Barrier"), 
+            Vector3.forward, Quaternion.identity) as GameObject;
+        barrierGameObject.SetActive(false);
     }
 
     public static void ReceiveDamage(int dmg)
