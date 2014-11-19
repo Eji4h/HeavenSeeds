@@ -227,7 +227,6 @@ public abstract class Monster : Unit
     IEnumerator WaterReceiveBehaviour()
     {
         ReuseGameObject(waterParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(3.5f);
         for (int i = 0; i < 4; i++)
         {
             ReceiveDamage(100);
