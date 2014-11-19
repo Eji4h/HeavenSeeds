@@ -80,7 +80,33 @@ public class CharacterController : Unit
     public static float GetHealPercentIncrease
     {
         get { return CharacterController.healPercentIncrease / randomNumSecurity; }
-    } 
+    }
+
+    public static int SwordValue
+    {
+        get { return swordCharacterController.characterStatus.SwordValue; }
+    }
+
+    public static int BowValue
+    {
+        get { return bowCharacterController.characterStatus.BowValue; }
+    }
+
+    public static int WandValue
+    {
+        get { return wandCharacterController.characterStatus.WandValue; }
+    }
+
+    public static int ShieldValue
+    {
+        get { return shieldCharacterController.characterStatus.ShiedlValue; }
+    }
+
+    public static int ScrollValue
+    {
+        get { return scrollCharacterController.characterStatus.ScrollValue; }
+    }
+
     #endregion
 
     #region Static Method
@@ -273,7 +299,7 @@ public class CharacterController : Unit
                 {
                     DefenceWeapon defenceWeapon = weaponGameObject.GetComponent<DefenceWeapon>();
                     iActionBehaviour = new DefenceBehaviour(defenceWeapon.barrierHp,
-                        characterStatus.ShiedlValue);
+                        characterStatus.ShiedlValue * 0.25f);
                 }
                 break;
             case CharacterActionState.ScrollAction:

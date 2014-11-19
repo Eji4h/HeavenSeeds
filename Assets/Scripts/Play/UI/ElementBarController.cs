@@ -19,7 +19,7 @@ public class ElementBarController : MonoBehaviour
         set 
         {
             progressBar.value = value;
-            if (progressBar.value >= 0.999999f)
+            if (progressBar.value >= 0.99f)
             {
                 Unit.Monster.ReceiveQueue(element);
                 progressBar.value = 0f;

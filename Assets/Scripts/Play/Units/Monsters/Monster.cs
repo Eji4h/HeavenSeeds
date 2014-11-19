@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PlayerPrefs = PreviewLabs.PlayerPrefs;
+using PayUnity;
 
 public abstract class Monster : Unit
 {
@@ -13,6 +14,8 @@ public abstract class Monster : Unit
         waterParticle,
         earthParticle,
         woodParticle;
+
+    static int elementDamageBase;
     #endregion
 
     #region Static Method
@@ -41,6 +44,12 @@ public abstract class Monster : Unit
         waterParticle.SetActive(false);
         earthParticle.SetActive(false);
         woodParticle.SetActive(false);
+
+        elementDamageBase = (CharacterController.SwordValue +
+            CharacterController.BowValue +
+            CharacterController.WandValue +
+            CharacterController.ShieldValue +
+            CharacterController.ScrollValue) / 5;
     }
     #endregion
 
@@ -58,6 +67,56 @@ public abstract class Monster : Unit
 
     Queue<IEnumerator> queueElementReceive = new Queue<IEnumerator>(4);
     bool queueElementIsRunning = false;
+
+    protected bool isBurn = false,
+        isLowAttackDamage = false,
+        isMoreReceiveDamage = false,
+        isStun = false;
+
+    int burnTurn = 0,
+        lowAttackDamageTurn = 0,
+        moreReceiveDamageTurn = 0,
+        stunTurn = 0;
+
+    int BurnTurn
+    {
+        get { return burnTurn; }
+        set 
+        {
+            burnTurn = value;
+            isBurn = burnTurn > 0;
+        }
+    }
+
+    int LowAttackDamageTurn
+    {
+        get { return lowAttackDamageTurn; }
+        set 
+        {
+            lowAttackDamageTurn = value;
+            isLowAttackDamage = lowAttackDamageTurn > 0;
+        }
+    }
+
+    int MoreReceiveDamageTurn
+    {
+        get { return moreReceiveDamageTurn; }
+        set 
+        {
+            moreReceiveDamageTurn = value;
+            isMoreReceiveDamage = moreReceiveDamageTurn > 0;
+        }
+    }
+
+    int StunTurn
+    {
+        get { return stunTurn; }
+        set 
+        {
+            stunTurn = value;
+            isStun = stunTurn > 0;
+        }
+    }
     #endregion
 
     #region Properties
@@ -131,6 +190,8 @@ public abstract class Monster : Unit
     {
         if (!isImmortal)
         {
+            if (isMoreReceiveDamage)
+                dmg = Mathf.RoundToInt(dmg * 1.2f);
             UIController.ShowHpPopUp(dmg, thisTransform.position, true);
             Hp -= dmg;
         }
@@ -211,9 +272,8 @@ public abstract class Monster : Unit
     {
         queueElementIsRunning = true;
         while(queueElementReceive.Count > 0)
-        {
             yield return StartCoroutine(queueElementReceive.Dequeue());
-        }
+
         queueElementIsRunning = false;
     }
 
@@ -221,35 +281,41 @@ public abstract class Monster : Unit
     {
         ReuseGameObject(fireParticle, Vector3.zero, true);
         yield return new WaitForSeconds(1f);
-        ReceiveDamage(500);
+        ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase * 5, 1f, 1.2f, 3));
+        BurnTurn = 3;
     }
 
     IEnumerator WaterReceiveBehaviour()
     {
+        int damagePerReceive = elementDamageBase / 4;
         ReuseGameObject(waterParticle, Vector3.zero, true);
         for (int i = 0; i < 4; i++)
         {
-            ReceiveDamage(100);
+            ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.75f, 1.1f, 3));
             yield return new WaitForSeconds(1f);
         }
+        LowAttackDamageTurn = 2;
     }
 
     IEnumerator EarthReceiveBehaviour()
     {
+        int damagePerReceive = elementDamageBase / 14;
         ReuseGameObject(earthParticle, Vector3.zero, true);
         yield return new WaitForSeconds(1f);
         for (int i = 0; i < 14; i++)
         {
-            ReceiveDamage(25);
+            ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.9f, 1.1f, 3));
             yield return new WaitForSeconds(0.25f);
         }
+        MoreReceiveDamageTurn = 2;
     }
 
     IEnumerator WoodReceiveBehaviour()
     {
         ReuseGameObject(woodParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(1.25f);
-        ReceiveDamage(300);
+        yield return new WaitForSeconds(2f);
+        ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase, 0.95f, 1.05f, 3));
+        StunTurn = 1;
     }
 
     IEnumerator AlphaToDestroy()

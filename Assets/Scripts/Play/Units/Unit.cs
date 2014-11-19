@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using PlayerPrefs = PreviewLabs.PlayerPrefs;
-using PayUnity;
 
 public abstract class Unit : MonoBehaviour
 {
