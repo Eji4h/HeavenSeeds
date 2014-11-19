@@ -26,8 +26,6 @@ public class BossKhchsingh : Monster
     float minimumDmgMultiply = 0.9f,
         maximumDmgMultiply = 1.1f;
 
-    bool isImmortal = false;
-
     GameObject maddenSparkGameObjectParticle,
         maddenReleaseGameObjectParticle,
         chargeGameObjectParticle,
@@ -49,7 +47,11 @@ public class BossKhchsingh : Monster
     // Use this for initialization
     protected override void Start()
     {
+        MaxHp = 1000;
+        base.Start();
 
+        SetLocalPositionReceiveDamageParticle(new Vector3(0f, 4f, 4.75f),
+            new Vector3(0f, 4f, 4.75f), new Vector3(0f, 0.1f, 0f));
     }
 
 

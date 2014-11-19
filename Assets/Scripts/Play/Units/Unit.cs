@@ -69,6 +69,8 @@ public abstract class Unit : MonoBehaviour
     protected Animation thisAnimation;
 
     int maxHp;
+
+    protected List<Transform> listGameObjectTransformInParent = new List<Transform>(8);
     #endregion
 
     #region Properties
@@ -98,13 +100,14 @@ public abstract class Unit : MonoBehaviour
     protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, 
         bool parent, Transform parentTransform)
     {
-        print("Name : " + name);
         Transform gameObjectTransform = gameObject.transform;
 
         gameObjectTransform.parent = parentTransform;
         gameObjectTransform.localPosition = localPosition;
         if (!parent)
             gameObjectTransform.parent = null;
+        else if(!listGameObjectTransformInParent.Contains(gameObjectTransform))
+            listGameObjectTransformInParent.Add(gameObjectTransform);
         gameObject.SetActive(false);
         gameObject.SetActive(true);
     }

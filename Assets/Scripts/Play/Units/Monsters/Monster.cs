@@ -264,6 +264,8 @@ public abstract class Monster : Unit
         //    yield return null;
         //}
         yield return new WaitForSeconds(3f);
+        listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
+            gameObjectTransformInParent.parent = null);
         Destroy(gameObject);
         SceneController.NextMonsterQueue();
     }

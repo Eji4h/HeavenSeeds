@@ -395,7 +395,8 @@ public class CharacterController : Unit
                 yield return null;
 
             thisAnimation.Play(idleStr);
-            yield return new WaitForSeconds(1f);
+            while (Monster.QueueElementIsRunning)
+                yield return null;
         }
         turnController.TurnChange();
     }
