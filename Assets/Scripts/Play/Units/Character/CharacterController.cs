@@ -14,7 +14,7 @@ public class CharacterController : Unit
         lowestCost;
 
     static int sumHp, maxSumHp,
-        barrierHp;
+        barrierHp, barrierTurn;
 
     static float blockPercentPerTimeDefence;
     static float atkPercentIncrease,
@@ -29,7 +29,9 @@ public class CharacterController : Unit
     {
         get { return CharacterController.cost / randomNumSecurity; }
         set 
-        { 
+        {
+            if (value > 99)
+                value = 99;
             CharacterController.cost = value * randomNumSecurity;
             UIController.ManaLabel.text = Cost.ToString();
         }
@@ -93,7 +95,7 @@ public class CharacterController : Unit
         set
         {
             CharacterController.barrierHp = value * randomNumSecurity;
-            barrierGameObject.SetActive(BarrierHp > 0);
+            barrierGameObject.SetActive(barrierTurn-- > 0 & BarrierHp > 0);
         }
     }
 
@@ -227,6 +229,7 @@ public class CharacterController : Unit
 
     public static void BarrierDefence(int barrierHp, float blockPercentPerTimeDefence)
     {
+        barrierTurn = 3;
         BarrierHp = Mathf.RoundToInt(barrierHp * (1f + BarrierHpPercentIncrease));
         BlockPercentPerTimeDefence = blockPercentPerTimeDefence;
     }
@@ -352,7 +355,7 @@ public class CharacterController : Unit
                 {
                     DefenceWeapon defenceWeapon = weaponGameObject.GetComponent<DefenceWeapon>();
                     iActionBehaviour = new DefenceBehaviour(defenceWeapon.barrierHp,
-                        characterStatus.ShiedlValue * 0.25f);
+                        characterStatus.ShiedlValue * 0.0025f);
                     shieldCost = 20 + characterStatus.ShieldCostChange;
                 }
                 break;
