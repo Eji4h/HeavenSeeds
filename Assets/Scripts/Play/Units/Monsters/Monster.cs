@@ -55,7 +55,7 @@ public abstract class Monster : Unit
 
     #region Variable
     protected Rigidbody thisRigidbody;
-    protected int hp, attackDamageBase;
+    protected int hp;
 
     ElementType weaknessElement;
 
@@ -155,11 +155,11 @@ public abstract class Monster : Unit
     }
     #endregion
 
+    #region Method
     protected override void Awake()
     {
         base.Awake();
         thisRigidbody = rigidbody;
-        attackDamageBase = PlayerPrefs.GetInt(name + "AttackDamageBase", 100);
     }
 
     protected override void Start()
@@ -203,12 +203,49 @@ public abstract class Monster : Unit
         Hp += heal;
     }
 
-    public abstract void StartState();
+    public void StartState()
+    {
+        BurnTurn--;
+        MoreReceiveDamageTurn--;
+        MonsterBehaviour();
+    }
 
     protected virtual void EndTurn()
     {
         thisAnimation.CrossFade("Idle");
+
+        LowAttackDamageTurn--;
+        StunTurn--;
+
         turnController.TurnChange();
+    }
+
+    public void SendDamageToCharacter(int dmg)
+    {
+        SendDamageToCharacter(dmg, 0.9f, 1.1f);
+    }
+
+    public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
+    {
+        CharacterController.ReceiveDamage(
+            OftenMethod.ProbabilityDistribution(dmg, minimumMultiply, maximumMultiply, 3));
+    }
+
+    protected virtual void MonsterBehaviour()
+    {
+        NormalAttack();
+    }
+
+    protected void NormalAttack()
+    {
+        thisAnimation.CrossFade("Attack");
+        StartCoroutine(WaitAttackAnimationFinishToEndTurn(thisAnimation["Attack"].length));
+    }
+
+    IEnumerator WaitAttackAnimationFinishToEndTurn(float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        EndTurn();
     }
 
     public virtual void ShowParticleReceiveDamage(CharacterActionState chaActionState)
@@ -233,7 +270,8 @@ public abstract class Monster : Unit
         {
             turnFall++;
             CharacterController selectedCharacterController;
-            List<CharacterController> listUnFallCharacterController = new List<CharacterController>(5);
+            List<CharacterController> listUnFallCharacterController = 
+                new List<CharacterController>(5);
 
             listCharacterController.ForEach(characterController =>
                 listUnFallCharacterController.Add(characterController));
@@ -282,7 +320,7 @@ public abstract class Monster : Unit
         ReuseGameObject(fireParticle, Vector3.zero, true);
         yield return new WaitForSeconds(1f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase * 5, 1f, 1.2f, 3));
-        BurnTurn = 3;
+        BurnTurn = 1;
     }
 
     IEnumerator WaterReceiveBehaviour()
@@ -307,7 +345,7 @@ public abstract class Monster : Unit
             ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.9f, 1.1f, 3));
             yield return new WaitForSeconds(0.25f);
         }
-        MoreReceiveDamageTurn = 2;
+        MoreReceiveDamageTurn = 1;
     }
 
     IEnumerator WoodReceiveBehaviour()
@@ -335,3 +373,4 @@ public abstract class Monster : Unit
         SceneController.NextMonsterQueue();
     }
 }
+    #endregion

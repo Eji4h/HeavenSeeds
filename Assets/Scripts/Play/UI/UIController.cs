@@ -12,6 +12,8 @@ public class UIController : MonoBehaviour
         monsterHpBar;
 
     static UILabel manaLabel;
+
+    static EndTurnButton endTurnButton;
     #endregion
 
     #region Static Properties
@@ -20,22 +22,25 @@ public class UIController : MonoBehaviour
         playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<PayUIProgressBar>();
         monsterHpBar = GameObject.Find("MonsterHpBar").GetComponent<PayUIProgressBar>();
         manaLabel = GameObject.Find("ManaLabel").GetComponent<UILabel>();
+        endTurnButton = GameObject.FindObjectOfType<EndTurnButton>();
     }
     public static PayUIProgressBar PlayerHpBar
     {
         get { return UIController.playerHpBar; }
-        set { UIController.playerHpBar = value; }
     }
 
     public static PayUIProgressBar MonsterHpBar
     {
         get { return UIController.monsterHpBar; }
-        set { UIController.monsterHpBar = value; }
     }
     public static UILabel ManaLabel
     {
         get { return UIController.manaLabel; }
-        set { UIController.manaLabel = value; }
+    }
+
+    public static EndTurnButton EndTurnButton
+    {
+        get { return UIController.endTurnButton; }
     }
     #endregion
 

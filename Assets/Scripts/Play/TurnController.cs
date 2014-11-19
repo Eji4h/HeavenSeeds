@@ -17,12 +17,24 @@ public class TurnController : MonoBehaviour
         TurnChange();
     }
 
+    public void CharacterActionEnd()
+    {
+        if (CharacterController.Cost < CharacterController.LowestCost)
+            TurnChange();
+        else
+            SceneController.MagicFieldController.ChangeStateToWaitingCommand();
+    }
+
     public void TurnChange()
     {
         if (playerTurn)
+        {
+            CharacterController.Cost += incomeCost;
             SceneController.MagicFieldController.ChangeStateToWaitingCommand();
+        }
         else
             SceneController.CurrentMonster.StartState();
-        //playerTurn = !playerTurn;
+        UIController.EndTurnButton.Enabled = playerTurn;
+        playerTurn = !playerTurn;
     }
 }

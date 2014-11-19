@@ -5,7 +5,13 @@ public class ChangeSceneBtn : MonoBehaviour
 {
     public string sceneGoToStr;
 
-    void OnClick()
+    // Use this for initialization
+    void Start()
+    {
+        EventDelegate.Add(GetComponent<UIButton>().onClick, ChangeSceneBtnOnClick);
+    }
+
+    void ChangeSceneBtnOnClick()
     {
         Application.LoadLevel(sceneGoToStr);
     }

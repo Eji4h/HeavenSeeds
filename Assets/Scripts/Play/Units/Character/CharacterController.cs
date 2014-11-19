@@ -10,7 +10,8 @@ public class CharacterController : Unit
         bowCost,
         wandCost,
         shieldCost,
-        scrollCost;
+        scrollCost,
+        lowestCost;
 
     static int sumHp, maxSumHp,
         barrierHp;
@@ -56,6 +57,11 @@ public class CharacterController : Unit
     public static int ScrollCost
     {
         get { return CharacterController.scrollCost; }
+    }
+
+    public static int LowestCost
+    {
+        get { return CharacterController.lowestCost; }
     }
 
     static int SumHp
@@ -179,7 +185,7 @@ public class CharacterController : Unit
             Vector3.forward, Quaternion.identity) as GameObject;
         barrierGameObject.SetActive(false);
 
-        Cost = PlayerPrefs.GetInt("startCost", 50);
+        Cost = PlayerPrefs.GetInt("startCost", 30);
     }
 
     public static void ReceiveDamage(int dmg)
@@ -323,6 +329,7 @@ public class CharacterController : Unit
                     iActionBehaviour = new AttackBehaviour(characterStatus.SwordValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
                     swordCost = 7 + characterStatus.SwordCostChange;
+                    lowestCost = swordCost;
                 }
                 break;
             case CharacterActionState.BowAction:
@@ -470,7 +477,7 @@ public class CharacterController : Unit
             while (Monster.QueueElementIsRunning)
                 yield return null;
         }
-        turnController.TurnChange();
+        turnController.CharacterActionEnd();
     }
 
     void MonsterShowParticleReceiveDamage()

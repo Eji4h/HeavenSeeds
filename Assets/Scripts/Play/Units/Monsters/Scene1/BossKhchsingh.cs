@@ -43,7 +43,6 @@ public class BossKhchsingh : Monster
     #endregion
 
     #region Method
-
     // Use this for initialization
     protected override void Start()
     {
@@ -54,9 +53,7 @@ public class BossKhchsingh : Monster
             new Vector3(0f, 4f, 4.75f), new Vector3(0f, 0.1f, 0f));
     }
 
-
-
-    public override void StartState()
+    protected override void MonsterBehaviour()
     {
 
     }
