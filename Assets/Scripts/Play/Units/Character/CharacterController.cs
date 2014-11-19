@@ -5,8 +5,16 @@ using System.Collections.Generic;
 public class CharacterController : Unit
 {
     #region Static Variable
+    static int cost;
+    static int swordCost,
+        bowCost,
+        wandCost,
+        shieldCost,
+        scrollCost;
+
     static int sumHp, maxSumHp,
         barrierHp;
+
     static float blockPercentPerTimeDefence;
     static float atkPercentIncrease,
         barrierHpPercentIncrease,
@@ -16,6 +24,40 @@ public class CharacterController : Unit
     #endregion
 
     #region Static Properties
+    public static int Cost
+    {
+        get { return CharacterController.cost / randomNumSecurity; }
+        set 
+        { 
+            CharacterController.cost = value * randomNumSecurity;
+            UIController.ManaLabel.text = Cost.ToString();
+        }
+    }
+    public static int SwordCost
+    {
+        get { return CharacterController.swordCost; }
+    }
+
+    public static int BowCost
+    {
+        get { return CharacterController.bowCost; }
+    }
+
+    public static int WandCost
+    {
+        get { return CharacterController.wandCost; }
+    }
+
+    public static int ShieldCost
+    {
+        get { return CharacterController.shieldCost; }
+    }
+
+    public static int ScrollCost
+    {
+        get { return CharacterController.scrollCost; }
+    }
+
     static int SumHp
     {
         get { return CharacterController.sumHp / randomNumSecurity; }
@@ -106,7 +148,6 @@ public class CharacterController : Unit
     {
         get { return scrollCharacterController.characterStatus.ScrollValue; }
     }
-
     #endregion
 
     #region Static Method
@@ -137,6 +178,8 @@ public class CharacterController : Unit
         barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Barrier"), 
             Vector3.forward, Quaternion.identity) as GameObject;
         barrierGameObject.SetActive(false);
+
+        Cost = PlayerPrefs.GetInt("startCost", 50);
     }
 
     public static void ReceiveDamage(int dmg)
@@ -279,6 +322,7 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.SwordValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
+                    swordCost = 7 + characterStatus.SwordCostChange;
                 }
                 break;
             case CharacterActionState.BowAction:
@@ -286,6 +330,7 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.BowValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
+                    bowCost = 8 + characterStatus.BowCostChange;
                 }
                 break;
             case CharacterActionState.WandAction:
@@ -293,6 +338,7 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.WandValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
+                    wandCost = 9 + characterStatus.WandCostChange;
                 }
                 break;
             case CharacterActionState.ShieldAction:
@@ -300,6 +346,7 @@ public class CharacterController : Unit
                     DefenceWeapon defenceWeapon = weaponGameObject.GetComponent<DefenceWeapon>();
                     iActionBehaviour = new DefenceBehaviour(defenceWeapon.barrierHp,
                         characterStatus.ShiedlValue * 0.25f);
+                    shieldCost = 20 + characterStatus.ShieldCostChange;
                 }
                 break;
             case CharacterActionState.ScrollAction:
@@ -308,6 +355,7 @@ public class CharacterController : Unit
                     iActionBehaviour = new HealAndBuffBehaviour(characterStatus.ScrollValue,
                         healAndBuffWeapon.atkPercentIncrease, healAndBuffWeapon.barrierHpPercentIncrease,
                         healAndBuffWeapon.healPercentIncrease);
+                    scrollCost = 13 + characterStatus.ScrollCostChange;
                 }
                 break;
         }
@@ -411,8 +459,6 @@ public class CharacterController : Unit
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
             MonsterShowParticleReceiveDamage();
             yield return new WaitForSeconds(timeAfterMonsterListShowParticleReceiveDamage);
-
-            //yield return new WaitForSeconds(0.6f);
 
             iActionBehaviour.Action();
             atkIsPlay = false;

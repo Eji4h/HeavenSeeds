@@ -48,15 +48,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     MagicFieldState mgFieldState;
     CharacterActionState chaActionState;
 
-    int cost,
-        incomeCost;
-
-	int swordCost, 
-		bowCost, 
-		wandCost, 
-		shieldCost, 
-		scrollCost;
-
     bool randomChaActionState = false;
     int randomChaActionStateCount = 0;
 
@@ -142,27 +133,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 randomChaActionState = false;
         }
     }
-
-    public int Cost
-    {
-        get { return cost; }
-        set 
-        { 
-            cost = value;
-            UIController.ManaLabel.text = cost.ToString();
-        }
-    }
     #endregion
-
-    public void SetCharacterCost(int swordCostChange, int bowCostChange, 
-        int wandCostChange, int shieldCostChange, int scrollCostChange)
-    {
-        swordCost = 7 + swordCostChange;
-        bowCost = 8 + bowCostChange;
-        wandCost = 9 + wandCostChange;
-        shieldCost = 20 + shieldCostChange;
-        scrollCost = 13 + scrollCostChange;
-    }
 
     // Use this for initialization
     void Start()
@@ -187,9 +158,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
         magicCircleOut.SetMagicPoint(magicPointsOut);
         magicCircleIn.SetMagicPoint(magicPointsIn);
-
-        Cost = PlayerPrefs.GetInt("startCost", 50);
-        incomeCost = PlayerPrefs.GetInt("incomeCost", 10);
 
         MgFieldState = MagicFieldState.WaitingCommand;
     }
@@ -286,9 +254,9 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     {
         if (CheckCompletePointNumSet(swordPointNumSet))
         {
-            if (cost >= swordCost)
+            if (CharacterController.Cost >= CharacterController.SwordCost)
             {
-                Cost -= swordCost;
+                CharacterController.Cost -= CharacterController.SwordCost;
                 ChaActionState = CharacterActionState.SwordAction;
                 return;
             }
@@ -297,9 +265,9 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         }
         else if (CheckCompletePointNumSet(bowPointNumSet))
         {
-            if (cost >= bowCost)
+            if (CharacterController.Cost >= CharacterController.BowCost)
             {
-                Cost -= bowCost;
+                CharacterController.Cost -= CharacterController.BowCost;
                 ChaActionState = CharacterActionState.BowAction;
                 return;
             }
@@ -308,9 +276,9 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         }
         else if (CheckCompletePointNumSet(wandPointNumSet))
         {
-            if (cost >= wandCost)
+            if (CharacterController.Cost >= CharacterController.WandCost)
             {
-                Cost -= wandCost;
+                CharacterController.Cost -= CharacterController.WandCost;
                 ChaActionState = CharacterActionState.WandAction;
                 return;
             }
@@ -319,9 +287,9 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         }
         else if (CheckCompletePointNumSet(shieldPointNumSet))
         {
-            if (cost >= shieldCost)
+            if (CharacterController.Cost >= CharacterController.ShieldCost)
             {
-                Cost -= shieldCost;
+                CharacterController.Cost -= CharacterController.ShieldCost;
                 ChaActionState = CharacterActionState.ShieldAction;
                 return;
             }
@@ -330,9 +298,9 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         }
         else if (CheckCompletePointNumSet(scrollPointNumSet))
         {
-            if (cost >= scrollCost)
+            if (CharacterController.Cost >= CharacterController.ScrollCost)
             {
-                Cost -= scrollCost;
+                CharacterController.Cost -= CharacterController.ScrollCost;
                 ChaActionState = CharacterActionState.ScrollAction;
                 return;
             }

@@ -106,8 +106,6 @@ public class SceneController : MonoBehaviour
         Monster.SetInit();
         CharacterController.SetInit();
 
-        magicFieldController.SetCharacterCost(0, 0, 0, 0, 0);
-
         int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
         string monsterPath = "Prefabs/Monsters/Scene" + sceneSelected,
             sceneSetPath = "Prefabs/Scenes/SceneSet" + sceneSelected;
