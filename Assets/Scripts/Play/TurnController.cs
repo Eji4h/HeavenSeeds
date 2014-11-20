@@ -6,7 +6,7 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 public class TurnController : MonoBehaviour
 {
     #region Variable
-    bool playerTurn = true;
+    bool playerTurn = false;
     int incomeCost;
     #endregion
 
@@ -34,18 +34,16 @@ public class TurnController : MonoBehaviour
 
     public void TurnChange()
     {
+        playerTurn = !playerTurn;
         if (playerTurn)
         {
             CharacterController.Cost += incomeCost;
             CharacterController.TurnEffectDecrease();
-            SceneController.MagicFieldController.ChangeMgFieldState(true);
         }
         else
-        {
             SceneController.CurrentMonster.StartState();
-            SceneController.MagicFieldController.ChangeMgFieldState(false);
-        }
+
+        SceneController.MagicFieldController.ChangeMgFieldState(playerTurn);
         UIController.EndTurnButton.Enabled = playerTurn;
-        playerTurn = !playerTurn;
     }
 }

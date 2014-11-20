@@ -197,36 +197,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
             if (Input.GetMouseButton(0))
                 CheckRayHitMagicPoint(Input.mousePosition);
-            if (Input.GetKey(KeyCode.S))
-            {
-                for (int i = 0; i < 5; i++)
-                    listMagicPointsUpstairs[swordPointNumSet[i]].IsSelected = true;
-                CheckSelectedMagicPoint();
-            }
-            else if (Input.GetKey(KeyCode.B))
-            {
-                for (int i = 0; i < 5; i++)
-                    listMagicPointsUpstairs[bowPointNumSet[i]].IsSelected = true;
-                CheckSelectedMagicPoint();
-            }
-            else if (Input.GetKey(KeyCode.W))
-            {
-                for (int i = 0; i < 5; i++)
-                    listMagicPointsUpstairs[wandPointNumSet[i]].IsSelected = true;
-                CheckSelectedMagicPoint();
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                for (int i = 0; i < 5; i++)
-                    listMagicPointsUpstairs[shieldPointNumSet[i]].IsSelected = true;
-                CheckSelectedMagicPoint();
-            }
-            else if (Input.GetKey(KeyCode.F))
-            {
-                for (int i = 0; i < 5; i++)
-                    listMagicPointsUpstairs[scrollPointNumSet[i]].IsSelected = true;
-                CheckSelectedMagicPoint();
-            }
 #else
             if (Input.touchCount > 0)
                 foreach (Touch touch in Input.touches)

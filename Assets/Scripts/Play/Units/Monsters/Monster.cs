@@ -56,6 +56,7 @@ public abstract class Monster : Unit
     #region Variable
     protected Rigidbody thisRigidbody;
     protected int hp;
+    protected float damageMinimumMultiply = 0.9f, damageMaximumMultiply = 1.1f;
 
     ElementType weaknessElement;
 
@@ -66,7 +67,8 @@ public abstract class Monster : Unit
         spellParticleLocalPosition;
 
     Queue<IEnumerator> queueElementReceive = new Queue<IEnumerator>(4);
-    bool queueElementIsRunning = false;
+    bool queueElementIsRunning = false,
+        nowBurning = false;
 
     protected bool isBurn = false,
         isLowAttackDamage = false,
@@ -79,46 +81,6 @@ public abstract class Monster : Unit
         stunTurn = 0;
 
     protected Material material;
-
-    int BurnTurn
-    {
-        get { return burnTurn; }
-        set 
-        {
-            burnTurn = value;
-            isBurn = burnTurn > 0;
-        }
-    }
-
-    int LowAttackDamageTurn
-    {
-        get { return lowAttackDamageTurn; }
-        set 
-        {
-            lowAttackDamageTurn = value;
-            isLowAttackDamage = lowAttackDamageTurn > 0;
-        }
-    }
-
-    int MoreReceiveDamageTurn
-    {
-        get { return moreReceiveDamageTurn; }
-        set 
-        {
-            moreReceiveDamageTurn = value;
-            isMoreReceiveDamage = moreReceiveDamageTurn > 0;
-        }
-    }
-
-    int StunTurn
-    {
-        get { return stunTurn; }
-        set 
-        {
-            stunTurn = value;
-            isStun = stunTurn > 0;
-        }
-    }
     #endregion
 
     #region Properties
@@ -154,6 +116,51 @@ public abstract class Monster : Unit
     public bool QueueElementIsRunning
     {
         get { return queueElementIsRunning; }
+    }
+
+    public bool NowBurning
+    {
+        get { return nowBurning; }
+    }
+
+    int BurnTurn
+    {
+        get { return burnTurn; }
+        set
+        {
+            burnTurn = value;
+            isBurn = burnTurn > 0;
+        }
+    }
+
+    int LowAttackDamageTurn
+    {
+        get { return lowAttackDamageTurn; }
+        set
+        {
+            lowAttackDamageTurn = value;
+            isLowAttackDamage = lowAttackDamageTurn > 0;
+        }
+    }
+
+    int MoreReceiveDamageTurn
+    {
+        get { return moreReceiveDamageTurn; }
+        set
+        {
+            moreReceiveDamageTurn = value;
+            isMoreReceiveDamage = moreReceiveDamageTurn > 0;
+        }
+    }
+
+    int StunTurn
+    {
+        get { return stunTurn; }
+        set
+        {
+            stunTurn = value;
+            isStun = stunTurn > 0;
+        }
     }
     #endregion
 
@@ -193,7 +200,13 @@ public abstract class Monster : Unit
         if (!isImmortal)
         {
             if (isMoreReceiveDamage)
+            {
+                print("Damage Before : " + dmg);
                 dmg = Mathf.RoundToInt(dmg * 1.2f);
+                print("Damage After : " + dmg);
+            }
+            else
+                print("Damage : " + dmg);
             UIController.ShowHpPopUp(dmg, thisTransform.position, true);
             Hp -= dmg;
         }
@@ -207,9 +220,11 @@ public abstract class Monster : Unit
 
     public void StartState()
     {
-        BurnTurn--;
         MoreReceiveDamageTurn--;
-        MonsterBehaviour();
+        if (!isStun)
+            MonsterBehaviour();
+        else
+            EndTurn();
     }
 
     protected virtual void EndTurn()
@@ -224,13 +239,21 @@ public abstract class Monster : Unit
 
     public void SendDamageToCharacter(int dmg)
     {
-        SendDamageToCharacter(dmg, 0.9f, 1.1f);
+        SendDamageToCharacter(dmg, damageMinimumMultiply, damageMaximumMultiply);
     }
 
     public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
     {
+        if(isLowAttackDamage)
+        {
+            print("Damage Send Before Calculate LowAttackDamage : " + dmg);
+            print("Damage Send After Calculate LowAttackDamage : " + (dmg * (isLowAttackDamage ? 0.8f : 1f)));
+        }
+        else
+            print("Normal Send Damage : " + dmg);
         CharacterController.ReceiveDamage(
-            OftenMethod.ProbabilityDistribution(dmg, minimumMultiply, maximumMultiply, 3));
+            OftenMethod.ProbabilityDistribution(dmg * (isLowAttackDamage ? 0.8f : 1f), 
+            minimumMultiply, maximumMultiply, 3));
     }
 
     protected virtual void MonsterBehaviour()
@@ -241,10 +264,10 @@ public abstract class Monster : Unit
     protected void NormalAttack()
     {
         thisAnimation.CrossFade("Attack");
-        StartCoroutine(WaitAttackAnimationFinishToEndTurn(thisAnimation["Attack"].length));
+        StartCoroutine(RunWaitTimeToEndTurn(thisAnimation["Attack"].length));
     }
 
-    IEnumerator WaitAttackAnimationFinishToEndTurn(float timeToWait)
+    IEnumerator RunWaitTimeToEndTurn(float timeToWait)
     {
         yield return new WaitForSeconds(timeToWait);
         EndTurn();
@@ -313,21 +336,24 @@ public abstract class Monster : Unit
         queueElementIsRunning = true;
         while(queueElementReceive.Count > 0)
             yield return StartCoroutine(queueElementReceive.Dequeue());
-
         queueElementIsRunning = false;
+        if (isBurn)
+            StartCoroutine(BurnReceiveBehaviour());
     }
 
     IEnumerator FireReceiveBehaviour()
     {
+        int damage = elementDamageBase * 5 * (weaknessElement == ElementType.Fire ? 2 : 1);
         ReuseGameObject(fireParticle, Vector3.zero, true);
         yield return new WaitForSeconds(1f);
-        ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase * 5, 1f, 1.2f, 3));
-        BurnTurn = 1;
+        ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 1f, 1.2f, 3));
+        BurnTurn = 3;
     }
 
     IEnumerator WaterReceiveBehaviour()
     {
-        int damagePerReceive = elementDamageBase / 4;
+        int damagePerReceive = (elementDamageBase / 4) * 
+            (weaknessElement == ElementType.Water ? 2 : 1);
         ReuseGameObject(waterParticle, Vector3.zero, true);
         for (int i = 0; i < 4; i++)
         {
@@ -339,7 +365,8 @@ public abstract class Monster : Unit
 
     IEnumerator EarthReceiveBehaviour()
     {
-        int damagePerReceive = elementDamageBase / 14;
+        int damagePerReceive = (elementDamageBase / 14) * 
+            (weaknessElement == ElementType.Earth ? 2 : 1);
         ReuseGameObject(earthParticle, Vector3.zero, true);
         yield return new WaitForSeconds(1f);
         for (int i = 0; i < 14; i++)
@@ -352,10 +379,22 @@ public abstract class Monster : Unit
 
     IEnumerator WoodReceiveBehaviour()
     {
+        int damge = elementDamageBase * (weaknessElement == ElementType.Wood ? 2 : 1);
         ReuseGameObject(woodParticle, Vector3.zero, true);
         yield return new WaitForSeconds(2f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase, 0.95f, 1.05f, 3));
         StunTurn = 1;
+    }
+
+    IEnumerator BurnReceiveBehaviour()
+    {
+        nowBurning = true;
+        //Burn Effect Show
+        print("Burn Effect");
+        yield return new WaitForSeconds(1f);
+        ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase / 10, 0.9f, 1.1f, 3));
+        BurnTurn--;
+        nowBurning = false;
     }
 
     IEnumerator AlphaToDestroy()

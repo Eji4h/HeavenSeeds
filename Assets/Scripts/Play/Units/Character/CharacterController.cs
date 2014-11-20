@@ -466,24 +466,23 @@ public class CharacterController : Unit
             thisAnimation.Play(actionStr);
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
-            MonsterShowParticleReceiveDamage();
+            if(iActionBehaviour is AttackBehaviour)
+                monster.ShowParticleReceiveDamage(chaActionState);
             yield return new WaitForSeconds(timeAfterMonsterListShowParticleReceiveDamage);
 
             iActionBehaviour.Action();
 
             while (thisAnimation.isPlaying)
                 yield return null;
-
             thisAnimation.Play(idleStr);
+
             while (Monster.QueueElementIsRunning)
+                yield return null;
+
+            while (Monster.NowBurning)
                 yield return null;
         }
         turnController.CharacterActionEnd();
-    }
-
-    void MonsterShowParticleReceiveDamage()
-    {
-        monster.ShowParticleReceiveDamage(chaActionState);
     }
 
     public void SetToFall(int turnFall)
