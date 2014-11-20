@@ -10,6 +10,13 @@ public class TurnController : MonoBehaviour
     int incomeCost;
     #endregion
 
+    #region Properties
+    public bool PlayerTurn
+    {
+        get { return playerTurn; }
+    }
+    #endregion
+
     // Use this for initialization
     void Start()
     {

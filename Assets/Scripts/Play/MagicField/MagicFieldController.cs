@@ -175,12 +175,13 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     public void ChangeMgFieldState(bool toWaitingCommand)
     {
-        MgFieldState = toWaitingCommand ? 
-            MagicFieldState.WaitingCommand : MagicFieldState.WaitingMonsterTurn;
         if (toWaitingCommand)
             MgFieldState = MagicFieldState.WaitingCommand;
         else
+        {
+            MgFieldState = MagicFieldState.WaitingMonsterTurn;
             RotateMagicCircle(magicCircleOutIndexChangePerMove, magicCircleInIndexChangePerMove);
+        }
         UIController.EndTurnButton.Enabled = toWaitingCommand;
     }
 
@@ -352,6 +353,10 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         UIController.EndTurnButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
+        if (SceneController.TurnController.PlayerTurn)
+            MgFieldState = MagicFieldState.WaitingCommand;
+        else
+            MgFieldState = MagicFieldState.WaitingMonsterTurn;
     }
     #endregion
 
