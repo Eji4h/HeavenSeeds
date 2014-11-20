@@ -95,7 +95,7 @@ public class CharacterController : Unit
         set
         {
             CharacterController.barrierHp = value * randomNumSecurity;
-            barrierGameObject.SetActive(barrierTurn-- > 0 & BarrierHp > 0);
+            barrierGameObject.SetActive(barrierTurn-- > 0 && BarrierHp > 0);
         }
     }
 
@@ -192,7 +192,7 @@ public class CharacterController : Unit
 
     public static void ReceiveDamage(int dmg)
     {
-        if(BarrierHp > 0)
+        if (barrierGameObject.activeInHierarchy)
         {
             int blockDmg = Mathf.RoundToInt(dmg * BlockPercentPerTimeDefence);
             if (BarrierHp > blockDmg)
@@ -210,13 +210,10 @@ public class CharacterController : Unit
             UIController.ShowHpPopUp(dmg, swordCharacterController.thisTransform.position, true);
             listCharacterController.ForEach(characterController =>
                 {
-                    if (!characterController.AtkIsPlay)
-                    {
-                        characterController.thisAnimation.Stop();
-                        characterController.thisAnimation.Play(characterController.hurtStr);
-                        characterController.thisAnimation.CrossFadeQueued(characterController.IsFall ?
-                            characterController.fallStr : characterController.idleStr);
-                    }
+                    characterController.thisAnimation.Stop();
+                    characterController.thisAnimation.Play(characterController.hurtStr);
+                    characterController.thisAnimation.CrossFadeQueued(characterController.IsFall ?
+                        characterController.fallStr : characterController.idleStr);
                 });
         }
     }
@@ -275,7 +272,6 @@ public class CharacterController : Unit
     #region Variable
     CharacterStatus characterStatus;
     GameObject weaponGameObject;
-    bool atkIsPlay = false;
     CharacterActionState chaActionState;
     string actionStr,
         idleStr,
@@ -295,11 +291,6 @@ public class CharacterController : Unit
     #endregion
 
     #region Properties
-    public bool AtkIsPlay
-    {
-        get { return atkIsPlay; }
-    }
-
     public bool IsFall
     {
         get { return isFall; }
@@ -472,7 +463,6 @@ public class CharacterController : Unit
     {
         if (!IsFall)
         {
-            atkIsPlay = true;
             thisAnimation.Play(actionStr);
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
@@ -480,7 +470,6 @@ public class CharacterController : Unit
             yield return new WaitForSeconds(timeAfterMonsterListShowParticleReceiveDamage);
 
             iActionBehaviour.Action();
-            atkIsPlay = false;
 
             while (thisAnimation.isPlaying)
                 yield return null;
