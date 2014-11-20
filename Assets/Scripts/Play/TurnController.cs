@@ -13,7 +13,7 @@ public class TurnController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        incomeCost = PlayerPrefs.GetInt("incomeCost", 10);
+        incomeCost = PlayerPrefs.GetInt("incomeCost", 13);
         TurnChange();
     }
 
@@ -22,7 +22,7 @@ public class TurnController : MonoBehaviour
         if (CharacterController.Cost < CharacterController.LowestCost)
             TurnChange();
         else
-            SceneController.MagicFieldController.ChangeStateToWaitingCommand();
+            SceneController.MagicFieldController.ChangeMgFieldState(true);
     }
 
     public void TurnChange()
@@ -30,10 +30,14 @@ public class TurnController : MonoBehaviour
         if (playerTurn)
         {
             CharacterController.Cost += incomeCost;
-            SceneController.MagicFieldController.ChangeStateToWaitingCommand();
+            CharacterController.TurnEffectDecrease();
+            SceneController.MagicFieldController.ChangeMgFieldState(true);
         }
         else
+        {
             SceneController.CurrentMonster.StartState();
+            SceneController.MagicFieldController.ChangeMgFieldState(false);
+        }
         UIController.EndTurnButton.Enabled = playerTurn;
         playerTurn = !playerTurn;
     }

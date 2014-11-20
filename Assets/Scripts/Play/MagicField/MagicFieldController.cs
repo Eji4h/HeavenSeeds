@@ -15,7 +15,7 @@ public enum CharacterActionState
 public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 {
     #region EnumType
-    public enum MagicFieldState
+    enum MagicFieldState
     {
         WaitingCommand,
         WaitingRotation,
@@ -60,7 +60,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     #endregion
 
     #region Properties
-    public MagicFieldState MgFieldState
+    MagicFieldState MgFieldState
     {
         get { return mgFieldState; }
         set 
@@ -158,8 +158,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
         magicCircleOut.SetMagicPoint(magicPointsOut);
         magicCircleIn.SetMagicPoint(magicPointsIn);
-
-        MgFieldState = MagicFieldState.WaitingCommand;
     }
 
     void SetMagicPointsUpstairs()
@@ -175,18 +173,25 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             magicPoint.collider2D.enabled = true);
     }
 
-    public void ChangeStateToWaitingCommand()
+    public void ChangeMgFieldState(bool toWaitingCommand)
     {
-        MgFieldState = MagicFieldState.WaitingCommand;
+        MgFieldState = toWaitingCommand ? 
+            MagicFieldState.WaitingCommand : MagicFieldState.WaitingMonsterTurn;
+        if (toWaitingCommand)
+            MgFieldState = MagicFieldState.WaitingCommand;
+        else
+            RotateMagicCircle(magicCircleOutIndexChangePerMove, magicCircleInIndexChangePerMove);
+        UIController.EndTurnButton.Enabled = toWaitingCommand;
     }
 
     #region Waiting Command Method
     IEnumerator WaitingCommand()
     {
+        WaitingCommandUIControllerClear();
         ResetMagicPointIsSelected();
         SetMagicPointsUpstairs();
-        CharacterTurnEffectDecrease();
-        while (mgFieldState == MagicFieldState.WaitingCommand)
+
+        for (; ; )
         {
 #if UNITY_EDITOR || UNITY_STANDALONE
             if (Input.GetMouseButton(0))
@@ -344,6 +349,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     #region Waiting Rotation Method
     IEnumerator WaitingRotation()
     {
+        UIController.EndTurnButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
     }
@@ -353,6 +359,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     IEnumerator WaitingMonsterTurn()
     {
+        UIController.EndTurnButton.Enabled = false;
         yield return null;
     }
 
@@ -365,9 +372,13 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             magicPoint.IsSelected = false);
     }
 
-    void CharacterTurnEffectDecrease()
+    void WaitingCommandUIControllerClear()
     {
-        CharacterController.TurnEffectDecrease();
+        UIController.EndTurnButton.Enabled = true;
+        UIController.FireElementBarController.ResetCount();
+        UIController.WaterElementBarController.ResetCount();
+        UIController.EarthElementBarController.ResetCount();
+        UIController.WoodElementBarController.ResetCount();
     }
 
     #region MagicPoint Collider Controller

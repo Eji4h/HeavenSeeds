@@ -14,6 +14,31 @@ public class UIController : MonoBehaviour
     static UILabel manaLabel;
 
     static EndTurnButton endTurnButton;
+
+    static ElementBarController fireElementBarController,
+        waterElementBarController,
+        earthElementBarController,
+        woodElementBarController;
+
+    public static ElementBarController FireElementBarController
+    {
+        get { return UIController.fireElementBarController; }
+    }
+
+    public static ElementBarController WaterElementBarController
+    {
+        get { return UIController.waterElementBarController; }
+    }
+
+    public static ElementBarController EarthElementBarController
+    {
+        get { return UIController.earthElementBarController; }
+    }
+
+    public static ElementBarController WoodElementBarController
+    {
+        get { return UIController.woodElementBarController; }
+    }
     #endregion
 
     #region Static Properties
@@ -23,6 +48,11 @@ public class UIController : MonoBehaviour
         monsterHpBar = GameObject.Find("MonsterHpBar").GetComponent<PayUIProgressBar>();
         manaLabel = GameObject.Find("ManaLabel").GetComponent<UILabel>();
         endTurnButton = GameObject.FindObjectOfType<EndTurnButton>();
+
+        fireElementBarController = GameObject.Find("FireElementBar").GetComponent<ElementBarController>();
+        waterElementBarController = GameObject.Find("WaterElementBar").GetComponent<ElementBarController>();
+        earthElementBarController = GameObject.Find("EarthElementBar").GetComponent<ElementBarController>();
+        woodElementBarController = GameObject.Find("WoodElementBar").GetComponent<ElementBarController>();
     }
     public static PayUIProgressBar PlayerHpBar
     {

@@ -3,13 +3,15 @@ using System.Collections;
 
 public class ElementBarController : MonoBehaviour
 {
+    #region Static Variable
+    static int numberOfSteps = 26;
+    #endregion
+
     #region Variable
     UIProgressBar progressBar;
     public ElementType element;
     float oneStepValue;
-
-    delegate void ProgressBarFullEvent();
-    ProgressBarFullEvent progressBarFullEvent;
+    int count = 0;
     #endregion
 
     #region Properties
@@ -32,11 +34,18 @@ public class ElementBarController : MonoBehaviour
     void Start()
     {
         progressBar = GetComponent<UIProgressBar>();
-        oneStepValue = 1f / progressBar.numberOfSteps;
+        oneStepValue = 1f / numberOfSteps;
     }
 
-    public void IncreaseOneStepValue()
+    public void Increase()
     {
-        Value += oneStepValue * 2f;
+        count++;
+        for (int i = 0; i < count; i++)
+            Value += oneStepValue;
+    }
+
+    public void ResetCount()
+    {
+        count = 0;
     }
 }

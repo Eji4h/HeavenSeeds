@@ -8,7 +8,11 @@ public class EndTurnButton : MonoBehaviour
     public bool Enabled
     {
         get { return uiButton.isEnabled; }
-        set { uiButton.isEnabled = value; }
+        set 
+        {
+            if(uiButton != null)
+                uiButton.isEnabled = value;
+        }
     }
 
     // Use this for initialization

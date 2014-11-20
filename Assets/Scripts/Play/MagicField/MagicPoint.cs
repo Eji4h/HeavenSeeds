@@ -10,11 +10,6 @@ public class MagicPoint : MonoBehaviour
         waterEndPercentRange,
         earthEndPercentRange,
         woodEndPercentRange;
-
-    static ElementBarController fireElementBarController,
-        waterElementBarController,
-        earthElementBarController,
-        woodElementBarController;
     #endregion
 
     #region Static Method
@@ -35,11 +30,6 @@ public class MagicPoint : MonoBehaviour
 
         woodEndPercentRange = woodEndPercentRange + minimumValue + 
             PlayerPrefs.GetFloat("WoodOrbValue", defaultSliderValue) * multiplyValue;
-
-        fireElementBarController = GameObject.Find("FireElementBar").GetComponent<ElementBarController>();
-        waterElementBarController = GameObject.Find("WaterElementBar").GetComponent<ElementBarController>();
-        earthElementBarController = GameObject.Find("EarthElementBar").GetComponent<ElementBarController>();
-        woodElementBarController = GameObject.Find("WoodElementBar").GetComponent<ElementBarController>();
     }
     #endregion
 
@@ -134,16 +124,16 @@ public class MagicPoint : MonoBehaviour
         switch (element)
         {
             case ElementType.Fire:
-                elementBarController = fireElementBarController;
+                elementBarController = UIController.FireElementBarController;
                 break;
             case ElementType.Water:
-                elementBarController = waterElementBarController;
+                elementBarController = UIController.WaterElementBarController;
                 break;
             case ElementType.Earth:
-                elementBarController = earthElementBarController;
+                elementBarController = UIController.EarthElementBarController;
                 break;
             case ElementType.Wood:
-                elementBarController = woodElementBarController;
+                elementBarController = UIController.WoodElementBarController;
                 break;
         }
 
@@ -165,7 +155,7 @@ public class MagicPoint : MonoBehaviour
     void OnFinishTweenPos()
     {
         IsSelected = false;
-        elementBarController.IncreaseOneStepValue();
+        elementBarController.Increase();
         thisTransform.parent = thisParentTransform;
         thisTransform.localPosition = localPos;
         RandomElement();

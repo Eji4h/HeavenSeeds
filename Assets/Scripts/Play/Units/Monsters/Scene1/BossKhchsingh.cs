@@ -49,6 +49,7 @@ public class BossKhchsingh : Monster
         MaxHp = 1000;
         base.Start();
 
+        material = transform.Find("Cube_001_Cube_001").renderer.material;
         SetLocalPositionReceiveDamageParticle(new Vector3(0f, 4f, 4.75f),
             new Vector3(0f, 4f, 4.75f), new Vector3(0f, 0.1f, 0f));
     }

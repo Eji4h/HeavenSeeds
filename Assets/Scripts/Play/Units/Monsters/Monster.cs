@@ -78,6 +78,8 @@ public abstract class Monster : Unit
         moreReceiveDamageTurn = 0,
         stunTurn = 0;
 
+    protected Material material;
+
     int BurnTurn
     {
         get { return burnTurn; }
@@ -358,19 +360,22 @@ public abstract class Monster : Unit
 
     IEnumerator AlphaToDestroy()
     {
-        //Material material = renderer.material;
-        //while(material.color.a > 0f)
+        //Color targetColor = new Color(material.color.r, material.color.g, material.color.b, 0f);
+
+        //while (material.color.a > 0.1f)
         //{
-        //    Color tempColor = material.color;
-        //    material.color = new Color(tempColor.r, tempColor.g,
-        //        tempColor.b, tempColor.a - 0.03f);
+        //    material.color = Color.Lerp(material.color, targetColor, Time.deltaTime);
+        //    print(material.color.a);
         //    yield return null;
         //}
-        yield return new WaitForSeconds(3f);
+
+        yield return new WaitForSeconds(1f);
+
         listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
             gameObjectTransformInParent.parent = null);
         Destroy(gameObject);
         SceneController.NextMonsterQueue();
+        SceneController.TurnController.CharacterActionEnd();
     }
 }
     #endregion

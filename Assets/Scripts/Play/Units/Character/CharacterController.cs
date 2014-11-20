@@ -184,10 +184,10 @@ public class CharacterController : Unit
         listCharacterController.Add(scrollCharacterController);
 
         barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Barrier"), 
-            Vector3.forward, Quaternion.identity) as GameObject;
+            Vector3.forward * 3.5f, Quaternion.identity) as GameObject;
         barrierGameObject.SetActive(false);
 
-        Cost = PlayerPrefs.GetInt("startCost", 30);
+        Cost = PlayerPrefs.GetInt("startCost", 15);
     }
 
     public static void ReceiveDamage(int dmg)
@@ -246,8 +246,17 @@ public class CharacterController : Unit
             BarrierHp *= Mathf.RoundToInt(1f + BarrierHpPercentIncrease);
     }
 
+    public static void ClearBuff()
+    {
+        AtkPercentIncrease = 0f;
+        BarrierHpPercentIncrease = 0f;
+        HealPercentIncrease = 0f;
+    }
+
     public static void TurnEffectDecrease()
     {
+        ClearBuff();
+
         int listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
 
         for(int i = 0; i < listCharacterControllerIsFall.Count; i++)
