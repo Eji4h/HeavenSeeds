@@ -323,6 +323,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         UIController.EndTurnButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
+        while (CharacterController.ActionIsUpdate)
+            yield return null;
         if (SceneController.TurnController.PlayerTurn)
             MgFieldState = MagicFieldState.WaitingCommand;
         else

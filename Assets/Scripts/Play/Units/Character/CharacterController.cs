@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class CharacterController : Unit
 {
     #region Static Variable
+    static bool actionIsUpdate = false;
     static int cost;
     static int swordCost,
         bowCost,
@@ -21,10 +22,15 @@ public class CharacterController : Unit
         barrierHpPercentIncrease,
         healPercentIncrease;
 
-    static GameObject barrierGameObject;
+    static GameObject barrierGameObject, 
+        healGameObject;
     #endregion
 
     #region Static Properties
+    public static bool ActionIsUpdate
+    {
+        get { return CharacterController.actionIsUpdate; }
+    }
     public static int Cost
     {
         get { return CharacterController.cost / randomNumSecurity; }
@@ -187,6 +193,9 @@ public class CharacterController : Unit
             Vector3.forward * 3.5f, Quaternion.identity) as GameObject;
         barrierGameObject.SetActive(false);
 
+        healGameObject = Instantiate(Resources.Load("Prefabs/Particle/Heal")) as GameObject;
+        healGameObject.SetActive(false);
+
         Cost = PlayerPrefs.GetInt("startCost", 15);
     }
 
@@ -222,6 +231,8 @@ public class CharacterController : Unit
     {
         SumHp += Mathf.RoundToInt(heal * (1f + HealPercentIncrease));
         UIController.ShowHpPopUp(heal, swordCharacterController.thisTransform.position, false);
+        healGameObject.SetActive(false);
+        healGameObject.SetActive(true);
     }
 
     public static void BarrierDefence(int barrierHp, float blockPercentPerTimeDefence)
@@ -456,13 +467,14 @@ public class CharacterController : Unit
 
     public void Action()
     {
-        StartCoroutine(UpdateAnimationAtk());
+        StartCoroutine(UpdateAction());
     }
 
-    IEnumerator UpdateAnimationAtk()
+    IEnumerator UpdateAction()
     {
         if (!IsFall)
         {
+            actionIsUpdate = true;
             thisAnimation.Play(actionStr);
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
@@ -481,6 +493,7 @@ public class CharacterController : Unit
 
             while (Monster.NowBurning)
                 yield return null;
+            actionIsUpdate = false;
         }
         turnController.CharacterActionEnd();
     }
