@@ -24,6 +24,8 @@ public class CharacterController : Unit
 
     static GameObject barrierGameObject, 
         healGameObject;
+    static Vector3 barrierHpPopUpPos;
+    static Color barrierHpPopUpColor = new Color(90f / 255f, 228f / 255f, 1f);
     #endregion
 
     #region Static Properties
@@ -191,6 +193,7 @@ public class CharacterController : Unit
 
         barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Barrier"), 
             Vector3.forward * 3.5f, Quaternion.identity) as GameObject;
+        barrierHpPopUpPos = barrierGameObject.transform.position + Vector3.up * 3f;
         barrierGameObject.SetActive(false);
 
         healGameObject = Instantiate(Resources.Load("Prefabs/Particle/Heal")) as GameObject;
@@ -211,6 +214,7 @@ public class CharacterController : Unit
                 blockDmg = BarrierHp;
                 BarrierHp = 0;
             }
+            UIController.ShowHpPopUp(blockDmg, barrierHpPopUpPos, barrierHpPopUpColor);
             dmg -= blockDmg;
         }
         if (dmg > 0)

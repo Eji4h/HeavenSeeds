@@ -38,9 +38,9 @@ public class HpPopUp : MonoBehaviour
         thisTweenPosition.SetEndToCurrentValue();
     }
 
-    public void PopUp(int value, Vector3 targetPos, bool isDmg)
+    public void PopUp(int value, Vector3 targetPos, Color color)
     {
-        thisLabel.color = isDmg ? Color.red : Color.green;
+        thisLabel.color = color;
         thisLabel.text = value.ToString();
 
         Vector3 targetScreenPoint = mainCamera.WorldToScreenPoint(targetPos),
@@ -57,5 +57,4 @@ public class HpPopUp : MonoBehaviour
         thisTweenPosition.PlayForward();
         thisTweenScale.PlayForward();
     }
-
 }

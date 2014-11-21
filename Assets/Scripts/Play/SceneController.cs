@@ -169,7 +169,7 @@ public class SceneController : MonoBehaviour
 
     Monster InstantiateMonster(string path)
     {
-        return Instantiate(Resources.Load<Monster>(path), Vector3.forward * 20f + Vector3.up,
+        return Instantiate(Resources.Load<Monster>(path), Vector3.forward * 20f + Vector3.up * 2f,
             Quaternion.AngleAxis(180, Vector3.up)) as Monster;
     }
 

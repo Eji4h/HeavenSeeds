@@ -88,7 +88,12 @@ public class UIController : MonoBehaviour
 
     public static void ShowHpPopUp(int value, Vector3 targetPos, bool isDmg)
     {
-        hpPopUpArray[hpPopUpCurrentIndex++].PopUp(value, targetPos, isDmg);
+        ShowHpPopUp(value, targetPos, isDmg ? Color.red : Color.green);
+    }
+
+    public static void ShowHpPopUp(int value, Vector3 targetPos, Color color)
+    {
+        hpPopUpArray[hpPopUpCurrentIndex++].PopUp(value, targetPos, color);
         hpPopUpCurrentIndex %= hpPopUpCount;
     }
 }

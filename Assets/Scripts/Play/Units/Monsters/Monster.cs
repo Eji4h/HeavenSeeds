@@ -220,21 +220,29 @@ public abstract class Monster : Unit
 
     public void StartState()
     {
-        MoreReceiveDamageTurn--;
-        if (!isStun)
-            MonsterBehaviour();
-        else
-            EndTurn();
+        if (Hp > 0)
+        {
+            MoreReceiveDamageTurn--;
+            if (!isStun)
+                MonsterBehaviour();
+            else
+                EndTurn();
+        }
     }
 
     protected virtual void EndTurn()
     {
-        thisAnimation.CrossFade("Idle");
+        if (Hp > 0)
+        {
+            thisAnimation.CrossFade("Idle");
 
-        LowAttackDamageTurn--;
-        StunTurn--;
+            if (isBurn)
+                StartCoroutine(BurnReceiveBehaviour());
+            LowAttackDamageTurn--;
+            StunTurn--;
 
-        turnController.TurnChange();
+            turnController.TurnChange();
+        }
     }
 
     public void SendDamageToCharacter(int dmg)
@@ -347,7 +355,7 @@ public abstract class Monster : Unit
         ReuseGameObject(fireParticle, Vector3.zero, true);
         yield return new WaitForSeconds(1f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 1f, 1.2f, 3));
-        BurnTurn = 3;
+        BurnTurn = 5;
     }
 
     IEnumerator WaterReceiveBehaviour()
@@ -392,7 +400,7 @@ public abstract class Monster : Unit
         //Burn Effect Show
         print("Burn Effect");
         yield return new WaitForSeconds(1f);
-        ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase / 10, 0.9f, 1.1f, 3));
+        ReceiveDamage(OftenMethod.ProbabilityDistribution(MaxHp * 0.01f, 0.5f, 1.5f, 3));
         BurnTurn--;
         nowBurning = false;
     }
