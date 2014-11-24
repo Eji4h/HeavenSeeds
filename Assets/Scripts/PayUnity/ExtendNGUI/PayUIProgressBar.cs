@@ -7,6 +7,8 @@ public class PayUIProgressBar : UIProgressBar
     #region Variable
     float maxValue,
         multiplyValue;
+
+    List<RangeOfColor> listRangeOfColor;
     #endregion
 
     #region Properties
@@ -16,6 +18,16 @@ public class PayUIProgressBar : UIProgressBar
         set 
         {
             this.value = value * multiplyValue;
+
+            if(listRangeOfColor != null)
+            {
+                listRangeOfColor.ForEach(rangeOfColor =>
+                    {
+                        if (this.value >= rangeOfColor.lowestRange &&
+                            this.value <= rangeOfColor.highestRange)
+                            mFG.color = rangeOfColor.colorThisRange;
+                    });
+            }
         }
     }
 
@@ -29,4 +41,11 @@ public class PayUIProgressBar : UIProgressBar
         }
     }
     #endregion
+
+    void Awake()
+    {
+        List<RangeOfColor> listRangeOfColor = new List<RangeOfColor>(GetComponentsInChildren<RangeOfColor>());
+        if (listRangeOfColor.Count > 0)
+            this.listRangeOfColor = listRangeOfColor;
+    }
 }
