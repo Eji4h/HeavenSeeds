@@ -27,7 +27,7 @@ public class GraphLink : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lineRenderer.SetPosition(0, new Vector3(thisTransform.position.x, thisTransform.position.y, 1f));
-        lineRenderer.SetPosition(1, new Vector3(linkTransform.position.x, linkTransform.position.y, 1f));
+        lineRenderer.SetPosition(0, new Vector3(thisTransform.position.x, thisTransform.position.y, 0.00001f));
+        lineRenderer.SetPosition(1, new Vector3(linkTransform.position.x, linkTransform.position.y, 0.00001f));
     }
 }

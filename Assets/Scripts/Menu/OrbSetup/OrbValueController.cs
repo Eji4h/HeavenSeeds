@@ -5,6 +5,7 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 public class OrbValueController : MonoBehaviour
 {
     #region Static Variable
+    static float startSliderValue = 0.5f;
     static UISlider fireSilder,
         waterSilder,
         earthSilder,
@@ -46,6 +47,150 @@ public class OrbValueController : MonoBehaviour
         PlayerPrefs.SetFloat("EarthOrbValue", earthValue);
         PlayerPrefs.SetFloat("WoodOrbValue", woodValue);
     }
+
+    public static void UpdateSlider()
+    {
+        fireSilder.value = fireValue;
+        waterSilder.value = waterValue;
+        earthSilder.value = earthValue;
+        woodSilder.value = woodValue;
+    }
+
+    public static void ResetOrbValue()
+    {
+        fireValue = startSliderValue;
+        waterValue = startSliderValue;
+        earthValue = startSliderValue;
+        woodValue = startSliderValue;
+        UpdateSlider();
+    }
+
+    static void UpdateElementValue(ref float elementValue1,
+        ref float elementValue2, ref float elementValue3,
+        ref float delta)
+    {
+        float deltaShare = 0f;
+
+        if (delta > 0f)
+        {
+            int minCount = 0;
+            bool element1IsMin = false,
+                element2IsMin = false,
+                element3IsMin = false;
+
+            for (int i = 0; i < 2; i++)
+            {
+                deltaShare = delta / (3f - minCount);
+
+                if (!element1IsMin &&
+                    elementValue1 < deltaShare)
+                {
+                    delta -= elementValue1;
+                    elementValue1 = 0f;
+                    element1IsMin = true;
+                    minCount++;
+                }
+
+                if (!element2IsMin &&
+                    elementValue2 < deltaShare)
+                {
+                    delta -= elementValue2;
+                    elementValue2 = 0f;
+                    element2IsMin = true;
+                    minCount++;
+                }
+
+                if (!element3IsMin &&
+                    elementValue3 < deltaShare)
+                {
+                    delta -= elementValue3;
+                    elementValue3 = 0f;
+                    element3IsMin = true;
+                    minCount++;
+                }
+            }
+
+            deltaShare = delta / (3f - minCount);
+
+            if (!element1IsMin)
+            {
+                delta -= deltaShare;
+                elementValue1 -= deltaShare;
+            }
+
+            if (!element2IsMin)
+            {
+                delta -= deltaShare;
+                elementValue2 -= deltaShare;
+            }
+
+            if (!element3IsMin)
+            {
+                delta -= deltaShare;
+                elementValue3 -= deltaShare;
+            }
+        }
+        else
+        {
+            delta *= -1f;
+            int maxCount = 0;
+            bool element1IsMax = false,
+                element2IsMax = false,
+                element3IsMax = false;
+
+            for (int i = 0; i < 2; i++)
+            {
+                deltaShare = delta / (3f - maxCount);
+
+                if (!element1IsMax &&
+                    elementValue1 + deltaShare > 1f)
+                {
+                    delta -= 1f - elementValue1;
+                    elementValue1 = 1f;
+                    element1IsMax = true;
+                    maxCount++;
+                }
+
+                if (!element2IsMax &&
+                    elementValue2 + deltaShare > 1f)
+                {
+                    delta -= 1f - elementValue2;
+                    elementValue2 = 1f;
+                    element2IsMax = true;
+                    maxCount++;
+                }
+
+                if (!element3IsMax &&
+                    elementValue3 + deltaShare > 1f)
+                {
+                    delta -= 1f - elementValue3;
+                    elementValue3 = 1f;
+                    element3IsMax = true;
+                    maxCount++;
+                }
+            }
+
+            deltaShare = delta / (3f - maxCount);
+
+            if (!element1IsMax)
+            {
+                delta -= deltaShare;
+                elementValue1 += deltaShare;
+            }
+
+            if (!element2IsMax)
+            {
+                delta -= deltaShare;
+                elementValue2 += deltaShare;
+            }
+
+            if (!element3IsMax)
+            {
+                delta -= deltaShare;
+                elementValue3 += deltaShare;
+            }
+        }
+    }
     #endregion
 
     #region Variable
@@ -55,38 +200,29 @@ public class OrbValueController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        float starterSliderValue = 0.5f;
         UISlider uiSlider = GetComponent<UISlider>();
-        uiSlider.value = starterSliderValue;
+        uiSlider.value = startSliderValue;
         EventDelegate.Add(uiSlider.onChange, OnValueChange);
 
         switch (elementType)
         {
             case ElementType.Fire:
                 fireSilder = uiSlider;
-                fireValue = starterSliderValue;
+                fireValue = startSliderValue;
                 break;
             case ElementType.Water:
                 waterSilder = uiSlider;
-                waterValue = starterSliderValue;
+                waterValue = startSliderValue;
                 break;
             case ElementType.Earth:
                 earthSilder = uiSlider;
-                earthValue = starterSliderValue;
+                earthValue = startSliderValue;
                 break;
             case ElementType.Wood:
                 woodSilder = uiSlider;
-                woodValue = starterSliderValue;
+                woodValue = startSliderValue;
                 break;
         }
-    }
-
-    void UpdateSlider()
-    {
-        fireSilder.value = fireValue;
-        waterSilder.value = waterValue;
-        earthSilder.value = earthValue;
-        woodSilder.value = woodValue;
     }
 
     void OnValueChange()
@@ -118,141 +254,6 @@ public class OrbValueController : MonoBehaviour
         }
 
         UpdateSlider();
-
         SetToPlayerPref();
-
-        //print("Fire : " + fireValue);
-        //print("Water : " + waterValue);
-        //print("Earth : " + earthValue);
-        //print("Wood : " + woodValue);
-        //print("Sum : " + (float)(fireValue + waterValue + earthValue + woodValue));
-        //print("Delta : " + (float)delta);
-    }
-
-    void UpdateElementValue(ref float elementValue1, 
-        ref float elementValue2, ref float elementValue3,
-        ref float delta)
-    {
-        float deltaShare = 0f;
-
-        if(delta > 0f)
-        {
-            int minCount = 0;
-            bool element1IsMin = false,
-                element2IsMin = false,
-                element3IsMin = false;
-
-            for(int i = 0; i < 2; i++)
-            {
-                deltaShare = delta / (3f - minCount);
-
-                if(!element1IsMin &&
-                    elementValue1 < deltaShare)
-                {
-                    delta -= elementValue1;
-                    elementValue1 = 0f;
-                    element1IsMin = true;
-                    minCount++;
-                }
-
-                if(!element2IsMin &&
-                    elementValue2 < deltaShare)
-                {
-                    delta -= elementValue2;
-                    elementValue2 = 0f;
-                    element2IsMin = true;
-                    minCount++;
-                }
-
-                if(!element3IsMin &&
-                    elementValue3 < deltaShare)
-                {
-                    delta -= elementValue3;
-                    elementValue3 = 0f;
-                    element3IsMin = true;
-                    minCount++;
-                }
-            }
-
-            deltaShare = delta / (3f - minCount);
-
-            if (!element1IsMin)
-            {
-                delta -= deltaShare;
-                elementValue1 -= deltaShare;
-            }
-
-            if(!element2IsMin)
-            {
-                delta -= deltaShare;
-                elementValue2 -= deltaShare;
-            }
-
-            if(!element3IsMin)
-            {
-                delta -= deltaShare;
-                elementValue3 -= deltaShare;
-            }
-        }
-        else
-        {
-            delta *= -1f;
-            int maxCount = 0;
-            bool element1IsMax = false,
-                element2IsMax = false,
-                element3IsMax = false;
-
-            for(int i = 0; i < 2; i++)
-            {
-                deltaShare = delta / (3f - maxCount);
-
-                if(!element1IsMax &&
-                    elementValue1 + deltaShare > 1f)
-                {
-                    delta -= 1f - elementValue1;
-                    elementValue1 = 1f;
-                    element1IsMax = true;
-                    maxCount++;
-                }
-
-                if(!element2IsMax &&
-                    elementValue2 + deltaShare > 1f)
-                {
-                    delta -= 1f - elementValue2;
-                    elementValue2 = 1f;
-                    element2IsMax = true;
-                    maxCount++;
-                }
-
-                if(!element3IsMax &&
-                    elementValue3 + deltaShare > 1f)
-                {
-                    delta -= 1f - elementValue3;
-                    elementValue3 = 1f;
-                    element3IsMax = true;
-                    maxCount++;
-                }
-            }
-
-            deltaShare = delta / (3f - maxCount);
-
-            if(!element1IsMax)
-            {
-                delta -= deltaShare;
-                elementValue1 += deltaShare;
-            }
-
-            if(!element2IsMax)
-            {
-                delta -= deltaShare;
-                elementValue2 += deltaShare;
-            }
-
-            if(!element3IsMax)
-            {
-                delta -= deltaShare;
-                elementValue3 += deltaShare;
-            }
-        }
     }
 }
