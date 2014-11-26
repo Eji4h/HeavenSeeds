@@ -235,6 +235,10 @@ public class CharacterController : Unit
     {
         SumHp += Mathf.RoundToInt(heal * (1f + HealPercentIncrease));
         UIController.ShowHpPopUp(heal, swordCharacterController.thisTransform.position, false);
+    }
+
+    static void ShowHealParticle()
+    {
         healGameObject.SetActive(false);
         healGameObject.SetActive(true);
     }
@@ -427,8 +431,8 @@ public class CharacterController : Unit
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 180f, 0f);
 
-                timeBeforeMonsterListShowParticleReceiveDamage = 0.1f;
-                timeAfterMonsterListShowParticleReceiveDamage = 0.65f;
+                timeBeforeMonsterListShowParticleReceiveDamage = 0.525f;
+                timeAfterMonsterListShowParticleReceiveDamage = 0.725f;
                 break;
             case CharacterActionState.BowAction:
                 holdHandTransform = transform.Find(leftHandIK);
@@ -436,8 +440,8 @@ public class CharacterController : Unit
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 0f, 0f);
 
-                timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
-                timeAfterMonsterListShowParticleReceiveDamage = 0f;
+                timeBeforeMonsterListShowParticleReceiveDamage = 1f;
+                timeAfterMonsterListShowParticleReceiveDamage = 0.25f;
                 break;
             case CharacterActionState.WandAction:
                 holdHandTransform = transform.Find(rightHandIK);
@@ -445,8 +449,8 @@ public class CharacterController : Unit
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 0f, 0f);
 
-                timeBeforeMonsterListShowParticleReceiveDamage = 0f;
-                timeAfterMonsterListShowParticleReceiveDamage = 0.75f;
+                timeBeforeMonsterListShowParticleReceiveDamage = 0.25f;
+                timeAfterMonsterListShowParticleReceiveDamage = 1f;
                 break;
             case CharacterActionState.ShieldAction:
                 holdHandTransform = transform.Find(rightHandIK);
@@ -454,8 +458,8 @@ public class CharacterController : Unit
                 weaponTransform.localPosition = Vector3.left * 0.2f;
                 weaponTransform.localRotation = Quaternion.Euler(75f, 180f, 90f);
 
-                timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
-                timeAfterMonsterListShowParticleReceiveDamage = 0f;
+                timeBeforeMonsterListShowParticleReceiveDamage = 0f;
+                timeAfterMonsterListShowParticleReceiveDamage = 1f;
                 break;
             case CharacterActionState.ScrollAction:
                 holdHandTransform = transform.Find(rightHandIK);
@@ -463,8 +467,8 @@ public class CharacterController : Unit
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(-60f, 0f, 105f);
 
-                timeBeforeMonsterListShowParticleReceiveDamage = 0.75f;
-                timeAfterMonsterListShowParticleReceiveDamage = 0f;
+                timeBeforeMonsterListShowParticleReceiveDamage = 0f;
+                timeAfterMonsterListShowParticleReceiveDamage = 1f;
                 break;
         }
     }
@@ -482,8 +486,10 @@ public class CharacterController : Unit
             thisAnimation.Play(actionStr);
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
-            if(iActionBehaviour is AttackBehaviour)
+            if (iActionBehaviour is AttackBehaviour)
                 monster.ShowParticleReceiveDamage(chaActionState);
+            else if (iActionBehaviour is HealAndBuffBehaviour)
+                ShowHealParticle();
             yield return new WaitForSeconds(timeAfterMonsterListShowParticleReceiveDamage);
 
             iActionBehaviour.Action();
