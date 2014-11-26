@@ -46,12 +46,8 @@ public class BossKhchsingh : Monster
     // Use this for initialization
     protected override void Start()
     {
-        MaxHp = 1000;
+        MaxHp = 5000;
         base.Start();
-
-        material = transform.Find("Cube_001_Cube_001").renderer.material;
-        SetLocalPositionReceiveDamageParticle(new Vector3(0f, 4f, 4.75f),
-            new Vector3(0f, 4f, 4.75f), new Vector3(0f, 0.1f, 0f));
     }
 
     protected override void MonsterBehaviour()

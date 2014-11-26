@@ -9,9 +9,5 @@ public class PayakKraiSorn : Monster
     {
         MaxHp = 1500;
         base.Start();
-
-        material = transform.Find("PayakKraiSornSD:Mesh").renderer.material;
-        SetLocalPositionReceiveDamageParticle(new Vector3(0f, 1.75f, 2.25f),
-            new Vector3(0f, 1.75f, 2.25f), new Vector3(0f, 0.1f, 0f));
     }
 }

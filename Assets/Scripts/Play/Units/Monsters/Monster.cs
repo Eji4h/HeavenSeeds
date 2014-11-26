@@ -64,7 +64,7 @@ public abstract class Monster : Unit
 
     Vector3 slashParticleLocalPosition,
         arrowHitParticleLocalPosition,
-        spellParticleLocalPosition;
+        spellParticleLocalPosition = new Vector3(0f, 0.05f, 0f);
 
     Queue<IEnumerator> queueElementReceive = new Queue<IEnumerator>(4);
     bool queueElementIsRunning = false,
@@ -79,8 +79,6 @@ public abstract class Monster : Unit
         lowAttackDamageTurn = 0,
         moreReceiveDamageTurn = 0,
         stunTurn = 0;
-
-    protected Material material;
     #endregion
 
     #region Properties
@@ -175,24 +173,14 @@ public abstract class Monster : Unit
     {
         UIController.MonsterHpBar.MaxValue = MaxHp;
         Hp = MaxHp;
-        SetGen(thisTransform.position);
+
+        Collider thisCollider = collider;
+        slashParticleLocalPosition =
+            new Vector3(0f, thisCollider.bounds.center.y, thisCollider.bounds.extents.z + 0.5f);
+        arrowHitParticleLocalPosition =
+            new Vector3(0f, thisCollider.bounds.center.y - 0.25f, thisCollider.bounds.extents.z + 0.5f);
+
         base.Start();
-    }
-
-    public void SetGen(Vector3 genPos)
-    {
-        thisTransform.position = genPos;
-        thisRigidbody.useGravity = true;
-        thisRigidbody.isKinematic = false;
-    }
-
-    protected void SetLocalPositionReceiveDamageParticle(Vector3 slashParticleLocalPosition,
-        Vector3 arrowHitParticleLocalPosition,
-        Vector3 spellParticleLocalPosition)
-    {
-        this.slashParticleLocalPosition = slashParticleLocalPosition;
-        this.arrowHitParticleLocalPosition = arrowHitParticleLocalPosition;
-        this.spellParticleLocalPosition = spellParticleLocalPosition;
     }
 
     public virtual void ReceiveDamage(int dmg)
