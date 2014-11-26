@@ -85,7 +85,7 @@ ModelImporter:
     400076: Bip001 Tail4
     400078: Bip001 TailNub
     400080: //RootNode
-    7400000: Squat
+    7400000: Idle
     9500000: //RootNode
     11100000: //RootNode
   materials:
@@ -105,7 +105,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Squat
+      name: Idle
       takeName: Take 001
       firstFrame: 0
       lastFrame: 40
@@ -245,7 +245,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .400000006
+    globalScale: .699999988
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
