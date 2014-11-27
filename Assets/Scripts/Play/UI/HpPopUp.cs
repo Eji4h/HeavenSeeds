@@ -38,7 +38,7 @@ public class HpPopUp : MonoBehaviour
         thisTweenPosition.SetEndToCurrentValue();
     }
 
-    public void PopUp(int value, Vector3 targetPos, Color color)
+    public void PopUp(int value, Vector3 targetPos, Color32 color)
     {
         thisLabel.color = color;
         thisLabel.text = value.ToString();
