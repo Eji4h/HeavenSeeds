@@ -133,6 +133,11 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 randomChaActionState = false;
         }
     }
+
+    public bool IsWaitingRotation
+    {
+        get { return MgFieldState == MagicFieldState.WaitingRotation; }
+    }
     #endregion
 
     // Use this for initialization
@@ -321,6 +326,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     IEnumerator WaitingRotation()
     {
         UIController.EndTurnButton.Enabled = false;
+        UIController.SpinButton.isEnabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
         while (CharacterController.ActionIsUpdate)
@@ -337,9 +343,9 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     IEnumerator WaitingMonsterTurn()
     {
         UIController.EndTurnButton.Enabled = false;
+        UIController.SpinButton.isEnabled = false;
         yield return null;
     }
-
     #endregion
 
     public void ResetMagicPointIsSelected()
@@ -352,6 +358,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     void WaitingCommandUIControllerClear()
     {
         UIController.EndTurnButton.Enabled = true;
+        UIController.SpinButton.isEnabled = true;
         UIController.FireElementBarController.ResetCount();
         UIController.WaterElementBarController.ResetCount();
         UIController.EarthElementBarController.ResetCount();

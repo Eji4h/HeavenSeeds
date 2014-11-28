@@ -119,6 +119,11 @@ public class MagicPoint : MonoBehaviour
             Element = ElementType.Wood;
     }
 
+    public void SetElement(ElementType element)
+    {
+        Element = element;
+    }
+
     public void UseMagicPoint()
     {
         switch (element)

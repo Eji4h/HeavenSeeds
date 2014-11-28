@@ -100,7 +100,7 @@ public class MagicCircle : MonoAndCoroutinePauseBehaviour
                 sumAngleChange = 0f,
                 angleChange = indexChange * rotateAnglePerMove,
                 angleChangeAbs = Mathf.Abs(angleChange),
-                speedRotate = angleChangeAbs * timePerMove,
+                speedRotate = angleChangeAbs / timePerMove,
                 finalZRotation = thisTransform.rotation.eulerAngles.z - angleChange;
             Vector3 directionRotate = indexChange > 0 ? Vector3.back : Vector3.forward;
 
