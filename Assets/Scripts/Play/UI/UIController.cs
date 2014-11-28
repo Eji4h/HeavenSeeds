@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     static UILabel manaLabel;
 
     static EndTurnButton endTurnButton;
+    static UIButton spinButton, pauseButton;
 
     static ElementBarController fireElementBarController,
         waterElementBarController,
@@ -49,6 +50,16 @@ public class UIController : MonoBehaviour
         get { return UIController.endTurnButton; }
     }
 
+    public static UIButton SpinButton
+    {
+        get { return UIController.spinButton; }
+    }
+
+    public static UIButton PauseButton
+    {
+        get { return UIController.pauseButton; }
+    }
+
     public static ElementBarController FireElementBarController
     {
         get { return UIController.fireElementBarController; }
@@ -79,6 +90,8 @@ public class UIController : MonoBehaviour
         manaBar.MaxValue = 99;
         manaLabel = GameObject.Find("ManaLabel").GetComponent<UILabel>();
         endTurnButton = GameObject.FindObjectOfType<EndTurnButton>();
+        spinButton = GameObject.Find("SpinButton").GetComponent<UIButton>();
+        pauseButton = GameObject.Find("PauseButton").GetComponent<UIButton>();
 
         fireElementBarController = GameObject.Find("FireElementBar").GetComponent<ElementBarController>();
         waterElementBarController = GameObject.Find("WaterElementBar").GetComponent<ElementBarController>();
