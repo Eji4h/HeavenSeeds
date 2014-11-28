@@ -1,15 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class SpinController : MonoBehaviour 
-{
+public class SpinController : MonoBehaviour {
     public float setRotX;
     public float setRotY;
     public float setRotZ;
     public float stopIn;
     public bool canStop = false;
     public bool isOvertime = false;
-    public float overTime, valClamp;
+    public float overTime,valClamp;
+
 
     void OnEnable()
     {
@@ -23,11 +23,11 @@ public class SpinController : MonoBehaviour
             if (isOvertime)
             {
                 if (setRotX != 0 && setRotX <= valClamp)
-                        setRotX += overTime * Time.deltaTime;
+                    setRotX += overTime * Time.deltaTime;
                 if (setRotY != 0 && setRotY <= valClamp)
-                        setRotY += overTime * Time.deltaTime;
+                    setRotY += overTime * Time.deltaTime;
                 if (setRotZ != 0 && setRotZ <= valClamp)
-                        setRotZ += overTime * Time.deltaTime;
+                    setRotZ += overTime * Time.deltaTime;
             }
             if (canStop)
             {

@@ -41,7 +41,7 @@ public class ElementBarController : MonoBehaviour
     {
         count++;
         for (int i = 0; i < count; i++)
-            Value += oneStepValue;
+            Value += oneStepValue * 3;
     }
 
     public void ResetCount()

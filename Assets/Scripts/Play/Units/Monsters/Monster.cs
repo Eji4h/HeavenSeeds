@@ -13,7 +13,11 @@ public abstract class Monster : Unit
         fireParticle,
         waterParticle,
         earthParticle,
-        woodParticle;
+        woodParticle, 
+        burnParticle, 
+        vortexParticle,
+        stunParticle,
+        rootParticle;
 
     static int elementDamageBase;
     #endregion
@@ -27,7 +31,11 @@ public abstract class Monster : Unit
             fireParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/newFire") as GameObject,
             waterParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Water") as GameObject,
             earthParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Ground") as GameObject,
-            woodParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LeafStrom") as GameObject;
+            woodParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LeafStrom") as GameObject, 
+            burnParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Burn") as GameObject,
+            vortexParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/WaterVotex") as GameObject, 
+            stunParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/NewStun") as GameObject,
+            rootParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Vineeee") as GameObject;
 
         slashParticle = Instantiate(slashParticlePrefab, Vector3.zero, Quaternion.AngleAxis(180f, Vector3.up)) as GameObject;
         arrowHitParticle = Instantiate(arrowHitParticlePrefab, Vector3.zero, Quaternion.identity) as GameObject;
@@ -36,6 +44,10 @@ public abstract class Monster : Unit
         waterParticle = Instantiate(waterParticlePrefab) as GameObject;
         earthParticle = Instantiate(earthParticlePrefab) as GameObject;
         woodParticle = Instantiate(woodParticlePrefab) as GameObject;
+        burnParticle = Instantiate(burnParticlePrefab) as GameObject;
+        vortexParticle = Instantiate(vortexParticlePrefab) as GameObject;
+        stunParticle = Instantiate(stunParticlePrefab) as GameObject;
+        rootParticle = Instantiate(rootParticlePrefab) as GameObject;
 
         slashParticle.SetActive(false);
         arrowHitParticle.SetActive(false);
@@ -44,6 +56,10 @@ public abstract class Monster : Unit
         waterParticle.SetActive(false);
         earthParticle.SetActive(false);
         woodParticle.SetActive(false);
+        burnParticle.SetActive(false);
+        vortexParticle.SetActive(false);
+        stunParticle.SetActive(false);
+        rootParticle.SetActive(false);
 
         elementDamageBase = (CharacterController.SwordValue +
             CharacterController.BowValue +
@@ -72,13 +88,13 @@ public abstract class Monster : Unit
 
     protected bool isBurn = false,
         isLowAttackDamage = false,
-        isMoreReceiveDamage = false,
-        isStun = false;
+        isStun = false,
+        isMoreReceiveDamage = false;
 
     int burnTurn = 0,
         lowAttackDamageTurn = 0,
-        moreReceiveDamageTurn = 0,
-        stunTurn = 0;
+        stunTurn = 0,
+        moreReceiveDamageTurn = 0;
     #endregion
 
     #region Properties
@@ -106,7 +122,7 @@ public abstract class Monster : Unit
             if (Hp <= 0)
             {
                 StopAllCoroutines();
-                StartCoroutine(AlphaToDestroy());
+                StartCoroutine(WaitingDieAnimationToDestroy());
             }
         }
     }
@@ -128,6 +144,7 @@ public abstract class Monster : Unit
         {
             burnTurn = value;
             isBurn = burnTurn > 0;
+            burnParticle.SetActive(isBurn);
         }
     }
 
@@ -138,16 +155,7 @@ public abstract class Monster : Unit
         {
             lowAttackDamageTurn = value;
             isLowAttackDamage = lowAttackDamageTurn > 0;
-        }
-    }
-
-    int MoreReceiveDamageTurn
-    {
-        get { return moreReceiveDamageTurn; }
-        set
-        {
-            moreReceiveDamageTurn = value;
-            isMoreReceiveDamage = moreReceiveDamageTurn > 0;
+            vortexParticle.SetActive(isLowAttackDamage);
         }
     }
 
@@ -158,6 +166,18 @@ public abstract class Monster : Unit
         {
             stunTurn = value;
             isStun = stunTurn > 0;
+            stunParticle.SetActive(isStun);
+        }
+    }
+
+    int MoreReceiveDamageTurn
+    {
+        get { return moreReceiveDamageTurn; }
+        set
+        {
+            moreReceiveDamageTurn = value;
+            isMoreReceiveDamage = moreReceiveDamageTurn > 0;
+            rootParticle.SetActive(isMoreReceiveDamage);
         }
     }
     #endregion
@@ -180,6 +200,22 @@ public abstract class Monster : Unit
         arrowHitParticleLocalPosition =
             new Vector3(0f, thisCollider.bounds.center.y - 0.25f, thisCollider.bounds.extents.z + 0.5f);
 
+        burnParticle.transform.parent = thisTransform;
+        burnParticle.transform.localPosition = Vector3.zero;
+        listGameObjectTransformInParent.Add(burnParticle.transform);
+
+        vortexParticle.transform.parent = thisTransform;
+        vortexParticle.transform.localPosition = Vector3.zero;
+        listGameObjectTransformInParent.Add(vortexParticle.transform);
+
+        stunParticle.transform.parent = thisTransform;
+        stunParticle.transform.localPosition = new Vector3(0f, thisCollider.bounds.max.y, thisCollider.bounds.extents.z + 0.1f);
+        listGameObjectTransformInParent.Add(stunParticle.transform);
+
+        rootParticle.transform.parent = thisTransform;
+        rootParticle.transform.localPosition = Vector3.zero;
+        listGameObjectTransformInParent.Add(rootParticle.transform);
+
         base.Start();
     }
 
@@ -187,14 +223,7 @@ public abstract class Monster : Unit
     {
         if (!isImmortal)
         {
-            if (isMoreReceiveDamage)
-            {
-                print("Damage Before : " + dmg);
-                dmg = Mathf.RoundToInt(dmg * 1.2f);
-                print("Damage After : " + dmg);
-            }
-            else
-                print("Damage : " + dmg);
+            dmg = Mathf.RoundToInt(dmg * 1.2f);
             UIController.ShowHpPopUp(dmg, thisTransform.position, true);
             Hp -= dmg;
         }
@@ -214,7 +243,7 @@ public abstract class Monster : Unit
             if (!isStun)
                 MonsterBehaviour();
             else
-                EndTurn();
+                StartCoroutine(RunWaitTimeToEndTurn(3f));
         }
     }
 
@@ -240,13 +269,6 @@ public abstract class Monster : Unit
 
     public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
     {
-        if(isLowAttackDamage)
-        {
-            print("Damage Send Before Calculate LowAttackDamage : " + dmg);
-            print("Damage Send After Calculate LowAttackDamage : " + (dmg * (isLowAttackDamage ? 0.8f : 1f)));
-        }
-        else
-            print("Normal Send Damage : " + dmg);
         CharacterController.ReceiveDamage(
             OftenMethod.ProbabilityDistribution(dmg * (isLowAttackDamage ? 0.8f : 1f), 
             minimumMultiply, maximumMultiply, 3));
@@ -370,7 +392,7 @@ public abstract class Monster : Unit
             ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.9f, 1.1f, 3));
             yield return new WaitForSeconds(0.25f);
         }
-        MoreReceiveDamageTurn = 1;
+        StunTurn = 1;
     }
 
     IEnumerator WoodReceiveBehaviour()
@@ -379,21 +401,19 @@ public abstract class Monster : Unit
         ReuseGameObject(woodParticle, Vector3.zero, true);
         yield return new WaitForSeconds(2f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase, 0.95f, 1.05f, 3));
-        StunTurn = 1;
+        MoreReceiveDamageTurn = 1;
     }
 
     IEnumerator BurnReceiveBehaviour()
     {
         nowBurning = true;
-        //Burn Effect Show
-        print("Burn Effect");
         yield return new WaitForSeconds(1f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(MaxHp * 0.01f, 0.5f, 1.5f, 3));
         BurnTurn--;
         nowBurning = false;
     }
 
-    IEnumerator AlphaToDestroy()
+    IEnumerator WaitingDieAnimationToDestroy()
     {
         //Color targetColor = new Color(material.color.r, material.color.g, material.color.b, 0f);
 
@@ -407,7 +427,10 @@ public abstract class Monster : Unit
         yield return new WaitForSeconds(1f);
 
         listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
-            gameObjectTransformInParent.parent = null);
+            {
+                gameObjectTransformInParent.parent = null;
+                gameObjectTransformInParent.gameObject.SetActive(false);
+            });
         Destroy(gameObject);
         SceneController.NextMonsterQueue();
         SceneController.TurnController.CharacterActionEnd();
