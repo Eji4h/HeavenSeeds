@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class UIController : MonoBehaviour
@@ -9,7 +10,8 @@ public class UIController : MonoBehaviour
         hpPopUpCount = 20;
 
     static PayUIProgressBar playerHpBar,
-        monsterHpBar;
+        monsterHpBar, 
+        manaBar;
 
     static UILabel manaLabel;
 
@@ -19,6 +21,33 @@ public class UIController : MonoBehaviour
         waterElementBarController,
         earthElementBarController,
         woodElementBarController;
+    #endregion
+
+    #region Static Properties
+    public static int ManaCost
+    {
+        get { return Convert.ToInt32(manaLabel.text); }
+        set 
+        {
+            manaBar.Value = value;
+            manaLabel.text = value.ToString();
+        }
+    }
+
+    public static PayUIProgressBar PlayerHpBar
+    {
+        get { return UIController.playerHpBar; }
+    }
+
+    public static PayUIProgressBar MonsterHpBar
+    {
+        get { return UIController.monsterHpBar; }
+    }
+
+    public static EndTurnButton EndTurnButton
+    {
+        get { return UIController.endTurnButton; }
+    }
 
     public static ElementBarController FireElementBarController
     {
@@ -41,11 +70,13 @@ public class UIController : MonoBehaviour
     }
     #endregion
 
-    #region Static Properties
+    #region Static Method
     public static void SetInit()
     {
         playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<PayUIProgressBar>();
         monsterHpBar = GameObject.Find("MonsterHpBar").GetComponent<PayUIProgressBar>();
+        manaBar = GameObject.Find("ManaBar").GetComponent<PayUIProgressBar>();
+        manaBar.MaxValue = 99;
         manaLabel = GameObject.Find("ManaLabel").GetComponent<UILabel>();
         endTurnButton = GameObject.FindObjectOfType<EndTurnButton>();
 
@@ -54,23 +85,16 @@ public class UIController : MonoBehaviour
         earthElementBarController = GameObject.Find("EarthElementBar").GetComponent<ElementBarController>();
         woodElementBarController = GameObject.Find("WoodElementBar").GetComponent<ElementBarController>();
     }
-    public static PayUIProgressBar PlayerHpBar
+
+    public static void ShowHpPopUp(int value, Vector3 targetPos, bool isDmg)
     {
-        get { return UIController.playerHpBar; }
+        ShowHpPopUp(value, targetPos, isDmg ? new Color32(235, 72, 7, 255) : new Color32(228, 213, 116, 255));
     }
 
-    public static PayUIProgressBar MonsterHpBar
+    public static void ShowHpPopUp(int value, Vector3 targetPos, Color32 color)
     {
-        get { return UIController.monsterHpBar; }
-    }
-    public static UILabel ManaLabel
-    {
-        get { return UIController.manaLabel; }
-    }
-
-    public static EndTurnButton EndTurnButton
-    {
-        get { return UIController.endTurnButton; }
+        hpPopUpArray[hpPopUpCurrentIndex++].PopUp(value, targetPos, color);
+        hpPopUpCurrentIndex %= hpPopUpCount;
     }
     #endregion
 
@@ -84,16 +108,5 @@ public class UIController : MonoBehaviour
 
         for (int i = 0; i < hpPopUpCount; i++)
             hpPopUpArray[i] = Instantiate(hpPopUpPrefab) as HpPopUp;
-    }
-
-    public static void ShowHpPopUp(int value, Vector3 targetPos, bool isDmg)
-    {
-        ShowHpPopUp(value, targetPos, isDmg ? new Color32(235, 72, 7, 255) : new Color32(228, 213, 116, 255));
-    }
-
-    public static void ShowHpPopUp(int value, Vector3 targetPos, Color32 color)
-    {
-        hpPopUpArray[hpPopUpCurrentIndex++].PopUp(value, targetPos, color);
-        hpPopUpCurrentIndex %= hpPopUpCount;
     }
 }

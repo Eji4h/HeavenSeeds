@@ -25,7 +25,7 @@ public class CharacterController : Unit
     static GameObject barrierGameObject, 
         healGameObject;
     static Vector3 barrierHpPopUpPos;
-    static Color barrierHpPopUpColor = new Color(90f / 255f, 228f / 255f, 1f);
+    static Color32 barrierHpPopUpColor = new Color32(90, 228, 255, 255);
     #endregion
 
     #region Static Properties
@@ -41,7 +41,7 @@ public class CharacterController : Unit
             if (value > 99)
                 value = 99;
             CharacterController.cost = value * randomNumSecurity;
-            UIController.ManaLabel.text = Cost.ToString();
+            UIController.ManaCost = Cost;
         }
     }
     public static int SwordCost
