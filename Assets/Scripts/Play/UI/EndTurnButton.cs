@@ -26,4 +26,10 @@ public class EndTurnButton : MonoBehaviour
     {
         SceneController.TurnController.TurnChange();
     }
+
+    public void ResetDefaultColor()
+    {
+        if (uiButton != null)
+            uiButton.ResetDefaultColor();
+    }
 }

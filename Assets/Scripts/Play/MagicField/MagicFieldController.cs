@@ -358,7 +358,9 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     void WaitingCommandUIControllerClear()
     {
         UIController.EndTurnButton.Enabled = true;
+        UIController.EndTurnButton.ResetDefaultColor();
         UIController.SpinButton.isEnabled = true;
+        UIController.SpinButton.ResetDefaultColor();
         UIController.FireElementBarController.ResetCount();
         UIController.WaterElementBarController.ResetCount();
         UIController.EarthElementBarController.ResetCount();

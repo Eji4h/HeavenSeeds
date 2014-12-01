@@ -299,8 +299,6 @@ public class CharacterController : Unit
 
     IActionBehaviour iActionBehaviour;
 
-	int useCost;
-
     //Action Time
     float timeBeforeMonsterListShowParticleReceiveDamage,
         timeAfterMonsterListShowParticleReceiveDamage;

@@ -7,13 +7,19 @@ public class TurnController : MonoBehaviour
 {
     #region Variable
     bool playerTurn = false;
-    int incomeCost;
+    int turnCount = 0,
+        incomeCost;
     #endregion
 
     #region Properties
     public bool PlayerTurn
     {
         get { return playerTurn; }
+    }
+
+    public int TurnCount
+    {
+        get { return turnCount; }
     }
     #endregion
 
@@ -44,5 +50,6 @@ public class TurnController : MonoBehaviour
             SceneController.CurrentMonster.StartState();
 
         SceneController.MagicFieldController.ChangeMgFieldState(playerTurn);
+        turnCount++;
     }
 }
