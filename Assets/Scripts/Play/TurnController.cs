@@ -45,6 +45,11 @@ public class TurnController : MonoBehaviour
         {
             CharacterController.Cost += incomeCost;
             CharacterController.TurnEffectDecrease();
+            if(CharacterController.IsStun)
+            {
+                CharacterController.StunTurn--;
+                playerTurn = false;
+            }
         }
         else
             SceneController.CurrentMonster.StartState();

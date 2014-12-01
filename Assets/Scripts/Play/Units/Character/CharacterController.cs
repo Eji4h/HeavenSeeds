@@ -26,6 +26,9 @@ public class CharacterController : Unit
         healGameObject;
     static Vector3 barrierHpPopUpPos;
     static Color32 barrierHpPopUpColor = new Color32(90, 228, 255, 255);
+
+    static bool isStun = false;
+    static int stunTurn;
     #endregion
 
     #region Static Properties
@@ -163,6 +166,21 @@ public class CharacterController : Unit
     public static int ScrollValue
     {
         get { return scrollCharacterController.characterStatus.ScrollValue; }
+    }
+
+    public static bool IsStun
+    {
+        get { return CharacterController.isStun; }
+    }
+
+    public static int StunTurn
+    {
+        get { return CharacterController.stunTurn; }
+        set
+        {
+            CharacterController.stunTurn = value;
+            isStun = stunTurn > 0;
+        }
     }
     #endregion
 

@@ -307,27 +307,7 @@ public abstract class Monster : Unit
         }
     }
 
-    public void RandomCharacterFall(int turnFall)
-    {
-        if (listCharacterControllerIsFall.Count < 5)
-        {
-            turnFall++;
-            CharacterController selectedCharacterController;
-            List<CharacterController> listUnFallCharacterController = 
-                new List<CharacterController>(5);
-
-            listCharacterController.ForEach(characterController =>
-                listUnFallCharacterController.Add(characterController));
-
-            listCharacterControllerIsFall.ForEach(characterController =>
-                listUnFallCharacterController.Remove(characterController));
-            selectedCharacterController = listUnFallCharacterController
-                [Random.Range(0, listUnFallCharacterController.Count)];
-
-            selectedCharacterController.SetToFall(turnFall);
-        }
-    }
-
+    #region ReceiveAttackQueue
     public void ReceiveAttackQueue(ElementType element)
     {
         switch (element)
@@ -412,6 +392,7 @@ public abstract class Monster : Unit
         BurnTurn--;
         nowBurning = false;
     }
+    #endregion
 
     IEnumerator WaitingDieAnimationToDestroy()
     {
@@ -424,7 +405,56 @@ public abstract class Monster : Unit
             });
         Destroy(gameObject);
         SceneController.NextMonsterQueue();
-        SceneController.TurnController.CharacterActionEnd();
+        turnController.CharacterActionEnd();
     }
-}
+
+    #region Debuff Character
+    public void RotateMagicCircle(int indexMagicCircleOutChange, int indexMagicCircleInChange)
+    {
+        magicFieldController.RotateMagicCircle(indexMagicCircleOutChange, indexMagicCircleInChange);
+    }
+
+    public void RandomRotateMagicCircle()
+    {
+        magicFieldController.RotateMagicCircle(RandomNumberSpin(5, 10), RandomNumberSpin(5, 10));
+    }
+
+    int RandomNumberSpin(int minNum, int maxNum)
+    {
+        return Random.Range(0, 2) == 0 ?
+            Random.Range(-maxNum, -minNum) : Random.Range(minNum, maxNum);
+    }
+
+    public void CharacterStun(int stunTurn)
+    {
+        CharacterController.StunTurn = stunTurn;
+    }
+
+    public void RandomCharacterFall(int turnFall)
+    {
+        if (listCharacterControllerIsFall.Count < 5)
+        {
+            turnFall++;
+            CharacterController selectedCharacterController;
+            List<CharacterController> listUnFallCharacterController =
+                new List<CharacterController>(5);
+
+            listCharacterController.ForEach(characterController =>
+                listUnFallCharacterController.Add(characterController));
+
+            listCharacterControllerIsFall.ForEach(characterController =>
+                listUnFallCharacterController.Remove(characterController));
+            selectedCharacterController = listUnFallCharacterController
+                [Random.Range(0, listUnFallCharacterController.Count)];
+
+            selectedCharacterController.SetToFall(turnFall);
+        }
+    }
+
+    public void MagicFieldRandomAction(int randomCount)
+    {
+        magicFieldController.RandomChaActionState(randomCount);
+    }
     #endregion
+    #endregion
+}
