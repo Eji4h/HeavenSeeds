@@ -1,31 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EndTurnButton : MonoBehaviour
+public abstract class UIButtonMonoBehaviour : MonoBehaviour
 {
     UIButton uiButton;
 
     public bool Enabled
     {
         get { return uiButton.isEnabled; }
-        set 
+        set
         {
-            if(uiButton != null)
+            if (uiButton != null)
                 uiButton.isEnabled = value;
         }
     }
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
     {
         uiButton = GetComponent<UIButton>();
-        EventDelegate.Add(uiButton.onClick, EndTurnButtonOnClick);
+        EventDelegate.Add(uiButton.onClick, OnClickBehaviour);
     }
 
-    void EndTurnButtonOnClick()
-    {
-        SceneController.TurnController.TurnChange();
-    }
+    protected abstract void OnClickBehaviour();
 
     public void ResetDefaultColor()
     {

@@ -326,7 +326,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     IEnumerator WaitingRotation()
     {
         UIController.EndTurnButton.Enabled = false;
-        UIController.SpinButton.isEnabled = false;
+        UIController.SpinButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
         while (CharacterController.ActionIsUpdate)
@@ -343,7 +343,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     IEnumerator WaitingMonsterTurn()
     {
         UIController.EndTurnButton.Enabled = false;
-        UIController.SpinButton.isEnabled = false;
+        UIController.SpinButton.Enabled = false;
         yield return null;
     }
     #endregion
@@ -359,7 +359,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     {
         UIController.EndTurnButton.Enabled = true;
         UIController.EndTurnButton.ResetDefaultColor();
-        UIController.SpinButton.isEnabled = true;
+        UIController.SpinButton.Enabled = true;
         UIController.SpinButton.ResetDefaultColor();
         UIController.FireElementBarController.ResetCount();
         UIController.WaterElementBarController.ResetCount();
