@@ -8,8 +8,10 @@ public class SpinButton : UIButtonMonoBehaviour
     #region Variable
     int randomNumSecurity;
     int spinAmount;
+    float timeMove = 1.5f;
 
     UILabel spinAmountLabel;
+    TweenRotation tweenRotation;
     #endregion
 
     #region Properties
@@ -33,6 +35,8 @@ public class SpinButton : UIButtonMonoBehaviour
         base.Start();
         randomNumSecurity = Random.Range(0, 1000);
         spinAmountLabel = GetComponentInChildren<UILabel>();
+        tweenRotation = GetComponent<TweenRotation>();
+        tweenRotation.duration = timeMove;
         //SpinAmount = PlayerPrefs.GetInt("SpinAmount", 3);
         SpinAmount = 3;
     }
@@ -41,8 +45,8 @@ public class SpinButton : UIButtonMonoBehaviour
     {
         if (SpinAmount > 0)
         {
-            SpinAmount--;
-            float timeMove = 1.5f;
+            tweenRotation.ResetToBeginning();
+            tweenRotation.PlayForward();
             StartCoroutine(RandomElement(timeMove));
             SceneController.MagicFieldController.RotateMagicCircle(
                 RandomNumberSpin(9, 11), RandomNumberSpin(9, 11), timeMove);
@@ -76,6 +80,8 @@ public class SpinButton : UIButtonMonoBehaviour
                     break;
             }
         }
+
+        SpinAmount--;
 
         if(OftenMethod.RandomPercent(30f))
         {

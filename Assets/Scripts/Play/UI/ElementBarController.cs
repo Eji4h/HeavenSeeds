@@ -23,7 +23,7 @@ public class ElementBarController : MonoBehaviour
             progressBar.value = value;
             if (progressBar.value >= 0.99f)
             {
-                Unit.Monster.ReceiveQueue(element);
+                Unit.Monster.ReceiveAttackQueue(element);
                 progressBar.value = 0f;
             }
         }

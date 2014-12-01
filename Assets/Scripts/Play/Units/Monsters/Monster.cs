@@ -328,7 +328,7 @@ public abstract class Monster : Unit
         }
     }
 
-    public void ReceiveQueue(ElementType element)
+    public void ReceiveAttackQueue(ElementType element)
     {
         switch (element)
         {

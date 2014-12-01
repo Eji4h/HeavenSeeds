@@ -50,6 +50,7 @@ public class TurnController : MonoBehaviour
             SceneController.CurrentMonster.StartState();
 
         SceneController.MagicFieldController.ChangeMgFieldState(playerTurn);
+        UIController.EndTurnButton.TurnChange(playerTurn);
         turnCount++;
     }
 }
