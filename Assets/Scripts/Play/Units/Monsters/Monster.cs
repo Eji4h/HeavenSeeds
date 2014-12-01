@@ -219,22 +219,6 @@ public abstract class Monster : Unit
         base.Start();
     }
 
-    public virtual void ReceiveDamage(int dmg)
-    {
-        if (!isImmortal)
-        {
-            dmg = Mathf.RoundToInt(dmg * 1.2f);
-            UIController.ShowHpPopUp(dmg, thisTransform.position, true);
-            Hp -= dmg;
-        }
-    }
-
-    public virtual void ReceiveHeal(int heal)
-    {
-        UIController.ShowHpPopUp(heal, thisTransform.position, false);
-        Hp += heal;
-    }
-
     public void StartState()
     {
         if (Hp > 0)
@@ -262,33 +246,20 @@ public abstract class Monster : Unit
         }
     }
 
-    public void SendDamageToCharacter(int dmg)
+    public virtual void ReceiveDamage(int dmg)
     {
-        SendDamageToCharacter(dmg, damageMinimumMultiply, damageMaximumMultiply);
+        if (!isImmortal)
+        {
+            dmg = Mathf.RoundToInt(dmg * 1.2f);
+            UIController.ShowHpPopUp(dmg, thisTransform.position, true);
+            Hp -= dmg;
+        }
     }
 
-    public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
+    public virtual void ReceiveHeal(int heal)
     {
-        CharacterController.ReceiveDamage(
-            OftenMethod.ProbabilityDistribution(dmg * (isLowAttackDamage ? 0.8f : 1f), 
-            minimumMultiply, maximumMultiply, 3));
-    }
-
-    protected virtual void MonsterBehaviour()
-    {
-        NormalAttack();
-    }
-
-    protected void NormalAttack()
-    {
-        thisAnimation.CrossFade("Attack");
-        StartCoroutine(RunWaitTimeToEndTurn(thisAnimation["Attack"].length));
-    }
-
-    IEnumerator RunWaitTimeToEndTurn(float timeToWait)
-    {
-        yield return new WaitForSeconds(timeToWait);
-        EndTurn();
+        UIController.ShowHpPopUp(heal, thisTransform.position, false);
+        Hp += heal;
     }
 
     public virtual void ShowParticleReceiveDamage(CharacterActionState chaActionState)
@@ -306,6 +277,31 @@ public abstract class Monster : Unit
                 break;
         }
     }
+
+    public void SendDamageToCharacter(int dmg)
+    {
+        SendDamageToCharacter(dmg, damageMinimumMultiply, damageMaximumMultiply);
+    }
+
+    public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
+    {
+        CharacterController.ReceiveDamage(
+            OftenMethod.ProbabilityDistribution(dmg * (isLowAttackDamage ? 0.8f : 1f), 
+            minimumMultiply, maximumMultiply, 3));
+    }
+
+    #region MonsterBehaviour
+    protected virtual void MonsterBehaviour()
+    {
+        NormalAttack();
+    }
+
+    protected void NormalAttack()
+    {
+        thisAnimation.CrossFade("Attack");
+        StartCoroutine(RunWaitTimeToEndTurn(thisAnimation["Attack"].length));
+    }
+    #endregion
 
     #region ReceiveAttackQueue
     public void ReceiveAttackQueue(ElementType element)
@@ -393,6 +389,12 @@ public abstract class Monster : Unit
         nowBurning = false;
     }
     #endregion
+
+    IEnumerator RunWaitTimeToEndTurn(float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        EndTurn();
+    }
 
     IEnumerator WaitingDieAnimationToDestroy()
     {
