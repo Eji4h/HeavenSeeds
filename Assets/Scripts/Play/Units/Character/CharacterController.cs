@@ -245,7 +245,7 @@ public class CharacterController : Unit
 
     public static void BarrierDefence(int barrierHp, float blockPercentPerTimeDefence)
     {
-        barrierTurn = 3;
+        barrierTurn = 10;
         BarrierHp = Mathf.RoundToInt(barrierHp * (1f + BarrierHpPercentIncrease));
         BlockPercentPerTimeDefence = blockPercentPerTimeDefence;
     }
@@ -348,7 +348,7 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.SwordValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
-                    swordCost = 7 + characterStatus.SwordCostChange;
+                    swordCost = 8 + characterStatus.SwordCostChange;
                     lowestCost = swordCost;
                 }
                 break;
@@ -357,7 +357,7 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.BowValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
-                    bowCost = 8 + characterStatus.BowCostChange;
+                    bowCost = 9 + characterStatus.BowCostChange;
                 }
                 break;
             case CharacterActionState.WandAction:
@@ -365,7 +365,7 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.WandValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
-                    wandCost = 9 + characterStatus.WandCostChange;
+                    wandCost = 7 + characterStatus.WandCostChange;
                 }
                 break;
             case CharacterActionState.ShieldAction:
@@ -382,7 +382,7 @@ public class CharacterController : Unit
                     iActionBehaviour = new HealAndBuffBehaviour(characterStatus.ScrollValue,
                         healAndBuffWeapon.atkPercentIncrease, healAndBuffWeapon.barrierHpPercentIncrease,
                         healAndBuffWeapon.healPercentIncrease);
-                    scrollCost = 13 + characterStatus.ScrollCostChange;
+                    scrollCost = 5 + characterStatus.ScrollCostChange;
                 }
                 break;
         }

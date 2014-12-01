@@ -415,15 +415,6 @@ public abstract class Monster : Unit
 
     IEnumerator WaitingDieAnimationToDestroy()
     {
-        //Color targetColor = new Color(material.color.r, material.color.g, material.color.b, 0f);
-
-        //while (material.color.a > 0.1f)
-        //{
-        //    material.color = Color.Lerp(material.color, targetColor, Time.deltaTime);
-        //    print(material.color.a);
-        //    yield return null;
-        //}
-
         yield return new WaitForSeconds(1f);
 
         listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
