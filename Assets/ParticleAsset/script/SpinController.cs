@@ -9,10 +9,11 @@ public class SpinController : MonoBehaviour {
     public bool canStop = false;
     public bool isOvertime = false;
     public float overTime,valClamp;
-
+    private float stopinSet;
 
     void OnEnable()
     {
+        stopinSet = stopIn;
         StartCoroutine(Spin());
     }
 
@@ -31,8 +32,8 @@ public class SpinController : MonoBehaviour {
             }
             if (canStop)
             {
-                stopIn -= Time.deltaTime;
-                if (stopIn >= 0)
+                stopinSet -= Time.deltaTime;
+                if (stopinSet >= 0)
                     transform.Rotate(setRotX * Time.deltaTime, setRotY * Time.deltaTime, setRotZ * Time.deltaTime);
             }
             else
