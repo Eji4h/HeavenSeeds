@@ -83,6 +83,12 @@ public class MagicPoint : MonoBehaviour
             }
         }
     }
+
+    public Color Color
+    {
+        get { return uiSprite.color; }
+        set { uiSprite.color = value; }
+    }
     #endregion
 
     void Awake()

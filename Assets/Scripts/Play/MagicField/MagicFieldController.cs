@@ -40,6 +40,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     MagicCircle magicCircleOut, magicCircleIn;
     MagicPoint magicPointCenter;
 
+    UISprite magicFieldBG;
+
     float timePerMove = 1f;
     int magicCircleOutIndexChangePerMove = 3,
         magicCircleInIndexChangePerMove = -1;
@@ -163,6 +165,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
         magicCircleOut.SetMagicPoint(magicPointsOut);
         magicCircleIn.SetMagicPoint(magicPointsIn);
+
+        magicFieldBG = transform.Find("MagicFieldBG").GetComponent<UISprite>();
     }
 
     void SetMagicPointsUpstairs()
@@ -181,10 +185,18 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     public void ChangeMgFieldState(bool toWaitingCommand)
     {
         if (toWaitingCommand)
+        {
             MgFieldState = MagicFieldState.WaitingCommand;
+            magicFieldBG.spriteName = "lightMagicBG";
+            listMagicPoints.ForEach(magicPoint =>
+                magicPoint.Color = Color.white);
+        }
         else
         {
             MgFieldState = MagicFieldState.WaitingMonsterTurn;
+            magicFieldBG.spriteName = "darkMagicBG";
+            listMagicPoints.ForEach(magicPoint =>
+                magicPoint.Color = Color.gray);
             RotateMagicCircle(magicCircleOutIndexChangePerMove, magicCircleInIndexChangePerMove);
         }
         UIController.EndTurnButton.Enabled = toWaitingCommand;
