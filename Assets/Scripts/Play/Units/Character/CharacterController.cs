@@ -215,6 +215,7 @@ public class CharacterController : Unit
         barrierGameObject.SetActive(false);
 
         healGameObject = Instantiate(Resources.Load("Prefabs/Particle/Heal")) as GameObject;
+        healGameObject.transform.position = new Vector3(0f, 7f, 0f);
         healGameObject.SetActive(false);
 
         Cost = PlayerPrefs.GetInt("startCost", 15);
@@ -447,8 +448,8 @@ public class CharacterController : Unit
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 180f, 0f);
 
-                timeBeforeMonsterListShowParticleReceiveDamage = 0.525f;
-                timeAfterMonsterListShowParticleReceiveDamage = 0.725f;
+                timeBeforeMonsterListShowParticleReceiveDamage = 1.15f;
+                timeAfterMonsterListShowParticleReceiveDamage = 0.1f;
                 break;
             case CharacterActionState.BowAction:
                 holdHandTransform = transform.Find(leftHandIK);
@@ -456,8 +457,8 @@ public class CharacterController : Unit
                 weaponTransform.localPosition = Vector3.left * 0.1f;
                 weaponTransform.localRotation = Quaternion.Euler(5f, 0f, 0f);
 
-                timeBeforeMonsterListShowParticleReceiveDamage = 1f;
-                timeAfterMonsterListShowParticleReceiveDamage = 0.25f;
+                timeBeforeMonsterListShowParticleReceiveDamage = 1.15f;
+                timeAfterMonsterListShowParticleReceiveDamage = 0.1f;
                 break;
             case CharacterActionState.WandAction:
                 holdHandTransform = transform.Find(rightHandIK);
