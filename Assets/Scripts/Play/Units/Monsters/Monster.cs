@@ -71,7 +71,8 @@ public abstract class Monster : Unit
 
     #region Variable
     protected Rigidbody thisRigidbody;
-    protected int hp;
+    protected int hp, 
+        damageBase;
     protected float damageMinimumMultiply = 0.9f, damageMaximumMultiply = 1.1f;
 
     ElementType weaknessElement;
@@ -278,9 +279,19 @@ public abstract class Monster : Unit
         }
     }
 
-    public void SendDamageToCharacter(int dmg)
+    public void SendDamageToCharacter()
     {
-        SendDamageToCharacter(dmg, damageMinimumMultiply, damageMaximumMultiply);
+        SendDamageToCharacter(damageBase);
+    }
+
+    public void SendDamageToCharacter(int damage)
+    {
+        SendDamageToCharacter(damage, damageMinimumMultiply, damageMaximumMultiply);
+    }
+
+    public void SendDamageToCharacter(float minimumMultiply, float maximumMultiply)
+    {
+        SendDamageToCharacter(damageBase, minimumMultiply, maximumMultiply);
     }
 
     public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
