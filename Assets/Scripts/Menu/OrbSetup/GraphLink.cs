@@ -19,7 +19,8 @@ public class GraphLink : MonoBehaviour
     {
         thisTransform = transform;
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.material = new Material(Shader.Find("Particles/Alpha Blended"));
+        lineRenderer.SetColors(Color.black, Color.black);
         lineRenderer.SetVertexCount(2);
         lineRenderer.SetWidth(lineWidth, lineWidth);
     }
