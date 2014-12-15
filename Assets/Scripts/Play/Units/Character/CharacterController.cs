@@ -209,7 +209,7 @@ public class CharacterController : Unit
         listCharacterController.Add(shieldCharacterController);
         listCharacterController.Add(scrollCharacterController);
 
-        barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Barrier"), 
+        barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Player/Attack/NewBarrier"), 
             Vector3.forward * 3.5f, Quaternion.identity) as GameObject;
         barrierHpPopUpPos = barrierGameObject.transform.position + Vector3.up * 3f;
         barrierGameObject.SetActive(false);
