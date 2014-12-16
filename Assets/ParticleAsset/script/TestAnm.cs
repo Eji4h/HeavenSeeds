@@ -32,6 +32,31 @@ public class TestAnm : MonoBehaviour {
         {
              animation.Play(bb[5].name);
         }
+        else if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            animation.Play(bb[6].name);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            animation.Play(bb[7].name);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            animation.Play(bb[8].name);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            animation.Play(bb[9].name);
+        }
+        else if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+        {
+            animation.Play(bb[10].name);
+        }
+        else if (Input.GetKeyDown(KeyCode.KeypadDivide))
+        {
+            animation.Play(bb[11].name);
+
+        }
      
 	}
 }

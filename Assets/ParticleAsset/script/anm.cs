@@ -30,4 +30,29 @@ public class anm : MonoBehaviour
     {
         part[5].SetActive(true);
     }
+    void SkillEX1()
+    {
+        part[6].SetActive(true);
+    }
+    void SkillEX2()
+    {
+        part[7].SetActive(true);
+    }
+    void SkillEX3()
+    {
+        part[8].SetActive(true);
+    }
+    void SkillEX4()
+    {
+        part[9].SetActive(true);
+    }
+    void SkillEX5()
+    {
+        part[10].SetActive(true);
+    }
+    void SkillEX6()
+    {
+        part[11].SetActive(true);
+    }
+   
 }
