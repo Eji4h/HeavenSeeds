@@ -451,4 +451,34 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         MgFieldState = MagicFieldState.WaitingRotation;
     }
     #endregion
+
+    #region Orb Debuff
+    public void OrbBurn(int numberOrbBurn)
+    {
+        int countOrbToBurn = 0;
+        while (countOrbToBurn < numberOrbBurn)
+        {
+            MagicPoint magicPointSelected = listMagicPoints[Random.Range(0, listMagicPoints.Count)];
+            if (magicPointSelected.Element != ElementType.None)
+            {
+                magicPointSelected.Element = ElementType.None;
+                countOrbToBurn++;
+            }
+        }
+    }
+
+    public void OrbSkull(int numberOrbSkull)
+    {
+        int countOrbToSkull = 0;
+        while (countOrbToSkull < numberOrbSkull)
+        {
+            MagicPoint magicPointSelected = listMagicPoints[Random.Range(0, listMagicPoints.Count)];
+            if (!magicPointSelected.IsSkull)
+            {
+                magicPointSelected.IsSkull = true;
+                countOrbToSkull++;
+            }
+        }
+    }
+    #endregion
 }

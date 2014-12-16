@@ -284,6 +284,11 @@ public abstract class Monster : Unit
         SendDamageToCharacter(damageBase);
     }
 
+    public void SendDamageToCharacter(float damageBaseMultiply)
+    {
+        SendDamageToCharacter((int)(damageBase * damageBaseMultiply));
+    }
+
     public void SendDamageToCharacter(int damage)
     {
         SendDamageToCharacter(damage, damageMinimumMultiply, damageMaximumMultiply);
@@ -292,6 +297,11 @@ public abstract class Monster : Unit
     public void SendDamageToCharacter(float minimumMultiply, float maximumMultiply)
     {
         SendDamageToCharacter(damageBase, minimumMultiply, maximumMultiply);
+    }
+
+    public void SendDamageToCharacter(float damageBaseMultiply, float minimumMultiply, float maximumMultiply)
+    {
+        SendDamageToCharacter((int)(damageBase * damageBaseMultiply), minimumMultiply, maximumMultiply);
     }
 
     public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
@@ -348,7 +358,7 @@ public abstract class Monster : Unit
 
     IEnumerator FireReceiveBehaviour()
     {
-        int damage = elementDamageBase * 5 * (weaknessElement == ElementType.Fire ? 2 : 1);
+        int damage = elementDamageBase * (weaknessElement == ElementType.Fire ? 2 : 1);
         ReuseGameObject(fireParticle, Vector3.zero, true);
         yield return new WaitForSeconds(1f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 1f, 1.2f, 3));
@@ -438,35 +448,68 @@ public abstract class Monster : Unit
             Random.Range(-maxNum, -minNum) : Random.Range(minNum, maxNum);
     }
 
-    public void CharacterStun(int stunTurn)
+    public void RandomCharacterFall(float percent, int turnFall)
     {
-        CharacterController.StunTurn = stunTurn;
-    }
-
-    public void RandomCharacterFall(int turnFall)
-    {
-        if (listCharacterControllerIsFall.Count < 5)
+        if (OftenMethod.RandomPercent(percent))
         {
-            turnFall++;
-            CharacterController selectedCharacterController;
-            List<CharacterController> listUnFallCharacterController =
-                new List<CharacterController>(5);
+            if (listCharacterControllerIsFall.Count < 5)
+            {
+                turnFall++;
+                CharacterController selectedCharacterController;
+                List<CharacterController> listUnFallCharacterController =
+                    new List<CharacterController>(5);
 
-            listCharacterController.ForEach(characterController =>
-                listUnFallCharacterController.Add(characterController));
+                listCharacterController.ForEach(characterController =>
+                    listUnFallCharacterController.Add(characterController));
 
-            listCharacterControllerIsFall.ForEach(characterController =>
-                listUnFallCharacterController.Remove(characterController));
-            selectedCharacterController = listUnFallCharacterController
-                [Random.Range(0, listUnFallCharacterController.Count)];
+                listCharacterControllerIsFall.ForEach(characterController =>
+                    listUnFallCharacterController.Remove(characterController));
+                selectedCharacterController = listUnFallCharacterController
+                    [Random.Range(0, listUnFallCharacterController.Count)];
 
-            selectedCharacterController.SetToFall(turnFall);
+                selectedCharacterController.SetToFall(turnFall);
+            }
         }
     }
 
-    public void MagicFieldRandomAction(int randomCount)
+    public void MagicFieldRandomAction(float percent, int randomCount)
     {
-        magicFieldController.RandomChaActionState(randomCount);
+        if (OftenMethod.RandomPercent(percent))
+            magicFieldController.RandomChaActionState(randomCount);
+    }
+
+    public void CharacterBurn(float percent, int burnTurn)
+    {
+        if (OftenMethod.RandomPercent(percent))
+            CharacterController.BurnTurn = burnTurn;
+    }
+
+    public void CharacterPoison(float percent, int poisonTurn)
+    {
+        if (OftenMethod.RandomPercent(percent))
+            CharacterController.PoisonTurn = poisonTurn;
+    }
+
+    public void CharacterStun(float percent, int stunTurn)
+    {
+        if (OftenMethod.RandomPercent(percent))
+            CharacterController.StunTurn = stunTurn;
+    }
+
+    public void CharacterFreeze(float percent, int freezeTurn)
+    {
+        if (OftenMethod.RandomPercent(percent))
+            CharacterController.FreezeTurn = freezeTurn;
+    }
+
+    public void OrbBurn(int numberOrbBurn)
+    {
+        magicFieldController.OrbBurn(numberOrbBurn);
+    }
+
+    public void OrbSkull(int numberOrbSkull)
+    {
+        magicFieldController.OrbSkull(numberOrbSkull);
     }
     #endregion
     #endregion

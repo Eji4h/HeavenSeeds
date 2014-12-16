@@ -43,6 +43,7 @@ public class MagicPoint : MonoBehaviour
     ElementBarController elementBarController;
 
     ElementType element;
+    bool isSkull;
     TweenPosition tweenPos;
     TweenScale tweenScale;
     Vector3 localPos;
@@ -84,6 +85,26 @@ public class MagicPoint : MonoBehaviour
         }
     }
 
+    public bool IsSkull
+    {
+        get { return isSkull; }
+        set 
+        {
+            isSkull = value; 
+            if(uiSprite != null)
+            {
+                if (isSkull)
+                {
+                    uiSprite.spriteName = "SkullOrb";
+                    uiSprite.width = 45;
+                    uiSprite.height = 45;
+                }
+                else
+                    Element = element;
+            }
+        }
+    }
+
     public Color Color
     {
         get { return uiSprite.color; }
@@ -113,6 +134,7 @@ public class MagicPoint : MonoBehaviour
 
     public void RandomElement()
     {
+        isSkull = false;
         float randomNum = Random.Range(0f, 100f);
 
         if (OftenMethod.InRandomRange(randomNum, 0f, fireEndPercentRange))
@@ -127,38 +149,48 @@ public class MagicPoint : MonoBehaviour
 
     public void SetElement(ElementType element)
     {
+        isSkull = false;
         Element = element;
     }
 
     public void UseMagicPoint()
     {
-        switch (element)
+        if (!isSkull && element != ElementType.None)
         {
-            case ElementType.Fire:
-                elementBarController = UIController.FireElementBarController;
-                break;
-            case ElementType.Water:
-                elementBarController = UIController.WaterElementBarController;
-                break;
-            case ElementType.Earth:
-                elementBarController = UIController.EarthElementBarController;
-                break;
-            case ElementType.Wood:
-                elementBarController = UIController.WoodElementBarController;
-                break;
+            switch (element)
+            {
+                case ElementType.Fire:
+                    elementBarController = UIController.FireElementBarController;
+                    break;
+                case ElementType.Water:
+                    elementBarController = UIController.WaterElementBarController;
+                    break;
+                case ElementType.Earth:
+                    elementBarController = UIController.EarthElementBarController;
+                    break;
+                case ElementType.Wood:
+                    elementBarController = UIController.WoodElementBarController;
+                    break;
+            }
+
+            Transform targetParentTransform = elementBarController.transform.parent;
+
+            thisTransform.parent = null;
+            elementBarController.transform.parent = null;
+            tweenPos.from = thisTransform.position;
+            tweenPos.to = elementBarController.transform.position;
+
+            elementBarController.transform.parent = targetParentTransform;
+
+            tweenPos.ResetToBeginning();
+            tweenPos.PlayForward();
         }
-
-        Transform targetParentTransform = elementBarController.transform.parent;
-
-        thisTransform.parent = null;
-        elementBarController.transform.parent = null;
-        tweenPos.from = thisTransform.position;
-        tweenPos.to = elementBarController.transform.position;
-
-        elementBarController.transform.parent = targetParentTransform;
-
-        tweenPos.ResetToBeginning();
-        tweenPos.PlayForward();
+        else
+        {
+            EventDelegate.Add(tweenScale.onFinished, OnFinishTweenScale);
+            if (isSkull)
+                CharacterController.ReceiveDamageByPercentOfSumMaxHp(7f);
+        }
         tweenScale.SetEndToCurrentValue();
         tweenScale.Toggle();
     }
@@ -172,5 +204,19 @@ public class MagicPoint : MonoBehaviour
         RandomElement();
         tweenScale.to = Vector3.one;
         tweenScale.Toggle();
+    }
+
+    void OnFinishTweenScale()
+    {
+        if (isSkull || element == ElementType.None)
+        {
+            IsSelected = false;
+            isSkull = false;
+            RandomElement();
+            tweenScale.to = Vector3.one;
+            tweenScale.Toggle();
+        }
+        else
+            tweenScale.onFinished.Clear();
     }
 }

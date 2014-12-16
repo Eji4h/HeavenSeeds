@@ -27,8 +27,14 @@ public class CharacterController : Unit
     static Vector3 barrierHpPopUpPos;
     static Color32 barrierHpPopUpColor = new Color32(90, 228, 255, 255);
 
-    static bool isStun = false;
-    static int stunTurn;
+    static bool isBurn,
+        isPoison,
+        isStun, 
+        isFreeze;
+    static int burnTurn,
+        poisonTurn,
+        stunTurn,
+        freezeTurn;
     #endregion
 
     #region Static Properties
@@ -168,18 +174,63 @@ public class CharacterController : Unit
         get { return scrollCharacterController.characterStatus.ScrollValue; }
     }
 
+    public static bool IsBurn
+    {
+        get { return isBurn; }
+    }
+
+    public static bool IsPoison
+    {
+        get { return isPoison; }
+    }
+
     public static bool IsStun
     {
-        get { return CharacterController.isStun; }
+        get { return isStun; }
+    }
+
+    public static bool IsFreeze
+    {
+        get { return isFreeze; }
+    }
+
+    public static int BurnTurn
+    {
+        get { return burnTurn; }
+        set
+        {
+            burnTurn = value;
+            isBurn = burnTurn > 0;
+        }
+    }
+
+    public static int PoisonTurn
+    {
+        get { return poisonTurn; }
+        set 
+        {
+            poisonTurn = value;
+            isPoison = poisonTurn > 0;
+        }
     }
 
     public static int StunTurn
     {
-        get { return CharacterController.stunTurn; }
+        get { return stunTurn; }
         set
         {
-            CharacterController.stunTurn = value;
+            stunTurn = value;
             isStun = stunTurn > 0;
+        }
+    }
+
+    public static int FreezeTurn
+    {
+        get { return freezeTurn; }
+        set
+        {
+            freezeTurn = value;
+            isFreeze = freezeTurn > 0;
         }
     }
     #endregion
@@ -250,6 +301,11 @@ public class CharacterController : Unit
         }
     }
 
+    public static void ReceiveDamageByPercentOfSumMaxHp(float percentOfSumMaxHp)
+    {
+        ReceiveDamage((int)(percentOfSumMaxHp * SumHp));
+    }
+
     public static void ReceiveHeal(int heal)
     {
         SumHp += Mathf.RoundToInt(heal * (1f + HealPercentIncrease));
@@ -279,6 +335,17 @@ public class CharacterController : Unit
 
         if (BarrierHp > 0)
             BarrierHp *= Mathf.RoundToInt(1f + BarrierHpPercentIncrease);
+    }
+
+    public static void ClearDebuff()
+    {
+        BurnTurn = 0;
+        PoisonTurn = 0;
+        listCharacterControllerIsFall.ForEach(character =>
+            character.IsFall = false);
+        magicFieldController.RandomChaActionStateCount = 0;
+        magicFieldController.listMagicPoints.ForEach(magicPoint =>
+                magicPoint.IsSkull = false);
     }
 
     public static void ClearBuff()
@@ -520,6 +587,21 @@ public class CharacterController : Unit
 
             while (Monster.NowBurning)
                 yield return null;
+
+            if(isBurn)
+            {
+                ReceiveDamageByPercentOfSumMaxHp(4f);
+                yield return new WaitForSeconds(1f);
+                BurnTurn--;
+            }
+
+            if(isPoison)
+            {
+                ReceiveDamageByPercentOfSumMaxHp(4f);
+                yield return new WaitForSeconds(1f);
+                PoisonTurn--;
+            }
+
             actionIsUpdate = false;
         }
         turnController.CharacterActionEnd();

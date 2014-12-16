@@ -50,6 +50,11 @@ public class TurnController : MonoBehaviour
                 CharacterController.StunTurn--;
                 playerTurn = false;
             }
+            if(CharacterController.IsFreeze)
+            {
+                CharacterController.FreezeTurn--;
+                playerTurn = false;
+            }
         }
         else
             SceneController.CurrentMonster.StartState();

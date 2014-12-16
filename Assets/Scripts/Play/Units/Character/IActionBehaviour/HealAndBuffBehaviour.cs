@@ -23,5 +23,6 @@ public class HealAndBuffBehaviour : IActionBehaviour
     {
         CharacterController.ReceiveHeal(healValue);
         CharacterController.GetBuff(atkPercentIncrease, barrierHpPercentIncrease, healPercentIncrease);
+        CharacterController.ClearDebuff();
     }
 }
