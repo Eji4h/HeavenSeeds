@@ -99,6 +99,8 @@ public abstract class Monster : Unit
         lowAttackDamageTurn = 0,
         stunTurn = 0,
         moreReceiveDamageTurn = 0;
+
+    float percentDebuffToCharacter;
     #endregion
 
     #region Properties
@@ -461,6 +463,11 @@ public abstract class Monster : Unit
     }
 
     #region Debuff Character
+    public void SetPercentDebuffToCharacter(float percentDebuffToCharacter)
+    {
+        this.percentDebuffToCharacter = percentDebuffToCharacter;
+    }
+
     public void RotateMagicCircle(int indexMagicCircleOutChange, int indexMagicCircleInChange)
     {
         magicFieldController.RotateMagicCircle(indexMagicCircleOutChange, indexMagicCircleInChange);
@@ -477,9 +484,9 @@ public abstract class Monster : Unit
             Random.Range(-maxNum, -minNum) : Random.Range(minNum, maxNum);
     }
 
-    public void RandomCharacterFall(float percent, int turnFall)
+    public void RandomCharacterFall(int turnFall)
     {
-        if (OftenMethod.RandomPercent(percent))
+        if (OftenMethod.RandomPercent(percentDebuffToCharacter))
         {
             if (listCharacterControllerIsFall.Count < 5)
             {
@@ -501,33 +508,33 @@ public abstract class Monster : Unit
         }
     }
 
-    public void MagicFieldRandomAction(float percent, int randomCount)
+    public void MagicFieldRandomAction(int randomCount)
     {
-        if (OftenMethod.RandomPercent(percent))
+        if (OftenMethod.RandomPercent(percentDebuffToCharacter))
             magicFieldController.RandomChaActionState(randomCount);
     }
 
-    public void CharacterBurn(float percent, int burnTurn)
+    public void CharacterBurn(int burnTurn)
     {
-        if (OftenMethod.RandomPercent(percent))
+        if (OftenMethod.RandomPercent(percentDebuffToCharacter))
             CharacterController.BurnTurn = burnTurn;
     }
 
-    public void CharacterPoison(float percent, int poisonTurn)
+    public void CharacterPoison(int poisonTurn)
     {
-        if (OftenMethod.RandomPercent(percent))
+        if (OftenMethod.RandomPercent(percentDebuffToCharacter))
             CharacterController.PoisonTurn = poisonTurn;
     }
 
-    public void CharacterStun(float percent, int stunTurn)
+    public void CharacterStun(int stunTurn)
     {
-        if (OftenMethod.RandomPercent(percent))
+        if (OftenMethod.RandomPercent(percentDebuffToCharacter))
             CharacterController.StunTurn = stunTurn;
     }
 
-    public void CharacterFreeze(float percent, int freezeTurn)
+    public void CharacterFreeze(int freezeTurn)
     {
-        if (OftenMethod.RandomPercent(percent))
+        if (OftenMethod.RandomPercent(percentDebuffToCharacter))
             CharacterController.FreezeTurn = freezeTurn;
     }
 

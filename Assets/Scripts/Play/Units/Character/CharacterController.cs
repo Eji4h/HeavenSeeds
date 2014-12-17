@@ -196,41 +196,41 @@ public class CharacterController : Unit
 
     public static int BurnTurn
     {
-        get { return burnTurn; }
+        get { return burnTurn / randomNumSecurity; }
         set
         {
-            burnTurn = value;
-            isBurn = burnTurn > 0;
+            burnTurn = value * randomNumSecurity;
+            isBurn = BurnTurn > 0;
         }
     }
 
     public static int PoisonTurn
     {
-        get { return poisonTurn; }
+        get { return poisonTurn / randomNumSecurity; }
         set 
         {
-            poisonTurn = value;
-            isPoison = poisonTurn > 0;
+            poisonTurn = value * randomNumSecurity;
+            isPoison = PoisonTurn > 0;
         }
     }
 
     public static int StunTurn
     {
-        get { return stunTurn; }
+        get { return stunTurn / randomNumSecurity; }
         set
         {
-            stunTurn = value;
-            isStun = stunTurn > 0;
+            stunTurn = value * randomNumSecurity;
+            isStun = StunTurn > 0;
         }
     }
 
     public static int FreezeTurn
     {
-        get { return freezeTurn; }
+        get { return freezeTurn / randomNumSecurity; }
         set
         {
-            freezeTurn = value;
-            isFreeze = freezeTurn > 0;
+            freezeTurn = value * randomNumSecurity;
+            isFreeze = FreezeTurn > 0;
         }
     }
     #endregion
