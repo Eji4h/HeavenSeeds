@@ -310,36 +310,11 @@ public abstract class Monster : Unit
         }
     }
 
-    public void SendDamageToCharacter()
-    {
-        SendDamageToCharacter(DamageBase);
-    }
-
     public void SendDamageToCharacter(float damageBaseMultiply)
     {
-        SendDamageToCharacter((int)(DamageBase * damageBaseMultiply));
-    }
-
-    public void SendDamageToCharacter(int damage)
-    {
-        SendDamageToCharacter(damage, damageMinimumMultiply, damageMaximumMultiply);
-    }
-
-    public void SendDamageToCharacter(float minimumMultiply, float maximumMultiply)
-    {
-        SendDamageToCharacter(DamageBase, minimumMultiply, maximumMultiply);
-    }
-
-    public void SendDamageToCharacter(float damageBaseMultiply, float minimumMultiply, float maximumMultiply)
-    {
-        SendDamageToCharacter((int)(DamageBase * damageBaseMultiply), minimumMultiply, maximumMultiply);
-    }
-
-    public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
-    {
         CharacterController.ReceiveDamage(
-            OftenMethod.ProbabilityDistribution(dmg * (isLowAttackDamage ? 0.8f : 1f), 
-            minimumMultiply, maximumMultiply, 3));
+            OftenMethod.ProbabilityDistribution(DamageBase * damageBaseMultiply *
+            (isLowAttackDamage ? 0.8f : 1f), DamageMinimumMultiply, DamageMaximumMultiply, 3));
     }
 
     #region MonsterBehaviour
