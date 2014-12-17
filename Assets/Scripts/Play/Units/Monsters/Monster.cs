@@ -75,8 +75,8 @@ public abstract class Monster : Unit
         damageBase,
         difficultyMultiply;
 
-    float damageMinimumMultiply = 0.9f,
-        damageMaximumMultiply = 1.1f;
+    float damageMinimumMultiply,
+        damageMaximumMultiply;
 
     ElementType weaknessElement;
 
@@ -223,6 +223,10 @@ public abstract class Monster : Unit
     {
         MaxHp *= DifficultyMultiply;
         DamageBase *= DifficultyMultiply;
+        if (damageMinimumMultiply == 0f)
+            DamageMinimumMultiply = 0.9f;
+        if (damageMaximumMultiply == 0f)
+            DamageMaximumMultiply = 1.1f;
         UIController.MonsterHpBar.MaxValue = MaxHp;
         Hp = MaxHp;
 
