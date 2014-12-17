@@ -8,6 +8,7 @@ public class PayakKraiSorn : Monster
     protected override void Start()
     {
         MaxHp = 1500;
+        DamageBase = 74;
         base.Start();
     }
 }

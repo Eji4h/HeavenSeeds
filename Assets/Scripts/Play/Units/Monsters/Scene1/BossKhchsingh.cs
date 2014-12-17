@@ -47,6 +47,7 @@ public class BossKhchsingh : Monster
     protected override void Start()
     {
         MaxHp = 5000;
+        DamageBase = 143;
         base.Start();
     }
 

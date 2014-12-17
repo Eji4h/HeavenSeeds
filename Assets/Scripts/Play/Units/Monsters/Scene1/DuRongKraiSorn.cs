@@ -8,6 +8,7 @@ public class DuRongKraiSorn : Monster
     protected override void Start()
     {
         MaxHp = 1350;
+        DamageBase = 55;
         base.Start();
     }
 }
