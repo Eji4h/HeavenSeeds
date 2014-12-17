@@ -106,7 +106,8 @@ public class SceneController : MonoBehaviour
         Monster.SetInit();
         CharacterController.SetInit();
 
-        int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
+        int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1),
+            sceneLv = PlayerPrefs.GetInt("SceneLv", 1);
         string monsterPath = "Prefabs/Monsters/Scene" + sceneSelected,
             sceneSetPath = "Prefabs/Scenes/SceneSet" + sceneSelected;
         List<Monster> listMonster = new List<Monster>(5);
@@ -116,9 +117,28 @@ public class SceneController : MonoBehaviour
         switch (sceneSelected)
         {
             case 1:
-                listMonster.Add(InstantiateMonster(monsterPath + "/DuRongKraiSorn"));
-                listMonster.Add(InstantiateMonster(monsterPath + "/PayakKraiSorn"));
-                listMonster.Add(InstantiateMonster(monsterPath + "/BossKhchsingh"));
+                switch (sceneLv)
+                {
+                    case 1:
+                        Monster duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
+                                payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
+                                bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
+
+                        duRongKraiSorn.DifficultyMultiply = 1;
+                        payakKraiSorn.DifficultyMultiply = 1;
+                        bossKhchsingh.DifficultyMultiply = 1;
+
+                        listMonster.Add(duRongKraiSorn);
+                        listMonster.Add(payakKraiSorn);
+                        listMonster.Add(bossKhchsingh);
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                }
                 break;
             case 2:
 

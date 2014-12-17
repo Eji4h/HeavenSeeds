@@ -71,9 +71,12 @@ public abstract class Monster : Unit
 
     #region Variable
     protected Rigidbody thisRigidbody;
-    protected int hp, 
-        damageBase;
-    protected float damageMinimumMultiply = 0.9f, damageMaximumMultiply = 1.1f;
+    int hp, 
+        damageBase,
+        difficultyMultiply;
+
+    float damageMinimumMultiply = 0.9f,
+        damageMaximumMultiply = 1.1f;
 
     ElementType weaknessElement;
 
@@ -108,6 +111,7 @@ public abstract class Monster : Unit
             UIController.MonsterHpBar.MaxValue = MaxHp;
         }
     }
+
     public virtual int Hp
     {
         get { return hp / randomNumSecurity; }
@@ -128,6 +132,29 @@ public abstract class Monster : Unit
         }
     }
 
+    protected int DamageBase
+    {
+        get { return damageBase / randomNumSecurity; }
+        set { damageBase = value * randomNumSecurity; }
+    }
+    public int DifficultyMultiply
+    {
+        get { return difficultyMultiply / randomNumSecurity; }
+        set { difficultyMultiply = value * randomNumSecurity; }
+    }
+
+    protected float DamageMinimumMultiply
+    {
+        get { return damageMinimumMultiply / randomNumSecurity; }
+        set { damageMinimumMultiply = value * randomNumSecurity; }
+    }
+
+    protected float DamageMaximumMultiply
+    {
+        get { return damageMaximumMultiply / randomNumSecurity; }
+        set { damageMaximumMultiply = value * randomNumSecurity; }
+    }
+
     public bool QueueElementIsRunning
     {
         get { return queueElementIsRunning; }
@@ -140,44 +167,44 @@ public abstract class Monster : Unit
 
     int BurnTurn
     {
-        get { return burnTurn; }
+        get { return burnTurn / randomNumSecurity; }
         set
         {
-            burnTurn = value;
-            isBurn = burnTurn > 0;
+            burnTurn = value * randomNumSecurity;
+            isBurn = BurnTurn > 0;
             burnParticle.SetActive(isBurn);
         }
     }
 
     int LowAttackDamageTurn
     {
-        get { return lowAttackDamageTurn; }
+        get { return lowAttackDamageTurn / randomNumSecurity; }
         set
         {
-            lowAttackDamageTurn = value;
-            isLowAttackDamage = lowAttackDamageTurn > 0;
+            lowAttackDamageTurn = value * randomNumSecurity;
+            isLowAttackDamage = LowAttackDamageTurn > 0;
             vortexParticle.SetActive(isLowAttackDamage);
         }
     }
 
     int StunTurn
     {
-        get { return stunTurn; }
+        get { return stunTurn / randomNumSecurity; }
         set
         {
-            stunTurn = value;
-            isStun = stunTurn > 0;
+            stunTurn = value * randomNumSecurity;
+            isStun = StunTurn > 0;
             stunParticle.SetActive(isStun);
         }
     }
 
     int MoreReceiveDamageTurn
     {
-        get { return moreReceiveDamageTurn; }
+        get { return moreReceiveDamageTurn / randomNumSecurity; }
         set
         {
-            moreReceiveDamageTurn = value;
-            isMoreReceiveDamage = moreReceiveDamageTurn > 0;
+            moreReceiveDamageTurn = value * randomNumSecurity;
+            isMoreReceiveDamage = MoreReceiveDamageTurn > 0;
             rootParticle.SetActive(isMoreReceiveDamage);
         }
     }
@@ -192,6 +219,8 @@ public abstract class Monster : Unit
 
     protected override void Start()
     {
+        MaxHp *= DifficultyMultiply;
+        DamageBase *= DifficultyMultiply;
         UIController.MonsterHpBar.MaxValue = MaxHp;
         Hp = MaxHp;
 
@@ -281,12 +310,12 @@ public abstract class Monster : Unit
 
     public void SendDamageToCharacter()
     {
-        SendDamageToCharacter(damageBase);
+        SendDamageToCharacter(DamageBase);
     }
 
     public void SendDamageToCharacter(float damageBaseMultiply)
     {
-        SendDamageToCharacter((int)(damageBase * damageBaseMultiply));
+        SendDamageToCharacter((int)(DamageBase * damageBaseMultiply));
     }
 
     public void SendDamageToCharacter(int damage)
@@ -296,12 +325,12 @@ public abstract class Monster : Unit
 
     public void SendDamageToCharacter(float minimumMultiply, float maximumMultiply)
     {
-        SendDamageToCharacter(damageBase, minimumMultiply, maximumMultiply);
+        SendDamageToCharacter(DamageBase, minimumMultiply, maximumMultiply);
     }
 
     public void SendDamageToCharacter(float damageBaseMultiply, float minimumMultiply, float maximumMultiply)
     {
-        SendDamageToCharacter((int)(damageBase * damageBaseMultiply), minimumMultiply, maximumMultiply);
+        SendDamageToCharacter((int)(DamageBase * damageBaseMultiply), minimumMultiply, maximumMultiply);
     }
 
     public void SendDamageToCharacter(int dmg, float minimumMultiply, float maximumMultiply)
