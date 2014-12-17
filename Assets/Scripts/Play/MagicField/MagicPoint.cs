@@ -96,8 +96,8 @@ public class MagicPoint : MonoBehaviour
                 if (isSkull)
                 {
                     uiSprite.spriteName = "SkullOrb";
-                    uiSprite.width = 45;
-                    uiSprite.height = 45;
+                    uiSprite.width = 35;
+                    uiSprite.height = 35;
                 }
                 else
                     Element = element;
