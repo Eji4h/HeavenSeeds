@@ -353,8 +353,12 @@ public abstract class Monster : Unit
 
     protected void ResetLocalPositionToZero()
     {
-        print("ResetToZero");
         thisTransform.localPosition = Vector3.zero;
+    }
+
+    protected void PlayAnimation(string animationNameToPlay)
+    {
+        thisAnimation.Play(animationNameToPlay);
     }
 
     protected void CrossFadeAnimation(string animationNameToCrossFade)
@@ -424,7 +428,7 @@ public abstract class Monster : Unit
     {
         int damage = elementDamageBase * (weaknessElement == ElementType.Fire ? 2 : 1);
         ReuseGameObject(fireParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(6f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 1f, 1.2f, 3));
         BurnTurn = 5;
     }
@@ -434,10 +438,11 @@ public abstract class Monster : Unit
         int damagePerReceive = (elementDamageBase / 4) * 
             (weaknessElement == ElementType.Water ? 2 : 1);
         ReuseGameObject(waterParticle, Vector3.zero, true);
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < 4; i++)
         {
+            yield return new WaitForSeconds(0.5f);
             ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.75f, 1.1f, 3));
-            yield return new WaitForSeconds(1f);
         }
         LowAttackDamageTurn = 2;
     }
@@ -460,7 +465,7 @@ public abstract class Monster : Unit
     {
         int damge = elementDamageBase * (weaknessElement == ElementType.Wood ? 2 : 1);
         ReuseGameObject(woodParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(6.5f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase, 0.95f, 1.05f, 3));
         MoreReceiveDamageTurn = 1;
     }

@@ -599,9 +599,8 @@ public class CharacterController : Unit
                 yield return new WaitForSeconds(1f);
                 PoisonTurn--;
             }
-
-            actionIsUpdate = false;
         }
+        actionIsUpdate = false;
         turnController.CharacterActionEnd();
     }
 
