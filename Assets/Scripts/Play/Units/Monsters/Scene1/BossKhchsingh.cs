@@ -9,10 +9,6 @@ public class BossKhchsingh : Monster
     #region EnumType
     enum BossKhchsinghState
     {
-        Idle,
-        Move,
-        Madden,
-        CallOrdinate,
         ThrashTrunk3Time,
         ChargeToDash,
         Trample,
@@ -22,24 +18,23 @@ public class BossKhchsingh : Monster
     #endregion
 
     #region Variable
-    BossKhchsinghState bossKhchsinghState;
-    float minimumDmgMultiply = 0.9f,
-        maximumDmgMultiply = 1.1f;
-
-    GameObject maddenSparkGameObjectParticle,
-        maddenReleaseGameObjectParticle,
-        chargeGameObjectParticle,
-        fallGameObjectParticle,
-        thrashTrunkHitGameObjectParticle,
-        treeBrokeGameObjectParticle,
-        groundSlamGameObjectParticle,
-        ultimateGameObjectParticle;
-
-    GameObject treeForThrowGameObject;
+    List<BossKhchsinghState> listBossKhchsinghStateCanUse = new List<BossKhchsinghState>(5);
     #endregion
 
     #region Properties
-
+    public override int Hp
+    {
+        get
+        {
+            return base.Hp;
+        }
+        set
+        {
+            base.Hp = value;
+            if (Hp <= (int)(MaxHp * 0.1))
+                listBossKhchsinghStateCanUse.Add(BossKhchsinghState.IvoryBeam);
+        }
+    }
     #endregion
 
     #region Method
@@ -48,14 +43,25 @@ public class BossKhchsingh : Monster
     {
         MaxHp = 5000;
         DamageBase = 143;
+        listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ChargeToDash);
+        //listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ThrashTrunk3Time);
+        //listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ThrowATree);
+        //listBossKhchsinghStateCanUse.Add(BossKhchsinghState.Trample);
         base.Start();
     }
 
     protected override void MonsterBehaviour()
     {
-
+        thisAnimation.CrossFade(listBossKhchsinghStateCanUse[Random.Range(0, listBossKhchsinghStateCanUse.Count)].ToString());
     }
     #endregion
+
+    void Update()
+    {
+        if(thisAnimation.IsPlaying(BossKhchsinghState.ChargeToDash.ToString()) || 
+            thisAnimation.IsPlaying("Return"))
+            print(thisTransform.localPosition.ToString());
+    }
 }
 
 //public class BossKhchsingh : Boss

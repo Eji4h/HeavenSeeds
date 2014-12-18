@@ -363,7 +363,6 @@ public class CharacterController : Unit
 
         for(int i = 0; i < listCharacterControllerIsFall.Count; i++)
         {
-            print(listCharacterControllerIsFall[i].name);
             listCharacterControllerIsFall[i].TurnFall--;
             if (listCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
             {
@@ -421,7 +420,6 @@ public class CharacterController : Unit
             turnFall = value;
             if (turnFall <= 0)
                 IsFall = false;
-            print(name + ", " + turnFall);
         }
     }
     #endregion

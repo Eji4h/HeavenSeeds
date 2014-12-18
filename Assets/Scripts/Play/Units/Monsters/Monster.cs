@@ -351,6 +351,12 @@ public abstract class Monster : Unit
         StartCoroutineRunWaitTimeToEndTurn(thisAnimation["Attack"].length);
     }
 
+    protected void ResetLocalPositionToZero()
+    {
+        print("ResetToZero");
+        thisTransform.localPosition = Vector3.zero;
+    }
+
     protected void CrossFadeAnimation(string animationNameToCrossFade)
     {
         thisAnimation.CrossFade(animationNameToCrossFade);
