@@ -15,6 +15,7 @@ public class SceneController : MonoBehaviour
         shieldCharacterController,
         scrollCharacterController;
 
+    static Transform monstersParentTransform;
     static Monster currentMonster;
     static Queue<Monster> queueMonster = new Queue<Monster>(3);
 
@@ -106,6 +107,7 @@ public class SceneController : MonoBehaviour
         Monster.SetInit();
         CharacterController.SetInit();
 
+        monstersParentTransform = GameObject.Find("Monsters").transform;
         int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1),
             sceneLv = PlayerPrefs.GetInt("SceneLv", 1);
         string monsterPath = "Prefabs/Monsters/Scene" + sceneSelected,
@@ -120,16 +122,17 @@ public class SceneController : MonoBehaviour
                 switch (sceneLv)
                 {
                     case 1:
-                        Monster duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
-                                payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
-                                bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
+                        Monster 
+                            //duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
+                            //payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
+                            bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
 
-                        duRongKraiSorn.DifficultyMultiply = 1;
-                        payakKraiSorn.DifficultyMultiply = 1;
+                        //duRongKraiSorn.DifficultyMultiply = 1;
+                        //payakKraiSorn.DifficultyMultiply = 1;
                         bossKhchsingh.DifficultyMultiply = 1;
 
-                        listMonster.Add(duRongKraiSorn);
-                        listMonster.Add(payakKraiSorn);
+                        //listMonster.Add(duRongKraiSorn);
+                        //listMonster.Add(payakKraiSorn);
                         listMonster.Add(bossKhchsingh);
                         break;
                     case 2:
@@ -180,6 +183,9 @@ public class SceneController : MonoBehaviour
 
         listMonster.ForEach(monster =>
             {
+                monster.transform.parent = monstersParentTransform;
+                monster.transform.localPosition = Vector3.up * 2f;
+                monster.transform.localRotation = Quaternion.AngleAxis(180f, Vector3.up);
                 monster.gameObject.SetActive(false);
                 queueMonster.Enqueue(monster);
             });
@@ -189,8 +195,7 @@ public class SceneController : MonoBehaviour
 
     Monster InstantiateMonster(string path)
     {
-        return Instantiate(Resources.Load<Monster>(path), Vector3.forward * 20f + Vector3.up * 2f,
-            Quaternion.AngleAxis(180, Vector3.up)) as Monster;
+        return Instantiate(Resources.Load<Monster>(path)) as Monster;
     }
 
     void SetCameraObjects()
