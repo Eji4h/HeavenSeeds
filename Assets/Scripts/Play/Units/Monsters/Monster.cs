@@ -104,6 +104,24 @@ public abstract class Monster : Unit
     #endregion
 
     #region Properties
+    protected float LocalPositionX
+    {
+        get { return thisTransform.localPosition.x; }
+        set { thisTransform.localPosition = new Vector3(value, thisTransform.position.y, thisTransform.position.z); }
+    }
+
+    protected float LocalPositionY
+    {
+        get { return thisTransform.localPosition.y; }
+        set { thisTransform.localPosition = new Vector3(thisTransform.position.x, value, thisTransform.position.z); }
+    }
+
+    protected float LocalPositionZ
+    {
+        get { return thisTransform.localPosition.z; }
+        set { thisTransform.localPosition = new Vector3(thisTransform.position.x, thisTransform.position.y, value); }
+    }
+
     protected override int MaxHp
     {
         get { return base.MaxHp; }
@@ -333,12 +351,12 @@ public abstract class Monster : Unit
         StartCoroutineRunWaitTimeToEndTurn(thisAnimation["Attack"].length);
     }
 
-    protected virtual void CrossFadeAnimation(string animationNameToCrossFade)
+    protected void CrossFadeAnimation(string animationNameToCrossFade)
     {
         thisAnimation.CrossFade(animationNameToCrossFade);
     }
 
-    protected virtual void StartCoroutineRunWaitTimeToEndTurn(float timeToWait)
+    protected void StartCoroutineRunWaitTimeToEndTurn(float timeToWait)
     {
         StartCoroutine(RunWaitTimeToEndTurn(timeToWait));
     }
