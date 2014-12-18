@@ -330,7 +330,37 @@ public abstract class Monster : Unit
     protected void NormalAttack()
     {
         thisAnimation.CrossFade("Attack");
-        StartCoroutine(RunWaitTimeToEndTurn(thisAnimation["Attack"].length));
+        StartCoroutineRunWaitTimeToEndTurn(thisAnimation["Attack"].length);
+    }
+
+    protected virtual void CrossFadeAnimation(string animationNameToCrossFade)
+    {
+        thisAnimation.CrossFade(animationNameToCrossFade);
+    }
+
+    protected virtual void StartCoroutineRunWaitTimeToEndTurn(float timeToWait)
+    {
+        StartCoroutine(RunWaitTimeToEndTurn(timeToWait));
+    }
+
+    IEnumerator RunWaitTimeToEndTurn(float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        EndTurn();
+    }
+
+    IEnumerator WaitingDieAnimationToDestroy()
+    {
+        yield return new WaitForSeconds(1f);
+
+        listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
+        {
+            gameObjectTransformInParent.parent = null;
+            gameObjectTransformInParent.gameObject.SetActive(false);
+        });
+        Destroy(gameObject);
+        SceneController.NextMonsterQueue();
+        turnController.CharacterActionEnd();
     }
     #endregion
 
@@ -420,26 +450,6 @@ public abstract class Monster : Unit
         nowBurning = false;
     }
     #endregion
-
-    IEnumerator RunWaitTimeToEndTurn(float timeToWait)
-    {
-        yield return new WaitForSeconds(timeToWait);
-        EndTurn();
-    }
-
-    IEnumerator WaitingDieAnimationToDestroy()
-    {
-        yield return new WaitForSeconds(1f);
-
-        listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
-            {
-                gameObjectTransformInParent.parent = null;
-                gameObjectTransformInParent.gameObject.SetActive(false);
-            });
-        Destroy(gameObject);
-        SceneController.NextMonsterQueue();
-        turnController.CharacterActionEnd();
-    }
 
     #region Debuff Character
     public void SetPercentDebuffToCharacter(float percentDebuffToCharacter)
