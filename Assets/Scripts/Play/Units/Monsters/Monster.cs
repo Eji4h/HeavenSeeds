@@ -447,14 +447,24 @@ public abstract class Monster : Unit
         this.percentDebuffToCharacter = percentDebuffToCharacter;
     }
 
-    public void RotateMagicCircle(int indexMagicCircleOutChange, int indexMagicCircleInChange)
+    public void RotateMagicCircle(int indexMagicCircleChange)
     {
-        magicFieldController.RotateMagicCircle(indexMagicCircleOutChange, indexMagicCircleInChange);
+        magicFieldController.RotateMagicCircle(indexMagicCircleChange, -indexMagicCircleChange);
     }
 
     public void RandomRotateMagicCircle()
     {
         magicFieldController.RotateMagicCircle(RandomNumberSpin(5, 10), RandomNumberSpin(5, 10));
+    }
+
+    public void RandomRotateMagicCircleOut()
+    {
+        magicFieldController.RotateMagicCircle(RandomNumberSpin(5, 10), 0);
+    }
+
+    public void RandomRotateMagicCircleIn()
+    {
+        magicFieldController.RotateMagicCircle(0, RandomNumberSpin(5, 10));
     }
 
     int RandomNumberSpin(int minNum, int maxNum)
@@ -490,7 +500,7 @@ public abstract class Monster : Unit
     public void MagicFieldRandomAction(int randomCount)
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
-            magicFieldController.RandomChaActionState(randomCount);
+            magicFieldController.RandomChaActionStateCount = randomCount;
     }
 
     public void CharacterBurn(int burnTurn)

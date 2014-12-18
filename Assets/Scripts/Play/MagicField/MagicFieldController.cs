@@ -24,6 +24,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     #endregion
 
     #region Variable
+    int randomNumSecurity;
     Camera uiCamera;
 
     public List<MagicPoint> listMagicPoints = new List<MagicPoint>(13),
@@ -114,8 +115,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 });
             selectedCharacterController.Action();
             //selectedFxAnimation.SetActive(false);
-            if (randomChaActionState && randomChaActionStateCount > 0)
-                RandomChaActionStateCount--;
             MgFieldState = MagicFieldState.WaitingRotation;
             //selectedFxAnimation.SetActive(true);
             magicCircleOut.RotateCircle(normalDirectionalRotation ?
@@ -125,14 +124,18 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         }
     }
 
+    public bool RandomChaActionState
+    {
+        get { return randomChaActionState; }
+    }
+
     public int RandomChaActionStateCount
     {
-        get { return randomChaActionStateCount; }
+        get { return randomChaActionStateCount / randomNumSecurity; }
         set
         {
-            randomChaActionStateCount = value;
-            if (randomChaActionStateCount < 1)
-                randomChaActionState = false;
+            randomChaActionStateCount = value * randomNumSecurity;
+            randomChaActionState = RandomChaActionStateCount > 0;
         }
     }
 
@@ -145,6 +148,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     // Use this for initialization
     void Start()
     {
+        randomNumSecurity = Random.Range(0, 1000);
         uiCamera = SceneController.UICamera;
         for (int i = 1; i < 14; i++)
             listMagicPoints.Add(GameObject.Find("Point" + i).GetComponent<MagicPoint>());
@@ -415,26 +419,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     //    timePerMove = defaultTimePerMove;
     //}
     //#endregion
-
-    #region Random Character Action Controller
-    //public void RandomChaActionState(float timeRandom)
-    //{
-    //    randomChaActionState = true;
-    //    StartCoroutine(DelayToNotRandomChaActionState(timeRandom));
-    //}
-
-    //IEnumerator DelayToNotRandomChaActionState(float timeRandom)
-    //{
-    //    yield return new WaitForSeconds(timeRandom);
-    //    randomChaActionState = false;
-    //}
-
-    public void RandomChaActionState(int randomCount)
-    {
-        randomChaActionState = true;
-        randomChaActionStateCount = randomCount;
-    }
-    #endregion
 
     #region RotateMagicCircle Controller
     public void RotateMagicCircle(int indexMagicCircleOutChange, int indexMagicCircleInChange)
