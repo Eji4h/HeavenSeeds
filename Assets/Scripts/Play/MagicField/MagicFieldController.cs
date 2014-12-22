@@ -113,14 +113,14 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                     if (magicPoint.IsSelected)
                         magicPoint.UseMagicPoint();
                 });
-            selectedCharacterController.Action();
             //selectedFxAnimation.SetActive(false);
-            MgFieldState = MagicFieldState.WaitingRotation;
             //selectedFxAnimation.SetActive(true);
             magicCircleOut.RotateCircle(normalDirectionalRotation ?
                 magicCircleOutIndexChangePerMove : -magicCircleOutIndexChangePerMove, timePerMove);
             magicCircleIn.RotateCircle(normalDirectionalRotation ?
                 magicCircleInIndexChangePerMove : -magicCircleInIndexChangePerMove, timePerMove);
+            MgFieldState = MagicFieldState.WaitingRotation;
+            selectedCharacterController.Action();
         }
     }
 
@@ -203,7 +203,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 magicPoint.Color = Color.gray);
             RotateMagicCircle(magicCircleOutIndexChangePerMove, magicCircleInIndexChangePerMove);
         }
-        UIController.EndTurnButton.Enabled = toWaitingCommand;
     }
 
     #region Waiting Command Method
@@ -341,16 +340,20 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     #region Waiting Rotation Method
     IEnumerator WaitingRotation()
     {
+        bool oldIsPlayerTurn = SceneController.TurnController.PlayerTurn;
         UIController.EndTurnButton.Enabled = false;
         UIController.SpinButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
         while (CharacterController.ActionIsUpdate)
             yield return null;
-        if (SceneController.TurnController.PlayerTurn)
-            MgFieldState = MagicFieldState.WaitingCommand;
-        else
-            MgFieldState = MagicFieldState.WaitingMonsterTurn;
+        if (SceneController.TurnController.PlayerTurn == oldIsPlayerTurn)
+        {
+            if (SceneController.TurnController.PlayerTurn)
+                MgFieldState = MagicFieldState.WaitingCommand;
+            else
+                MgFieldState = MagicFieldState.WaitingMonsterTurn;
+        }
     }
     #endregion
 

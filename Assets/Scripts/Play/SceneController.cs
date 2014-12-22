@@ -123,16 +123,16 @@ public class SceneController : MonoBehaviour
                 {
                     case 1:
                         Monster 
-                            duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
-                            payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
+                            //duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
+                            //payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
                             bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
 
-                        duRongKraiSorn.DifficultyMultiply = 1;
-                        payakKraiSorn.DifficultyMultiply = 1;
+                        //duRongKraiSorn.DifficultyMultiply = 1;
+                        //payakKraiSorn.DifficultyMultiply = 1;
                         bossKhchsingh.DifficultyMultiply = 1;
 
-                        listMonster.Add(duRongKraiSorn);
-                        listMonster.Add(payakKraiSorn);
+                        //listMonster.Add(duRongKraiSorn);
+                        //listMonster.Add(payakKraiSorn);
                         listMonster.Add(bossKhchsingh);
                         break;
                     case 2:

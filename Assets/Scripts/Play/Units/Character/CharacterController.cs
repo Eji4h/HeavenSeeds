@@ -562,9 +562,9 @@ public class CharacterController : Unit
 
     IEnumerator UpdateAction()
     {
+        actionIsUpdate = true;
         if (!IsFall)
         {
-            actionIsUpdate = true;
             thisAnimation.Play(actionStr);
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
@@ -579,29 +579,29 @@ public class CharacterController : Unit
             while (thisAnimation.isPlaying)
                 yield return null;
             thisAnimation.Play(idleStr);
-
-            while (Monster.QueueElementIsRunning)
-                yield return null;
-
-            while (Monster.NowBurning)
-                yield return null;
-
-            if(isBurn)
-            {
-                ReceiveDamageByPercentOfSumMaxHp(4f);
-                yield return new WaitForSeconds(1f);
-                BurnTurn--;
-            }
-
-            if(isPoison)
-            {
-                ReceiveDamageByPercentOfSumMaxHp(4f);
-                yield return new WaitForSeconds(1f);
-                PoisonTurn--;
-            }
         }
-        actionIsUpdate = false;
+
+        while (Monster.QueueElementIsRunning)
+            yield return null;
+
+        while (Monster.NowBurning)
+            yield return null;
+
+        if (isBurn)
+        {
+            ReceiveDamageByPercentOfSumMaxHp(4f);
+            yield return new WaitForSeconds(1f);
+            BurnTurn--;
+        }
+
+        if (isPoison)
+        {
+            ReceiveDamageByPercentOfSumMaxHp(4f);
+            yield return new WaitForSeconds(1f);
+            PoisonTurn--;
+        }
         turnController.CharacterActionEnd();
+        actionIsUpdate = false;
     }
 
     public void SetToFall(int turnFall)

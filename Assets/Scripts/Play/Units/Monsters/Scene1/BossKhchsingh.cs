@@ -24,10 +24,7 @@ public class BossKhchsingh : Monster
     #region Properties
     public override int Hp
     {
-        get
-        {
-            return base.Hp;
-        }
+        get { return base.Hp; }
         set
         {
             base.Hp = value;

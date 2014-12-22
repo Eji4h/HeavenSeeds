@@ -34,8 +34,6 @@ public class TurnController : MonoBehaviour
     {
         if (CharacterController.Cost < CharacterController.LowestCost)
             TurnChange();
-        else
-            SceneController.MagicFieldController.ChangeMgFieldState(true);
     }
 
     public void TurnChange()
