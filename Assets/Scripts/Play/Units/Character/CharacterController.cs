@@ -320,7 +320,7 @@ public class CharacterController : Unit
 
     public static void BarrierDefence(int barrierHp, float blockPercentPerTimeDefence)
     {
-        barrierTurn = 10;
+        barrierTurn = 4;
         BarrierHp = Mathf.RoundToInt(barrierHp * (1f + BarrierHpPercentIncrease));
         BlockPercentPerTimeDefence = blockPercentPerTimeDefence;
     }
@@ -342,7 +342,11 @@ public class CharacterController : Unit
         BurnTurn = 0;
         PoisonTurn = 0;
         listCharacterControllerIsFall.ForEach(character =>
-            character.IsFall = false);
+            {
+                character.turnFall = 0;
+                character.isFall = false;
+            });
+        listCharacterControllerIsFall.Clear();
         magicFieldController.RandomChaActionStateCount = 0;
         magicFieldController.listMagicPoints.ForEach(magicPoint =>
                 magicPoint.IsSkull = false);
