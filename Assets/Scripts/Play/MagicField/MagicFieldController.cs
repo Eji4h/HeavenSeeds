@@ -54,8 +54,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     bool randomChaActionState = false;
     int randomChaActionStateCount = 0;
 
-    GameObject selectedFxAnimation,
-        swordFxAnimation,
+    public GameObject swordFxAnimation,
         bowFxAnimation,
         wandFxAnimation,
         shieldFxAnimation,
@@ -79,6 +78,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         get { return chaActionState; }
         set
         {
+            GameObject selectedFxAnimation;
             CharacterController selectedCharacterController;
             chaActionState = randomChaActionState ? (CharacterActionState)Random.Range(0, 5) : value;
             switch (chaActionState)
@@ -113,8 +113,11 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                     if (magicPoint.IsSelected)
                         magicPoint.UseMagicPoint();
                 });
-            //selectedFxAnimation.SetActive(false);
-            //selectedFxAnimation.SetActive(true);
+            if (selectedFxAnimation != null)
+            {
+                selectedFxAnimation.SetActive(false);
+                selectedFxAnimation.SetActive(true);
+            }
             magicCircleOut.RotateCircle(normalDirectionalRotation ?
                 magicCircleOutIndexChangePerMove : -magicCircleOutIndexChangePerMove, timePerMove);
             magicCircleIn.RotateCircle(normalDirectionalRotation ?
