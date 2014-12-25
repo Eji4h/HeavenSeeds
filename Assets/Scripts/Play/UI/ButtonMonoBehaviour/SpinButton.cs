@@ -22,7 +22,10 @@ public class SpinButton : UIButtonMonoBehaviour
         { 
             spinAmount = value * randomNumSecurity;
             PlayerPrefs.SetInt("SpinAmount", SpinAmount);
-            spinAmountLabel.text = SpinAmount.ToString();
+            if (SpinAmount > 0)
+                spinAmountLabel.text = SpinAmount.ToString();
+            else
+                spinAmountLabel.text = "Buy";
         }
     }
 
