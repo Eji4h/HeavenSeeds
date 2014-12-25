@@ -263,7 +263,9 @@ public abstract class Monster : Unit
         listGameObjectTransformInParent.Add(vortexParticle.transform);
 
         stunParticle.transform.parent = thisTransform;
-        stunParticle.transform.localPosition = new Vector3(0f, thisCollider.bounds.max.y, thisCollider.bounds.extents.z + 0.1f);
+        stunParticle.transform.localPosition = new Vector3(0f, 
+            thisCollider.bounds.max.y / thisTransform.localScale.y, 
+            (thisCollider.bounds.extents.z + 0.1f) / thisTransform.localScale.z);
         listGameObjectTransformInParent.Add(stunParticle.transform);
 
         rootParticle.transform.parent = thisTransform;
