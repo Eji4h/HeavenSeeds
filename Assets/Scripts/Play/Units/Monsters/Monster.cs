@@ -30,7 +30,7 @@ public abstract class Monster : Unit
             spellParticlePrefab = Resources.Load("Prefabs/Particle/Player/Attack/Spell2") as GameObject,
             fireParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LatestFire") as GameObject,
             waterParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Water") as GameObject,
-            earthParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Ground") as GameObject,
+            earthParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Land") as GameObject,
             woodParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LeafStrom") as GameObject, 
             burnParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Burn") as GameObject,
             vortexParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/WaterVotex") as GameObject, 
