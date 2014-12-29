@@ -828,7 +828,7 @@ ModelImporter:
       name: IdleWand
       takeName: Default Take
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 179
       wrapMode: 2
       orientationOffsetY: 0
       level: 0

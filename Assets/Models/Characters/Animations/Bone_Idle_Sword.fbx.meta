@@ -828,7 +828,7 @@ ModelImporter:
       name: IdleSword
       takeName: Default Take
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 149
       wrapMode: 2
       orientationOffsetY: 0
       level: 0

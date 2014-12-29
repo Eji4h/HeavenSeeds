@@ -828,7 +828,7 @@ ModelImporter:
       name: IdleScroll
       takeName: Default Take
       firstFrame: 0
-      lastFrame: 79
+      lastFrame: 66
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
