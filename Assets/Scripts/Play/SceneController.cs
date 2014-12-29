@@ -7,7 +7,8 @@ public class SceneController : MonoBehaviour
 {
     #region Variable
     static Camera mainCamera,
-        uiCamera;
+        uiCamera,
+        overlayFxCamera;
 
     static CharacterController swordCharacterController,
         bowCharacterController,
@@ -33,6 +34,11 @@ public class SceneController : MonoBehaviour
     public static Camera UICamera
     {
         get { return SceneController.uiCamera; }
+    }
+
+    public static Camera OverlayFxCamera
+    {
+        get { return SceneController.overlayFxCamera; }
     }
 
     public static CharacterController SwordCharacterController
@@ -202,6 +208,7 @@ public class SceneController : MonoBehaviour
     {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         uiCamera = GameObject.Find("UICamera").GetComponent<Camera>();
+        overlayFxCamera = GameObject.Find("OverlayFxCamera").GetComponent<Camera>();
     }
 
     void SetMagicFieldController()

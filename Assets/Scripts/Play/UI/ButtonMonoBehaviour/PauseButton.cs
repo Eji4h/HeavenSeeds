@@ -13,5 +13,7 @@ public class PauseButton : UIButtonMonoBehaviour
         UIController.EndTurnButton.Enabled = !isPause;
         UIController.SpinButton.Enabled = !isPause;
         //UIController.PauseButton.isEnabled = !isPause;
+
+        SceneController.OverlayFxCamera.gameObject.SetActive(!isPause);
     }
 }
