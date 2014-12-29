@@ -93,8 +93,8 @@ public class SceneController : MonoBehaviour
         Unit.GenRandomNumSecurity();
         queueMonster.Clear();
         SetCameraObjects();
-        SetCharacters();
         SetMagicFieldController();
+        SetCharacters();
         SetTurnController();
     }
 
@@ -256,11 +256,11 @@ public class SceneController : MonoBehaviour
         shieldCharacterControllerTransform.localPosition = Vector3.zero;
         scrollCharacterControllerTransform.localPosition = Vector3.zero;
 
-        string swordWeaponName = PlayerPrefs.GetString("SwordWeapon", "Sword1"),
-            bowWeaponName = PlayerPrefs.GetString("BowWeapon", "Bow1"),
-            wandWeaponName = PlayerPrefs.GetString("WandWeapon", "Wand1"),
-            shieldWeaponName = PlayerPrefs.GetString("ShieldWeapon", "Shield1"),
-            scrollWeaponName = PlayerPrefs.GetString("ScrollWeapon", "Scroll1");
+        string swordWeaponName = PlayerPrefs.GetString("SwordWeapon", "Sword_Stone"),
+            bowWeaponName = PlayerPrefs.GetString("BowWeapon", "Bow_Stone"),
+            wandWeaponName = PlayerPrefs.GetString("WandWeapon", "Wand_Stone"),
+            shieldWeaponName = PlayerPrefs.GetString("ShieldWeapon", "Shield_Stone"),
+            scrollWeaponName = PlayerPrefs.GetString("ScrollWeapon", "Scroll_Stone");
 
         string prefabsWeaponPath = "Prefabs/Weapons/";
 
@@ -281,6 +281,31 @@ public class SceneController : MonoBehaviour
         wandCharacterController.SetStatus();
         shieldCharacterController.SetStatus();
         scrollCharacterController.SetStatus();
+
+        string prefabsWeaponOverlayFxPath = "Prefabs/Particle/Player/SpellCircle/";
+
+        GameObject swordFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + swordWeaponName) as GameObject,
+            bowFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + bowWeaponName) as GameObject,
+            wandFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + wandWeaponName) as GameObject,
+            shieldFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + shieldWeaponName) as GameObject,
+            scrollFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + scrollWeaponName) as GameObject;
+
+        MagicFieldController.swordFxAnimation = Instantiate(swordFxAnimationPrefab, 
+            swordFxAnimationPrefab.transform.position, swordFxAnimationPrefab.transform.rotation) as GameObject;
+        MagicFieldController.bowFxAnimation = Instantiate(bowFxAnimationPrefab,
+            bowFxAnimationPrefab.transform.position, bowFxAnimationPrefab.transform.rotation) as GameObject;
+        //MagicFieldController.wandFxAnimation = Instantiate(wandFxAnimationPrefab,
+        //    wandFxAnimationPrefab.transform.position, wandFxAnimationPrefab.transform.rotation) as GameObject;
+        MagicFieldController.shieldFxAnimation = Instantiate(shieldFxAnimationPrefab,
+            shieldFxAnimationPrefab.transform.position, shieldFxAnimationPrefab.transform.rotation) as GameObject;
+        //MagicFieldController.scrollFxAnimation = Instantiate(scrollFxAnimationPrefab,
+        //    scrollFxAnimationPrefab.transform.position, scrollFxAnimationPrefab.transform.rotation) as GameObject;
+
+        MagicFieldController.swordFxAnimation.SetActive(false);
+        MagicFieldController.bowFxAnimation.SetActive(false);
+        //MagicFieldController.wandFxAnimation.SetActive(false);
+        MagicFieldController.shieldFxAnimation.SetActive(false);
+        //MagicFieldController.scrollFxAnimation.SetActive(false);
     }
 
     void SetTurnController()
