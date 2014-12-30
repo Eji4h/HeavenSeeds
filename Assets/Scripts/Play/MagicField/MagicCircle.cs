@@ -16,8 +16,8 @@ public class MagicCircle : MonoAndCoroutinePauseBehaviour
     Transform thisTransform;
 
     //Data Structor
-    public MagicPoint[] listMagicPoint;
-    public int index, capacity;
+    MagicPoint[] listMagicPoint;
+    int index, capacity;
 
     //Rotation
     float rotateAnglePerMove;
