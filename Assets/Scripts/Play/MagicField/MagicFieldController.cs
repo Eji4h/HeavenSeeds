@@ -113,7 +113,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                     if (magicPoint.IsSelected)
                         magicPoint.UseMagicPoint();
                 });
-            if (selectedFxAnimation != null)
+            if (selectedFxAnimation != null && !selectedCharacterController.IsFall)
             {
                 selectedFxAnimation.SetActive(false);
                 selectedFxAnimation.SetActive(true);
