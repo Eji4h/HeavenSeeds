@@ -100,11 +100,6 @@ public class UIController : MonoBehaviour
         woodElementBarController = GameObject.Find("WoodElementBar").GetComponent<ElementBarController>();
     }
 
-    public static void ShowHpPopUp(int value, Vector3 targetPos, bool isDmg)
-    {
-        ShowHpPopUp(value, targetPos, isDmg ? new Color32(235, 72, 7, 255) : new Color32(228, 213, 116, 255));
-    }
-
     public static void ShowHpPopUp(int value, Vector3 targetPos, Color32 color)
     {
         hpPopUpArray[hpPopUpCurrentIndex++].PopUp(value, targetPos, color);

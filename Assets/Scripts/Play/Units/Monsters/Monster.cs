@@ -20,6 +20,9 @@ public abstract class Monster : Unit
         rootParticle;
 
     static int elementDamageBase;
+
+    static Color32 receiveDamageHpPopColor = new Color32(235, 72, 7, 255),
+        healHpPopUpColor = new Color32(0, 220, 0, 255);
     #endregion
 
     #region Static Method
@@ -307,14 +310,14 @@ public abstract class Monster : Unit
         if (!isImmortal)
         {
             dmg = Mathf.RoundToInt(dmg * 1.2f);
-            UIController.ShowHpPopUp(dmg, thisTransform.position, true);
+            UIController.ShowHpPopUp(dmg, thisTransform.position, receiveDamageHpPopColor);
             Hp -= dmg;
         }
     }
 
     public virtual void ReceiveHeal(int heal)
     {
-        UIController.ShowHpPopUp(heal, thisTransform.position, false);
+        UIController.ShowHpPopUp(heal, thisTransform.position, healHpPopUpColor);
         Hp += heal;
     }
 

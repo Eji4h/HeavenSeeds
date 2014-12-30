@@ -25,7 +25,9 @@ public class CharacterController : Unit
     static GameObject barrierGameObject, 
         healGameObject;
     static Vector3 barrierHpPopUpPos;
-    static Color32 barrierHpPopUpColor = new Color32(90, 228, 255, 255);
+    static Color32 receiveDamageHpPopUpColor = new Color32(208, 60, 224, 255),
+        healHpPopUpColor = new Color32(0, 220, 0, 255),
+        barrierHpPopUpColor = new Color32(254, 250, 94, 255);
 
     static bool isBurn,
         isPoison,
@@ -290,7 +292,7 @@ public class CharacterController : Unit
         if (dmg > 0)
         {
             SumHp -= dmg;
-            UIController.ShowHpPopUp(dmg, swordCharacterController.thisTransform.position, true);
+            UIController.ShowHpPopUp(dmg, swordCharacterController.thisTransform.position, receiveDamageHpPopUpColor);
             listCharacterController.ForEach(characterController =>
                 {
                     characterController.thisAnimation.Stop();
@@ -309,7 +311,7 @@ public class CharacterController : Unit
     public static void ReceiveHeal(int heal)
     {
         SumHp += Mathf.RoundToInt(heal * (1f + HealPercentIncrease));
-        UIController.ShowHpPopUp(heal, swordCharacterController.thisTransform.position, false);
+        UIController.ShowHpPopUp(heal, swordCharacterController.thisTransform.position, healHpPopUpColor);
     }
 
     static void ShowHealParticle()
