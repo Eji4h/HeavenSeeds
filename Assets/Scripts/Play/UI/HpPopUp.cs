@@ -46,9 +46,9 @@ public class HpPopUp : MonoBehaviour
         Vector3 targetScreenPoint = mainCamera.WorldToScreenPoint(targetPos),
             popUpPos = uiCamara.ScreenToWorldPoint(targetScreenPoint);
 
-        transform.position = new Vector3(popUpPos.x, popUpPos.y + 0.5f);
+        transform.position = new Vector3(popUpPos.x, popUpPos.y + 0.4f);
         thisTweenPosition.SetEndToCurrentValue();
-        transform.position = new Vector3(popUpPos.x, popUpPos.y + 0.3f);
+        transform.position = new Vector3(popUpPos.x, popUpPos.y + 0.2f);
         thisTweenPosition.SetStartToCurrentValue();
         thisTweenAlpha.ResetToBeginning();
         thisTweenPosition.ResetToBeginning();

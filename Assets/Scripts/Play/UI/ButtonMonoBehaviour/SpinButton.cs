@@ -11,6 +11,7 @@ public class SpinButton : UIButtonMonoBehaviour
     float timeMove = 1.5f;
 
     UILabel spinAmountLabel;
+    UIWidget spinAmountLabelWidget;
     TweenRotation tweenRotation;
     #endregion
 
@@ -23,9 +24,15 @@ public class SpinButton : UIButtonMonoBehaviour
             spinAmount = value * randomNumSecurity;
             PlayerPrefs.SetInt("SpinAmount", SpinAmount);
             if (SpinAmount > 0)
+            {
+                spinAmountLabelWidget.width = 25;
                 spinAmountLabel.text = SpinAmount.ToString();
+            }
             else
-                spinAmountLabel.text = "Buy";
+            {
+                spinAmountLabelWidget.width = 50;
+                spinAmountLabel.text = "BUY";
+            }
         }
     }
 
@@ -38,6 +45,7 @@ public class SpinButton : UIButtonMonoBehaviour
         base.Start();
         randomNumSecurity = Random.Range(0, 1000);
         spinAmountLabel = GetComponentInChildren<UILabel>();
+        spinAmountLabelWidget = spinAmountLabel.GetComponent<UIWidget>();
         tweenRotation = GetComponent<TweenRotation>();
         tweenRotation.duration = timeMove;
         //SpinAmount = PlayerPrefs.GetInt("SpinAmount", 3);
