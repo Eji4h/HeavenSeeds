@@ -5,14 +5,11 @@ using PayUnity;
 
 public class MagicPoint : MonoBehaviour
 {
-    #region Static Variable
     static float fireEndPercentRange,
         waterEndPercentRange,
         earthEndPercentRange,
         woodEndPercentRange;
-    #endregion
 
-    #region Static Method
     public static void SetInit()
     {
         float minimumValue = 10f,
@@ -31,9 +28,7 @@ public class MagicPoint : MonoBehaviour
         woodEndPercentRange = woodEndPercentRange + minimumValue + 
             PlayerPrefs.GetFloat("WoodOrbValue", defaultSliderValue) * multiplyValue;
     }
-    #endregion
 
-    #region Variable
     Transform thisTransform,
         thisParentTransform;
     UISprite uiSprite,
@@ -47,9 +42,7 @@ public class MagicPoint : MonoBehaviour
     TweenPosition tweenPos;
     TweenScale tweenScale;
     Vector3 localPos;
-    #endregion
 
-    #region Properties
     public bool IsSelected
     {
         get { return isSelected; }
@@ -110,7 +103,6 @@ public class MagicPoint : MonoBehaviour
         get { return uiSprite.color; }
         set { uiSprite.color = value; }
     }
-    #endregion
 
     void Awake()
     {
