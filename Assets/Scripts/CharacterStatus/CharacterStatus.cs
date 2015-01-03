@@ -4,7 +4,6 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public abstract class CharacterStatus : MonoBehaviour
 {
-    #region EnumType
     protected enum GrowRateType
     {
         Main,
@@ -12,9 +11,7 @@ public abstract class CharacterStatus : MonoBehaviour
         Third,
         Bad
     }
-    #endregion
 
-    #region Struct
     struct TierDetail
     {
         public readonly int initNextLvExp,
@@ -42,24 +39,16 @@ public abstract class CharacterStatus : MonoBehaviour
             this.growRateHp = growRateHp;
         }
     }
-    #endregion
 
-    #region Static Variable
     static TierDetail tierLv1,
-        tierLv2,
-        tierLv3;
-    #endregion
+        tierLv2;
 
-    #region Static Method
     public static void SetInitTier()
     {
         tierLv1 = new TierDetail(200, 100, 10, 6, 5, 4, 3, 50);
         tierLv2 = new TierDetail(300, 150, 15, 7, 6, 5, 4, 55);
-        tierLv3 = new TierDetail(400, 200, 20, 8, 7, 6, 5, 60);
     }
-    #endregion
 
-    #region Variable
     TierDetail tierDetail;
 
     int initValueSword,
@@ -101,9 +90,7 @@ public abstract class CharacterStatus : MonoBehaviour
         scrollCostChange;
 
     string characterName;
-    #endregion
 
-    #region Properties
     public int Lv
     {
         get { return lv; }
@@ -176,9 +163,7 @@ public abstract class CharacterStatus : MonoBehaviour
     {
         get { return scrollCostChange; }
     }
-    #endregion
 
-    #region Method
     protected abstract void SetInitValue();
 
     protected void SetInitValue(string characterName,
@@ -209,211 +194,56 @@ public abstract class CharacterStatus : MonoBehaviour
         this.scrollGrowRate = scrollGrowRate;
     }
 
-    protected void SetInitAndIncreasePerLvValueInTierLv()
+    void SetInitAndIncreasePerLvValueInTierLv()
     {
         if (TierLv > 1)
         {
-            int increaseValuePerLvSword = 0,
-                increaseValuePerLvBow = 0,
-                increaseValuePerLvWand = 0,
-                increaseValuePerLvShield = 0,
-                increaseValuePerLvScroll = 0,
-                increaseHpPerLv = 0;
+            int increaseValuePerLvSword,
+                increaseValuePerLvBow,
+                increaseValuePerLvWand,
+                increaseValuePerLvShield,
+                increaseValuePerLvScroll,
+                increaseHpPerLv, 
+                lvFromLowerTier;
 
-            //IncreaseValuePerLvSword
-            switch(swordGrowRate)
-            {
-                case GrowRateType.Main:
-                    increaseValuePerLvSword = tierLv1.growRateMain;
-                    break;
-                case GrowRateType.Secondary:
-                    increaseValuePerLvSword = tierLv1.growRateSecondary;
-                    break;
-                case GrowRateType.Third:
-                    increaseValuePerLvSword = tierLv1.growRateThird;
-                    break;
-                case GrowRateType.Bad:
-                    increaseValuePerLvSword = tierLv1.growRateBad;
-                    break;
-            }
-
-            //IncreaseValuePerLvBow
-            switch (bowGrowRate)
-            {
-                case GrowRateType.Main:
-                    increaseValuePerLvBow = tierLv1.growRateMain;
-                    break;
-                case GrowRateType.Secondary:
-                    increaseValuePerLvBow = tierLv1.growRateSecondary;
-                    break;
-                case GrowRateType.Third:
-                    increaseValuePerLvBow = tierLv1.growRateThird;
-                    break;
-                case GrowRateType.Bad:
-                    increaseValuePerLvBow = tierLv1.growRateBad;
-                    break;
-            }
-
-            //IncreaseValuePerLvWand
-            switch (wandGrowRate)
-            {
-                case GrowRateType.Main:
-                    increaseValuePerLvWand = tierLv1.growRateMain;
-                    break;
-                case GrowRateType.Secondary:
-                    increaseValuePerLvWand = tierLv1.growRateSecondary;
-                    break;
-                case GrowRateType.Third:
-                    increaseValuePerLvWand = tierLv1.growRateThird;
-                    break;
-                case GrowRateType.Bad:
-                    increaseValuePerLvWand = tierLv1.growRateBad;
-                    break;
-            }
-
-            //IncreaseValuePerLvShield
-            switch (shieldGrowRate)
-            {
-                case GrowRateType.Main:
-                    increaseValuePerLvShield = tierLv1.growRateMain;
-                    break;
-                case GrowRateType.Secondary:
-                    increaseValuePerLvShield = tierLv1.growRateSecondary;
-                    break;
-                case GrowRateType.Third:
-                    increaseValuePerLvShield = tierLv1.growRateThird;
-                    break;
-                case GrowRateType.Bad:
-                    increaseValuePerLvShield = tierLv1.growRateBad;
-                    break;
-            }
-
-            //IncreaseValuePerLvScroll
-            switch (scrollGrowRate)
-            {
-                case GrowRateType.Main:
-                    increaseValuePerLvScroll = tierLv1.growRateMain;
-                    break;
-                case GrowRateType.Secondary:
-                    increaseValuePerLvScroll = tierLv1.growRateSecondary;
-                    break;
-                case GrowRateType.Third:
-                    increaseValuePerLvScroll = tierLv1.growRateThird;
-                    break;
-                case GrowRateType.Bad:
-                    increaseValuePerLvScroll = tierLv1.growRateBad;
-                    break;
-            }
-
-            //IncraseHpPerLv
+            //SetIncreasePerLvTier2
+            SetIncreaseValuePerLv(out increaseValuePerLvSword, swordGrowRate, tierLv1);
+            SetIncreaseValuePerLv(out increaseValuePerLvBow, bowGrowRate, tierLv1);
+            SetIncreaseValuePerLv(out increaseValuePerLvWand, wandGrowRate, tierLv1);
+            SetIncreaseValuePerLv(out increaseValuePerLvShield, shieldGrowRate, tierLv1);
+            SetIncreaseValuePerLv(out increaseValuePerLvScroll, scrollGrowRate, tierLv1);
             increaseHpPerLv = tierLv1.growRateHp;
 
-            //SetInitValueTierLv2
-            initValueSword += increaseValuePerLvSword * 5;
-            initValueBow += increaseValuePerLvBow * 5;
-            initValueWand += increaseValuePerLvWand * 5;
-            initValueShield += increaseValuePerLvShield * 5;
-            initValueScroll += increaseValuePerLvScroll * 5;
-            initHp += increaseHpPerLv * 5;
+            //SetInitValueTier2
+            lvFromLowerTier = 5;
+            initValueSword += increaseValuePerLvSword * lvFromLowerTier;
+            initValueBow += increaseValuePerLvBow * lvFromLowerTier;
+            initValueWand += increaseValuePerLvWand * lvFromLowerTier;
+            initValueShield += increaseValuePerLvShield * lvFromLowerTier;
+            initValueScroll += increaseValuePerLvScroll * lvFromLowerTier;
+            initHp += increaseHpPerLv * lvFromLowerTier;
+        }
+    }
 
-            if (TierLv > 2)
-            {
-                //IncreaseValuePerLvSword
-                switch (swordGrowRate)
-                {
-                    case GrowRateType.Main:
-                        increaseValuePerLvSword = tierLv2.growRateMain;
-                        break;
-                    case GrowRateType.Secondary:
-                        increaseValuePerLvSword = tierLv2.growRateSecondary;
-                        break;
-                    case GrowRateType.Third:
-                        increaseValuePerLvSword = tierLv2.growRateThird;
-                        break;
-                    case GrowRateType.Bad:
-                        increaseValuePerLvSword = tierLv2.growRateBad;
-                        break;
-                }
-
-                //IncreaseValuePerLvBow
-                switch (bowGrowRate)
-                {
-                    case GrowRateType.Main:
-                        increaseValuePerLvBow = tierLv2.growRateMain;
-                        break;
-                    case GrowRateType.Secondary:
-                        increaseValuePerLvBow = tierLv2.growRateSecondary;
-                        break;
-                    case GrowRateType.Third:
-                        increaseValuePerLvBow = tierLv2.growRateThird;
-                        break;
-                    case GrowRateType.Bad:
-                        increaseValuePerLvBow = tierLv2.growRateBad;
-                        break;
-                }
-
-                //IncreaseValuePerLvWand
-                switch (wandGrowRate)
-                {
-                    case GrowRateType.Main:
-                        increaseValuePerLvWand = tierLv2.growRateMain;
-                        break;
-                    case GrowRateType.Secondary:
-                        increaseValuePerLvWand = tierLv2.growRateSecondary;
-                        break;
-                    case GrowRateType.Third:
-                        increaseValuePerLvWand = tierLv2.growRateThird;
-                        break;
-                    case GrowRateType.Bad:
-                        increaseValuePerLvWand = tierLv2.growRateBad;
-                        break;
-                }
-
-                //IncreaseValuePerLvShield
-                switch (shieldGrowRate)
-                {
-                    case GrowRateType.Main:
-                        increaseValuePerLvShield = tierLv2.growRateMain;
-                        break;
-                    case GrowRateType.Secondary:
-                        increaseValuePerLvShield = tierLv2.growRateSecondary;
-                        break;
-                    case GrowRateType.Third:
-                        increaseValuePerLvShield = tierLv2.growRateThird;
-                        break;
-                    case GrowRateType.Bad:
-                        increaseValuePerLvShield = tierLv2.growRateBad;
-                        break;
-                }
-
-                //IncreaseValuePerLvScroll
-                switch (scrollGrowRate)
-                {
-                    case GrowRateType.Main:
-                        increaseValuePerLvScroll = tierLv2.growRateMain;
-                        break;
-                    case GrowRateType.Secondary:
-                        increaseValuePerLvScroll = tierLv2.growRateSecondary;
-                        break;
-                    case GrowRateType.Third:
-                        increaseValuePerLvScroll = tierLv2.growRateThird;
-                        break;
-                    case GrowRateType.Bad:
-                        increaseValuePerLvScroll = tierLv2.growRateBad;
-                        break;
-                }
-
-                //IncraseHpPerLv
-                increaseHpPerLv = tierLv2.growRateHp;
-
-                //SetInitValueTierLv2
-                initValueSword += increaseValuePerLvSword * 10;
-                initValueBow += increaseValuePerLvBow * 10;
-                initValueWand += increaseValuePerLvWand * 10;
-                initValueShield += increaseValuePerLvShield * 10;
-                initValueScroll += increaseValuePerLvScroll * 10;
-                initHp += increaseHpPerLv * 10;
-            }
+    void SetIncreaseValuePerLv(out int itemIncreaseValuePerLv, GrowRateType growRate, TierDetail tierLvDetail)
+    {
+        switch(growRate)
+        {
+            case GrowRateType.Main:
+                itemIncreaseValuePerLv = tierLvDetail.growRateMain;
+                break;
+            case GrowRateType.Secondary:
+                itemIncreaseValuePerLv = tierLvDetail.growRateSecondary;
+                break;
+            case GrowRateType.Third:
+                itemIncreaseValuePerLv = tierLvDetail.growRateThird;
+                break;
+            case GrowRateType.Bad:
+                itemIncreaseValuePerLv = tierLvDetail.growRateBad;
+                break;
+            default:
+                itemIncreaseValuePerLv = tierLvDetail.growRateBad;
+                break;
         }
     }
 
@@ -431,9 +261,6 @@ public abstract class CharacterStatus : MonoBehaviour
             case 2:
                 tierDetail = tierLv2;
                 break;
-            case 3:
-                tierDetail = tierLv3;
-                break;
             default:
                 tierDetail = tierLv1;
                 break;
@@ -441,21 +268,16 @@ public abstract class CharacterStatus : MonoBehaviour
 
         SetInitAndIncreasePerLvValueInTierLv();
 
-        nextLvExp = (lv == tierDetail.maxLv) ? 0 : tierDetail.initNextLvExp + (lv - 1) * tierDetail.increaseNextLvExp;
+        int lvDecreaseOne = lv - 1;
+        nextLvExp = (lv == tierDetail.maxLv) ? 0 : tierDetail.initNextLvExp + lvDecreaseOne * tierDetail.increaseNextLvExp;
 
         Lv = PlayerPrefs.GetInt(characterName + "Lv", 1);
         CurrentExp = PlayerPrefs.GetInt(characterName + "CurrentExp", 0);
-        swordValue = initValueSword + (lv - 1) * increaseValuePerLvSword;
-        bowValue = initValueBow + (lv - 1) * increaseValuePerLvBow;
-        wandValue = initValueWand + (lv - 1) * increaseValuePerLvWand;
-        shiedlValue = initValueShield + (lv - 1) * increaseValuePerLvShield;
-        scrollValue = initValueScroll + (lv - 1) * increaseValuePerLvScroll;
-        hp = initHp + (lv - 1) * increaseHpPerLv;
+        swordValue = initValueSword + lvDecreaseOne * increaseValuePerLvSword;
+        bowValue = initValueBow + lvDecreaseOne * increaseValuePerLvBow;
+        wandValue = initValueWand + lvDecreaseOne * increaseValuePerLvWand;
+        shiedlValue = initValueShield + lvDecreaseOne * increaseValuePerLvShield;
+        scrollValue = initValueScroll + lvDecreaseOne * increaseValuePerLvScroll;
+        hp = initHp + lvDecreaseOne * increaseHpPerLv;
     }
-
-    // Use this for initialization
-    protected virtual void Start()
-    {
-    }
-    #endregion
 }

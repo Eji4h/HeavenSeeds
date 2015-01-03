@@ -3,16 +3,12 @@ using System.Collections;
 
 public class GraphLink : MonoBehaviour
 {
-    #region Static Variable
     public static float lineWidth = 0.01f;
-    #endregion
 
-    #region Variable
     Transform thisTransform;
     public Transform linkTransform;
 
     LineRenderer lineRenderer;
-    #endregion
 
     // Use this for initialization
     void Start()

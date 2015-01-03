@@ -4,14 +4,11 @@ using System.Collections.Generic;
 
 public class PayUIProgressBar : UIProgressBar
 {
-    #region Variable
     float maxValue,
         multiplyValue;
 
     List<RangeOfColor> listRangeOfColor;
-    #endregion
 
-    #region Properties
     public float Value
     {
         get { return value; }
@@ -40,7 +37,6 @@ public class PayUIProgressBar : UIProgressBar
             multiplyValue = 1f / maxValue;
         }
     }
-    #endregion
 
     void Awake()
     {

@@ -4,7 +4,6 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class OrbValueController : MonoBehaviour
 {
-    #region Static Variable
     static float startSliderValue = 0.5f;
     static UISlider fireSilder,
         waterSilder,
@@ -15,9 +14,7 @@ public class OrbValueController : MonoBehaviour
         waterValue,
         earthValue,
         woodValue;
-    #endregion
 
-    #region Static Properties
     public static float FireValue
     {
         get { return OrbValueController.fireValue; }
@@ -37,9 +34,7 @@ public class OrbValueController : MonoBehaviour
     {
         get { return OrbValueController.woodValue; }
     }
-    #endregion
 
-    #region Static Method
     public static void SetToPlayerPref()
     {
         PlayerPrefs.SetFloat("FireOrbValue", fireValue);
@@ -191,11 +186,8 @@ public class OrbValueController : MonoBehaviour
             }
         }
     }
-    #endregion
 
-    #region Variable
     public ElementType elementType;
-    #endregion
 
     // Use this for initialization
     void Start()
