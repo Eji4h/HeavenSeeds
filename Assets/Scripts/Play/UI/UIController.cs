@@ -4,7 +4,6 @@ using System.Collections;
 
 public class UIController : MonoBehaviour
 {
-    #region Static Variable
     static HpPopUp[] hpPopUpArray;
     static int hpPopUpCurrentIndex = 0,
         hpPopUpCount = 20;
@@ -23,9 +22,7 @@ public class UIController : MonoBehaviour
         waterElementBarController,
         earthElementBarController,
         woodElementBarController;
-    #endregion
 
-    #region Static Properties
     public static int ManaCost
     {
         get { return Convert.ToInt32(manaLabel.text); }
@@ -80,9 +77,7 @@ public class UIController : MonoBehaviour
     {
         get { return UIController.woodElementBarController; }
     }
-    #endregion
 
-    #region Static Method
     public static void SetInit()
     {
         playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<PayUIProgressBar>();
@@ -105,7 +100,6 @@ public class UIController : MonoBehaviour
         hpPopUpArray[hpPopUpCurrentIndex++].PopUp(value, targetPos, color);
         hpPopUpCurrentIndex %= hpPopUpCount;
     }
-    #endregion
 
     // Use this for initialization
     void Start()

@@ -3,26 +3,20 @@ using System.Collections;
 
 public class HpPopUp : MonoBehaviour
 {
-    #region Static
     static Camera mainCamera, uiCamara;
     static Transform allHpPopUpParentTransform;
-    #endregion
 
-    #region Static Method
     public static void SetCamera()
     {
         mainCamera = SceneController.MainCamera;
         uiCamara = SceneController.UICamera;
         allHpPopUpParentTransform = GameObject.Find("AllHpPopUp").transform;
     }
-    #endregion
 
-    #region Variable
     UILabel thisLabel;
     TweenAlpha thisTweenAlpha;
     TweenPosition thisTweenPosition;
     TweenScale thisTweenScale;
-    #endregion
 
     // Use this for initialization
     void Start()

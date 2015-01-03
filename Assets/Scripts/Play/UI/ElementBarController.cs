@@ -3,18 +3,13 @@ using System.Collections;
 
 public class ElementBarController : MonoBehaviour
 {
-    #region Static Variable
     static int numberOfSteps = 26;
-    #endregion
 
-    #region Variable
     UIProgressBar progressBar;
     public ElementType element;
     float oneStepValue;
     int count = 0;
-    #endregion
 
-    #region Properties
     float Value
     {
         get { return progressBar.value; }
@@ -28,7 +23,6 @@ public class ElementBarController : MonoBehaviour
             }
         }
     }
-    #endregion
 
     // Use this for initialization
     void Start()
