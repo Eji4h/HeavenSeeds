@@ -81,7 +81,7 @@ public abstract class Monster : Unit
     float damageMinimumMultiply,
         damageMaximumMultiply;
 
-    ElementType weaknessElement;
+    protected ElementType weaknessElement;
 
     protected bool isImmortal = false;
 
@@ -468,10 +468,10 @@ public abstract class Monster : Unit
 
     IEnumerator WoodReceiveBehaviour()
     {
-        int damge = elementDamageBase * (weaknessElement == ElementType.Wood ? 2 : 1);
+        int damage = elementDamageBase * (weaknessElement == ElementType.Wood ? 2 : 1);
         ReuseGameObject(woodParticle, Vector3.zero, true);
         yield return new WaitForSeconds(6.5f);
-        ReceiveDamage(OftenMethod.ProbabilityDistribution(elementDamageBase, 0.95f, 1.05f, 3));
+        ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 0.95f, 1.05f, 3));
         MoreReceiveDamageTurn = 1;
     }
 
