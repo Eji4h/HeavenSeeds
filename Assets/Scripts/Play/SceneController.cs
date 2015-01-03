@@ -5,7 +5,6 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class SceneController : MonoBehaviour
 {
-    #region Variable
     static Camera mainCamera,
         uiCamera,
         overlayFxCamera;
@@ -23,9 +22,7 @@ public class SceneController : MonoBehaviour
     static MagicFieldController magicFieldController;
 
     static TurnController turnController;
-    #endregion
 
-    #region Properteis
     public static Camera MainCamera
     {
         get { return SceneController.mainCamera; }
@@ -80,9 +77,7 @@ public class SceneController : MonoBehaviour
     {
         get { return SceneController.turnController; }
     }
-    #endregion
 
-    #region Static Method
     public static void NextMonsterQueue()
     {
         if (queueMonster.Count > 0)
@@ -92,7 +87,6 @@ public class SceneController : MonoBehaviour
             currentMonster.gameObject.SetActive(true);
         }
     }
-    #endregion
 
     void Awake()
     {

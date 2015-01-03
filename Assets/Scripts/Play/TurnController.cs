@@ -5,13 +5,10 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class TurnController : MonoBehaviour
 {
-    #region Variable
     bool playerTurn = false;
     int turnCount = 0,
         incomeCost;
-    #endregion
 
-    #region Properties
     public bool PlayerTurn
     {
         get { return playerTurn; }
@@ -21,7 +18,6 @@ public class TurnController : MonoBehaviour
     {
         get { return turnCount; }
     }
-    #endregion
 
     // Use this for initialization
     void Start()
