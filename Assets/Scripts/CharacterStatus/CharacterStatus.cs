@@ -94,19 +94,33 @@ public abstract class CharacterStatus : MonoBehaviour
     public int Lv
     {
         get { return lv; }
-        set { lv = value; }
+        set 
+        {
+            lv = value;
+            PlayerPrefs.SetInt(characterName + "Lv", lv);
+        }
     }
 
     public int TierLv
     {
         get { return tierLv; }
-        set { tierLv = value; }
     }
 
     public int CurrentExp
     {
         get { return currentExp; }
-        set { currentExp = value; }
+        set 
+        {
+            currentExp = value; 
+            while (nextLvExp > 0 && 
+                currentExp >= nextLvExp)
+            {
+                int remainExp = nextLvExp - currentExp;
+                currentExp -= nextLvExp;
+                Lv++;
+            }
+            PlayerPrefs.SetInt(characterName + "CurrentExp", currentExp);
+        }
     }
 
     public int SwordValue
@@ -198,13 +212,7 @@ public abstract class CharacterStatus : MonoBehaviour
     {
         if (TierLv > 1)
         {
-            int increaseValuePerLvSword,
-                increaseValuePerLvBow,
-                increaseValuePerLvWand,
-                increaseValuePerLvShield,
-                increaseValuePerLvScroll,
-                increaseHpPerLv, 
-                lvFromLowerTier;
+            int lvFromLowerTier;
 
             //SetIncreasePerLvTier2
             SetIncreaseValuePerLv(out increaseValuePerLvSword, swordGrowRate, tierLv1);
@@ -251,7 +259,7 @@ public abstract class CharacterStatus : MonoBehaviour
     {
         SetInitValue();
         SetGrowRate();
-        TierLv = PlayerPrefs.GetInt(characterName + "TierLv", 1);
+        tierLv = PlayerPrefs.GetInt(characterName + "TierLvSelected", 1);
 
         switch (TierLv)
         {
