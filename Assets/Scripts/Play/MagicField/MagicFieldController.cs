@@ -14,16 +14,13 @@ public enum CharacterActionState
 
 public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 {
-    #region EnumType
     enum MagicFieldState
     {
         WaitingCommand,
         WaitingRotation,
         WaitingMonsterTurn
     }
-    #endregion
 
-    #region Variable
     int randomNumSecurity;
     Camera uiCamera;
 
@@ -59,9 +56,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         wandFxAnimation,
         shieldFxAnimation,
         scrollFxAnimation;
-    #endregion
 
-    #region Properties
     MagicFieldState MgFieldState
     {
         get { return mgFieldState; }
@@ -146,7 +141,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     {
         get { return MgFieldState == MagicFieldState.WaitingRotation; }
     }
-    #endregion
 
     // Use this for initialization
     void Start()
@@ -340,7 +334,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     }
     #endregion
 
-    #region Waiting Rotation Method
     IEnumerator WaitingRotation()
     {
         bool oldIsPlayerTurn = SceneController.TurnController.PlayerTurn;
@@ -358,9 +351,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                 MgFieldState = MagicFieldState.WaitingMonsterTurn;
         }
     }
-    #endregion
 
-    #region Waiting Monster Turn Method
 
     IEnumerator WaitingMonsterTurn()
     {
@@ -368,7 +359,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         UIController.SpinButton.Enabled = false;
         yield return null;
     }
-    #endregion
 
     public void ResetMagicPointIsSelected()
     {
@@ -389,42 +379,11 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         UIController.WoodElementBarController.ResetCount();
     }
 
-    #region MagicPoint Collider Controller
     void SetMagicPointCollider(bool enabled)
     {
         listMagicPoints.ForEach(magicPoint =>
             magicPoint.collider2D.enabled = enabled);
     }
-
-    //public void DisableColliderMagicPoint(float timeDisable)
-    //{
-    //    StartCoroutine(DelayMagicPointColliderToEnabled(timeDisable));
-    //}
-
-    //IEnumerator DelayMagicPointColliderToEnabled(float timeDisable)
-    //{
-    //    SetMagicPointCollider(false);
-    //    yield return new WaitForSeconds(timeDisable);
-    //    SetMagicPointCollider(true);
-    //}
-    #endregion
-
-    //#region MagicCircle TimePerMove Controller
-    //public void TimePerMoveSlowdown(float slowdownMultiply, float timeSlow)
-    //{
-    //    if (slowdownMultiply < 1f)
-    //    {
-    //        timePerMove *= slowdownMultiply;
-    //        StartCoroutine(DelayToDefaultTimePerMove(timeSlow));
-    //    }
-    //}
-
-    //IEnumerator DelayToDefaultTimePerMove(float timeSlow)
-    //{
-    //    yield return new WaitForSeconds(timeSlow);
-    //    timePerMove = defaultTimePerMove;
-    //}
-    //#endregion
 
     #region RotateMagicCircle Controller
     public void RotateMagicCircle(int indexMagicCircleOutChange, int indexMagicCircleInChange)
