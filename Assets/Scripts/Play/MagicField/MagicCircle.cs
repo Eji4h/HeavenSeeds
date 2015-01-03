@@ -4,15 +4,12 @@ using System.Collections.Generic;
 
 public class MagicCircle : MonoAndCoroutinePauseBehaviour
 {
-    #region Struct
     struct RotationCircleArguments
     {
         public int indexChange;
         public float timePerMove;
     }
-    #endregion
 
-    #region Variable
     Transform thisTransform;
 
     //Data Structor
@@ -26,9 +23,7 @@ public class MagicCircle : MonoAndCoroutinePauseBehaviour
         new Queue<RotationCircleArguments>(8);
 
     public bool isCircleOut;
-    #endregion
 
-    #region Properties
     //Data Structor
     public MagicPoint[] ListMagicPoint
     {
@@ -59,7 +54,6 @@ public class MagicCircle : MonoAndCoroutinePauseBehaviour
     {
         get { return nowRotate; }
     }
-    #endregion
 
     public void SetMagicPoint(MagicPoint[] listMagicPoint)
     {
@@ -73,7 +67,7 @@ public class MagicCircle : MonoAndCoroutinePauseBehaviour
         {
             int selectedIndex = index - this.index;
             while (selectedIndex < 0)
-                selectedIndex += listMagicPoint.Length;
+                selectedIndex += capacity;
             return listMagicPoint[selectedIndex % capacity];
         }
     }
