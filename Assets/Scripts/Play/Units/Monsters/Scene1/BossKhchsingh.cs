@@ -19,6 +19,7 @@ public class BossKhchsingh : Monster
 
     #region Variable
     List<BossKhchsinghState> listBossKhchsinghStateCanUse = new List<BossKhchsinghState>(5);
+    bool addUltimateSkillToListStateCanUse = false;
     #endregion
 
     #region Properties
@@ -28,8 +29,13 @@ public class BossKhchsingh : Monster
         set
         {
             base.Hp = value;
-            if (Hp <= (int)(MaxHp * 0.1))
+
+            if (!addUltimateSkillToListStateCanUse &&
+                Hp <= (int)(MaxHp * 0.2))
+            {
                 listBossKhchsinghStateCanUse.Add(BossKhchsinghState.IvoryBeam);
+                addUltimateSkillToListStateCanUse = true;
+            }
         }
     }
     #endregion
