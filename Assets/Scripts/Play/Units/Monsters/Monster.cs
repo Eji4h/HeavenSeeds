@@ -300,7 +300,7 @@ public abstract class Monster : Unit
     {
         if (!isImmortal)
         {
-            dmg = Mathf.RoundToInt(dmg * 1.2f);
+            dmg = Mathf.RoundToInt(dmg * (isMoreReceiveDamage ? 1.2f : 1f));
             UIController.ShowHpPopUp(dmg, thisTransform.position, receiveDamageHpPopColor);
             Hp -= dmg;
             MoreReceiveDamageTurn--;
