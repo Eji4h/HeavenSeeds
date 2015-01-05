@@ -349,12 +349,17 @@ public class CharacterController : Unit
     {
         BurnTurn = 0;
         PoisonTurn = 0;
-        listCharacterControllerIsFall.ForEach(character =>
+        int listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
+
+        for (int i = 0; i < listCharacterControllerIsFall.Count; i++)
+        {
+            listCharacterControllerIsFall[i].TurnFall = 0;
+            if (listCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
             {
-                character.turnFall = 0;
-                character.isFall = false;
-            });
-        listCharacterControllerIsFall.Clear();
+                i--;
+                listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
+            }
+        }
         magicFieldController.RandomChaActionStateCount = 0;
         magicFieldController.listMagicPoints.ForEach(magicPoint =>
                 magicPoint.IsSkull = false);
