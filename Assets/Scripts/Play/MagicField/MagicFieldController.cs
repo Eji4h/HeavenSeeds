@@ -355,6 +355,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             SceneController.TurnController.TurnChange();
             whenFinishRotationWillEndTurn = false;
         }
+        else
+            MgFieldState = MagicFieldState.WaitingCommand;
     }
 
 
