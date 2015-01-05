@@ -356,7 +356,12 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             whenFinishRotationWillEndTurn = false;
         }
         else
-            MgFieldState = MagicFieldState.WaitingCommand;
+        {
+            if (SceneController.TurnController.PlayerTurn)
+                MgFieldState = MagicFieldState.WaitingCommand;
+            else
+                MgFieldState = MagicFieldState.WaitingMonsterTurn;
+        }
     }
 
 
