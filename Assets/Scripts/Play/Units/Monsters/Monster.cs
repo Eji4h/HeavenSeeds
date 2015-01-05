@@ -274,7 +274,6 @@ public abstract class Monster : Unit
     {
         if (Hp > 0)
         {
-            MoreReceiveDamageTurn--;
             if (!isStun)
                 MonsterBehaviour();
             else
@@ -304,6 +303,7 @@ public abstract class Monster : Unit
             dmg = Mathf.RoundToInt(dmg * 1.2f);
             UIController.ShowHpPopUp(dmg, thisTransform.position, receiveDamageHpPopColor);
             Hp -= dmg;
+            MoreReceiveDamageTurn--;
         }
     }
 
@@ -464,7 +464,7 @@ public abstract class Monster : Unit
         ReuseGameObject(woodParticle, Vector3.zero, true);
         yield return new WaitForSeconds(6.5f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 0.95f, 1.05f, 3));
-        MoreReceiveDamageTurn = 1;
+        MoreReceiveDamageTurn = 3;
     }
 
     IEnumerator BurnReceiveBehaviour()
