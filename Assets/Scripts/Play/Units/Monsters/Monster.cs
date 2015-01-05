@@ -74,9 +74,8 @@ public abstract class Monster : Unit
 
     #region Variable
     protected Rigidbody thisRigidbody;
-    int hp, 
-        damageBase,
-        difficultyMultiply;
+    int hp,
+        damageBase;
 
     float damageMinimumMultiply,
         damageMaximumMultiply;
@@ -160,11 +159,6 @@ public abstract class Monster : Unit
         get { return damageBase / randomNumSecurity; }
         set { damageBase = value * randomNumSecurity; }
     }
-    public int DifficultyMultiply
-    {
-        get { return difficultyMultiply / randomNumSecurity; }
-        set { difficultyMultiply = value * randomNumSecurity; }
-    }
 
     protected float DamageMinimumMultiply
     {
@@ -242,8 +236,6 @@ public abstract class Monster : Unit
 
     protected override void Start()
     {
-        MaxHp *= DifficultyMultiply;
-        DamageBase *= DifficultyMultiply;
         if (damageMinimumMultiply == 0f)
             DamageMinimumMultiply = 0.9f;
         if (damageMaximumMultiply == 0f)

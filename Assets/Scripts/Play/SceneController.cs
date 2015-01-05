@@ -127,10 +127,6 @@ public class SceneController : MonoBehaviour
                             //payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
                             bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
 
-                        //duRongKraiSorn.DifficultyMultiply = 1;
-                        //payakKraiSorn.DifficultyMultiply = 1;
-                        bossKhchsingh.DifficultyMultiply = 1;
-
                         //listMonster.Add(duRongKraiSorn);
                         //listMonster.Add(payakKraiSorn);
                         listMonster.Add(bossKhchsingh);
