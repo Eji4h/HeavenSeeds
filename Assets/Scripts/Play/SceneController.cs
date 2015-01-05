@@ -108,8 +108,7 @@ public class SceneController : MonoBehaviour
         CharacterController.SetInit();
 
         monstersParentTransform = GameObject.Find("Monsters").transform;
-        int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1),
-            sceneLv = PlayerPrefs.GetInt("SceneLv", 1);
+        int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
         string monsterPath = "Prefabs/Monsters/Scene" + sceneSelected,
             sceneSetPath = "Prefabs/Scenes/SceneSet" + sceneSelected;
         List<Monster> listMonster = new List<Monster>(5);
@@ -119,25 +118,14 @@ public class SceneController : MonoBehaviour
         switch (sceneSelected)
         {
             case 1:
-                switch (sceneLv)
-                {
-                    case 1:
-                        Monster 
-                            //duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
-                            //payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
-                            bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
+                Monster
+                    //duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
+                    //payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
+                    bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
 
-                        //listMonster.Add(duRongKraiSorn);
-                        //listMonster.Add(payakKraiSorn);
-                        listMonster.Add(bossKhchsingh);
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-
-                        break;
-                }
+                //listMonster.Add(duRongKraiSorn);
+                //listMonster.Add(payakKraiSorn);
+                listMonster.Add(bossKhchsingh);
                 break;
             case 2:
 
