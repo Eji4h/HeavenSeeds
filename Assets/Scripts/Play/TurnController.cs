@@ -26,12 +26,6 @@ public class TurnController : MonoBehaviour
         TurnChange();
     }
 
-    public void CharacterActionEnd()
-    {
-        if (CharacterController.Cost < CharacterController.LowestCost)
-            TurnChange();
-    }
-
     public void TurnChange()
     {
         playerTurn = !playerTurn;

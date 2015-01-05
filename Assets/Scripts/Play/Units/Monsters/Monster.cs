@@ -393,7 +393,7 @@ public abstract class Monster : Unit
         });
         Destroy(gameObject);
         SceneController.NextMonsterQueue();
-        turnController.CharacterActionEnd();
+        CharacterController.CheckCostLessthanLowestCost();
     }
     #endregion
 

@@ -48,6 +48,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     MagicFieldState mgFieldState;
     CharacterActionState chaActionState;
 
+    bool whenFinishRotationWillEndTurn = false;
+
     bool randomChaActionState = false;
     int randomChaActionStateCount = 0;
 
@@ -120,6 +122,12 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             MgFieldState = MagicFieldState.WaitingRotation;
             selectedCharacterController.Action();
         }
+    }
+
+    public bool WhenFinishRotationWillEndTurn
+    {
+        get { return whenFinishRotationWillEndTurn; }
+        set { whenFinishRotationWillEndTurn = value; }
     }
 
     public bool RandomChaActionState
@@ -336,19 +344,16 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     IEnumerator WaitingRotation()
     {
-        bool oldIsPlayerTurn = SceneController.TurnController.PlayerTurn;
         UIController.EndTurnButton.Enabled = false;
         UIController.SpinButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
         while (CharacterController.ActionIsUpdate)
             yield return null;
-        if (SceneController.TurnController.PlayerTurn == oldIsPlayerTurn)
+        if (whenFinishRotationWillEndTurn)
         {
-            if (SceneController.TurnController.PlayerTurn)
-                MgFieldState = MagicFieldState.WaitingCommand;
-            else
-                MgFieldState = MagicFieldState.WaitingMonsterTurn;
+            SceneController.TurnController.TurnChange();
+            whenFinishRotationWillEndTurn = false;
         }
     }
 

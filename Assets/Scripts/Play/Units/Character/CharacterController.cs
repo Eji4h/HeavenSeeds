@@ -274,6 +274,12 @@ public class CharacterController : Unit
         Cost = PlayerPrefs.GetInt("startCost", 15);
     }
 
+    public static void CheckCostLessthanLowestCost()
+    {
+        if (Cost < LowestCost)
+            magicFieldController.WhenFinishRotationWillEndTurn = true;
+    }
+
     public static void ReceiveDamage(int dmg)
     {
         if (barrierGameObject.activeInHierarchy)
@@ -606,7 +612,7 @@ public class CharacterController : Unit
             yield return new WaitForSeconds(1f);
             PoisonTurn--;
         }
-        turnController.CharacterActionEnd();
+        CheckCostLessthanLowestCost();
         actionIsUpdate = false;
     }
 
