@@ -5,7 +5,7 @@ public class BlandaStatus : CharacterStatus
 {
     protected override void SetInitValue()
     {
-        SetInitValue("Blanda", 57, 82, 52, 93, 40, 2300);
+        SetInitValue("Wann", 57, 82, 52, 93, 40, 2300);
     }
 
     protected override void SetGrowRate()

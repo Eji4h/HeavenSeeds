@@ -17,35 +17,15 @@ public class Callpopup : MonoBehaviour {
         //Name.GetComponent<UILabel>().text = transform.name;
         
   
-        switch (transform.name)
-        {
-            case ("Goma"):
-                Pic.GetComponent<UISprite>().spriteName = "Card_info_mayom_01";
-                Thumb.GetComponent<UISprite>().spriteName = "Card_tribe_mayom_01";
-                Lv.GetComponent<UILabel>().text =  GetComponent<GomaStatus>().Lv.ToString();
-                Swrd.GetComponent<UILabel>().text = GetComponent<GomaStatus>().SwordValue.ToString();
-                Bw.GetComponent<UILabel>().text = GetComponent<GomaStatus>().BowValue.ToString();
-                Wnd.GetComponent<UILabel>().text = GetComponent<GomaStatus>().WandValue.ToString();
-                Shd.GetComponent<UILabel>().text = GetComponent<GomaStatus>().ShiedlValue.ToString();
-                Scl.GetComponent<UILabel>().text = GetComponent<GomaStatus>().ScrollValue.ToString();
-                break;
-            case ("Hansa"):
-                Pic.GetComponent<UISprite>().spriteName = "Card_info_rambut_01";
-                Thumb.GetComponent<UISprite>().spriteName = "Card_tribe_rambut_01";
-                break;
-            case ("Yana"):
-                Pic.GetComponent<UISprite>().spriteName = "Card_info_mangst_01";
-                Thumb.GetComponent<UISprite>().spriteName = "Card_tribe_mangst_01";
-                break;
-            case ("Sansa"):
-                Pic.GetComponent<UISprite>().spriteName = "Card_info_orang_01";
-                Thumb.GetComponent<UISprite>().spriteName = "Card_tribe_orang_01";
-                break;
-            case ("Shun"):
-                Pic.GetComponent<UISprite>().spriteName = "Card_info_durian_01";
-                Thumb.GetComponent<UISprite>().spriteName = "Card_tribe_raseapp_01";
-                break;
-        }
+      
+        Pic.GetComponent<UISprite>().spriteName = "Card_info_"+transform.name;
+        Thumb.GetComponent<UISprite>().spriteName = "Card_tribe_"+transform.name;
+        Lv.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().Lv.ToString();
+        Swrd.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().SwordValue.ToString();
+        Bw.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().BowValue.ToString();
+        Wnd.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().WandValue.ToString();
+        Shd.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().ShiedlValue.ToString();
+        Scl.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().ScrollValue.ToString();
         a.active = true;
     }
 }
