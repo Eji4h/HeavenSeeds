@@ -5,7 +5,7 @@ public class PeepaStatus : CharacterStatus
 {
     protected override void SetInitValue()
     {
-        SetInitValue("Peepa", 41, 35, 88, 70, 75, 1600);
+        SetInitValue("Peepah", 41, 35, 88, 70, 75, 1600);
     }
 
     protected override void SetGrowRate()
