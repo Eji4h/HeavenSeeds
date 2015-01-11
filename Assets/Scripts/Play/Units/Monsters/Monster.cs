@@ -6,7 +6,6 @@ using PayUnity;
 
 public abstract class Monster : Unit
 {
-    #region Static Variable
     static GameObject slashParticle,
         arrowHitParticle,
         spellParticle, 
@@ -23,9 +22,7 @@ public abstract class Monster : Unit
 
     static Color32 receiveDamageHpPopColor = new Color32(235, 72, 7, 255),
         healHpPopUpColor = new Color32(0, 220, 0, 255);
-    #endregion
 
-    #region Static Method
     public static new void SetInit()
     {
         GameObject slashParticlePrefab = Resources.Load("Prefabs/Particle/Player/Attack/Slash 2") as GameObject, 
@@ -70,9 +67,7 @@ public abstract class Monster : Unit
             CharacterController.ShieldValue +
             CharacterController.ScrollValue) / 5;
     }
-    #endregion
 
-    #region Variable
     protected Rigidbody thisRigidbody;
     int hp,
         damageBase;
@@ -103,9 +98,7 @@ public abstract class Monster : Unit
         moreReceiveDamageTurn = 0;
 
     float percentDebuffToCharacter;
-    #endregion
 
-    #region Properties
     protected float LocalPositionX
     {
         get { return thisTransform.localPosition.x; }
@@ -225,9 +218,7 @@ public abstract class Monster : Unit
             rootParticle.SetActive(isMoreReceiveDamage);
         }
     }
-    #endregion
 
-    #region Method
     protected override void Awake()
     {
         base.Awake();
@@ -572,6 +563,5 @@ public abstract class Monster : Unit
     {
         magicFieldController.OrbSkull(numberOrbSkull);
     }
-    #endregion
     #endregion
 }
