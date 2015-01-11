@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Boss_Gandhavar : Monster {
+public class BossGandhavar : Monster
+{
 
 	// Use this for initialization
 	void Start () {
