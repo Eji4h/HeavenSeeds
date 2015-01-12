@@ -133,7 +133,7 @@ public class SceneController : MonoBehaviour
                 break;
             case 2:
                 Monster
-                    bossMachanu = InstantiateMonster(monsterPath + "/BossMuchanu").GetComponent<Monster>();
+                    bossMachanu = InstantiateMonster(monsterPath + "/BossMachanu").GetComponent<Monster>();
 
                 listMonster.Add(bossMachanu);
                 break;
