@@ -168,7 +168,16 @@ public abstract class Monster : Unit
     public bool IsImmortal
     {
         get { return isImmortal; }
-        set { isImmortal = value; }
+    }
+
+    public void SetIsImmortalTrue()
+    {
+        isImmortal = true;
+    }
+
+    public void SetIsImmortalFalse()
+    {
+        isImmortal = false;
     }
 
     public bool QueueElementIsRunning
