@@ -115,6 +115,10 @@ public class SceneController : MonoBehaviour
 
         Instantiate(Resources.Load(sceneSetPath));
 
+        //For monsters test
+        sceneSelected = 2;
+        monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
+
         switch (sceneSelected)
         {
             case 1:
@@ -128,7 +132,10 @@ public class SceneController : MonoBehaviour
                 listMonster.Add(bossKhchsingh);
                 break;
             case 2:
+                Monster
+                    bossMachanu = InstantiateMonster(monsterPath + "/BossMuchanu").GetComponent<Monster>();
 
+                listMonster.Add(bossMachanu);
                 break;
             case 3:
 
