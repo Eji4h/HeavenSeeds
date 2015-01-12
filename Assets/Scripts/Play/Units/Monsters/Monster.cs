@@ -321,6 +321,12 @@ public abstract class Monster : Unit
         Hp += heal;
     }
 
+    public void ReceiveHealOfMissingHpPercent(float percentHealOfMissingHp)
+    {
+        int healHp = (int)((MaxHp - Hp) * (percentHealOfMissingHp / 100f));
+        ReceiveHeal(healHp);
+    }
+
     public virtual void ShowParticleReceiveDamage(CharacterActionState chaActionState)
     {
         switch (chaActionState)
