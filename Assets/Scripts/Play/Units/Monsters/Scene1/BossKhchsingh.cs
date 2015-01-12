@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 public class BossKhchsingh : Monster
 {
-    #region EnumType
     enum BossKhchsinghState
     {
         ThrashTrunk3Time,
@@ -15,14 +14,10 @@ public class BossKhchsingh : Monster
         ThrowATree,
         IvoryBeam
     }
-    #endregion
 
-    #region Variable
     List<BossKhchsinghState> listBossKhchsinghStateCanUse = new List<BossKhchsinghState>(5);
     bool addUltimateSkillToListStateCanUse = false;
-    #endregion
 
-    #region Properties
     public override int Hp
     {
         get { return base.Hp; }
@@ -38,9 +33,7 @@ public class BossKhchsingh : Monster
             }
         }
     }
-    #endregion
 
-    #region Method
     // Use this for initialization
     protected override void Start()
     {
@@ -57,5 +50,4 @@ public class BossKhchsingh : Monster
     {
         thisAnimation.CrossFade(listBossKhchsinghStateCanUse[Random.Range(0, listBossKhchsinghStateCanUse.Count)].ToString());
     }
-    #endregion
 }
