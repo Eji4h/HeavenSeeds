@@ -165,6 +165,12 @@ public abstract class Monster : Unit
         set { damageMaximumMultiply = value * randomNumSecurity; }
     }
 
+    public bool IsImmortal
+    {
+        get { return isImmortal; }
+        set { isImmortal = value; }
+    }
+
     public bool QueueElementIsRunning
     {
         get { return queueElementIsRunning; }
