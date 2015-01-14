@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class CharacterController : Unit
 {
-    #region Static Variable
     static bool actionIsUpdate = false;
     static int cost;
     static int swordCost,
@@ -37,9 +36,7 @@ public class CharacterController : Unit
         poisonTurn,
         stunTurn,
         freezeTurn;
-    #endregion
 
-    #region Static Properties
     public static bool ActionIsUpdate
     {
         get { return CharacterController.actionIsUpdate; }
@@ -114,8 +111,23 @@ public class CharacterController : Unit
         set
         {
             CharacterController.barrierHp = value * randomNumSecurity;
-            barrierGameObject.SetActive(barrierTurn-- > 0 && BarrierHp > 0);
+            CheckBarrierActive();
         }
+    }
+
+    static int BarrierTurn
+    {
+        get { return CharacterController.barrierTurn; }
+        set 
+        {
+            CharacterController.barrierTurn = value;
+            CheckBarrierActive();
+        }
+    }
+
+    static void CheckBarrierActive()
+    {
+        barrierGameObject.SetActive(BarrierTurn > 0 && BarrierHp > 0);
     }
 
     static float BlockPercentPerTimeDefence
@@ -235,9 +247,7 @@ public class CharacterController : Unit
             isFreeze = FreezeTurn > 0;
         }
     }
-    #endregion
 
-    #region Static Method
     public static new void SetInit()
     {
         swordCharacterController = SceneController.SwordCharacterController;
@@ -328,7 +338,7 @@ public class CharacterController : Unit
 
     public static void BarrierDefence(int barrierHp, float blockPercentPerTimeDefence)
     {
-        barrierTurn = 4;
+        BarrierTurn = 3;
         BarrierHp = Mathf.RoundToInt(barrierHp * (1f + BarrierHpPercentIncrease));
         BlockPercentPerTimeDefence = blockPercentPerTimeDefence;
     }
@@ -387,10 +397,10 @@ public class CharacterController : Unit
                 listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
             }
         }
-    }
-    #endregion
 
-    #region Variable
+        BarrierTurn--;
+    }
+
     CharacterStatus characterStatus;
     GameObject weaponGameObject;
     CharacterActionState chaActionState;
@@ -407,9 +417,7 @@ public class CharacterController : Unit
 
     bool isFall = false;
     int turnFall = 0;
-    #endregion
 
-    #region Properties
     public bool IsFall
     {
         get { return isFall; }
@@ -439,7 +447,7 @@ public class CharacterController : Unit
                 IsFall = false;
         }
     }
-    #endregion
+
     public void SetStatus()
     {
         switch (chaActionState)
