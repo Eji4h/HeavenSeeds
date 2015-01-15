@@ -99,6 +99,9 @@ public abstract class Monster : Unit
 
     float percentDebuffToCharacter;
 
+    protected bool isAttackUp = false;
+    protected int attackUpStack = 0;
+
     protected float LocalPositionX
     {
         get { return thisTransform.localPosition.x; }
@@ -354,10 +357,35 @@ public abstract class Monster : Unit
 
     public void SendDamageToCharacter(float damageBaseMultiply)
     {
+        float damageBaseCal = DamageBase * (1f + (isAttackUp ? 0.4f : 0f) + attackUpStack * 0.1f);
         CharacterController.ReceiveDamage(
-            OftenMethod.ProbabilityDistribution(DamageBase * damageBaseMultiply *
+            OftenMethod.ProbabilityDistribution(damageBaseCal * damageBaseMultiply *
             (isLowAttackDamage ? 0.8f : 1f), DamageMinimumMultiply, DamageMaximumMultiply, 3));
     }
+
+    #region AttackUp
+
+    public void SetIsAttackUpIsTrue()
+    {
+        isAttackUp = true;
+    }
+
+    public void SetIsAttackUpIsFalse()
+    {
+        isAttackUp = false;
+    }
+
+    public void ResetAttackUpStack()
+    {
+        attackUpStack = 0;
+    }
+
+    public void IncreaseAttackUpStack()
+    {
+        attackUpStack++;
+    }
+
+    #endregion
 
     #region MonsterBehaviour
     protected virtual void MonsterBehaviour()
