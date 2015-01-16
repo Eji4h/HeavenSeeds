@@ -536,7 +536,7 @@ ModelImporter:
     400528: VIS-thigh_003_pole_ik
     400530: VIS-thigh_pole_ik
     4300000: PayakKraiSornSD_Model
-    7400000: Default Take
+    7400000: Idle
     9500000: //RootNode
     11100000: //RootNode
     13700000: PayakKraiSornSD_Model
@@ -555,11 +555,569 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 44
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: PayakKraiSornSD_Model
+        weight: 1
+      - path: rig
+        weight: 1
+      - path: rig/root
+        weight: 1
+      - path: rig/root/DEF-hips
+        weight: 1
+      - path: rig/root/foot_001_ik
+        weight: 1
+      - path: rig/root/foot_001_ik/foot_001_roll_ik
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01/MCH-foot_001_rocker_02
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01/MCH-foot_001_rocker_02/MCH-foot_001_roll_01
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01/MCH-foot_001_rocker_02/MCH-foot_001_roll_01/MCH-foot_001_roll_02
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01/MCH-foot_001_rocker_02/MCH-foot_001_roll_01/MCH-foot_001_roll_02/MCH-foot_002
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01/MCH-foot_001_rocker_02/MCH-foot_001_roll_01/MCH-toe_001_socket1
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01/MCH-foot_001_rocker_02/MCH-foot_001_roll_01/MCH-toe_001_socket1/MCH-toe_001_parent
+        weight: 1
+      - path: rig/root/foot_001_ik/MCH-foot_001_rocker_01/MCH-foot_001_rocker_02/MCH-foot_001_roll_01/MCH-toe_001_socket1/MCH-toe_001_parent/toe_001
+        weight: 1
+      - path: rig/root/foot_002_ik
+        weight: 1
+      - path: rig/root/foot_002_ik/foot_002_roll_ik
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01/MCH-foot_002_rocker_02
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01/MCH-foot_002_rocker_02/MCH-foot_002_roll_01
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01/MCH-foot_002_rocker_02/MCH-foot_002_roll_01/MCH-foot_002_roll_02
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01/MCH-foot_002_rocker_02/MCH-foot_002_roll_01/MCH-foot_002_roll_02/MCH-foot_007
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01/MCH-foot_002_rocker_02/MCH-foot_002_roll_01/MCH-toe_002_socket1
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01/MCH-foot_002_rocker_02/MCH-foot_002_roll_01/MCH-toe_002_socket1/MCH-toe_002_parent
+        weight: 1
+      - path: rig/root/foot_002_ik/MCH-foot_002_rocker_01/MCH-foot_002_rocker_02/MCH-foot_002_roll_01/MCH-toe_002_socket1/MCH-toe_002_parent/toe_002
+        weight: 1
+      - path: rig/root/foot_003_ik
+        weight: 1
+      - path: rig/root/foot_003_ik/foot_003_roll_ik
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01/MCH-foot_003_rocker_02
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01/MCH-foot_003_rocker_02/MCH-foot_003_roll_01
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01/MCH-foot_003_rocker_02/MCH-foot_003_roll_01/MCH-foot_003_roll_02
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01/MCH-foot_003_rocker_02/MCH-foot_003_roll_01/MCH-foot_003_roll_02/MCH-foot_004
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01/MCH-foot_003_rocker_02/MCH-foot_003_roll_01/MCH-toe_003_socket1
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01/MCH-foot_003_rocker_02/MCH-foot_003_roll_01/MCH-toe_003_socket1/MCH-toe_003_parent
+        weight: 1
+      - path: rig/root/foot_003_ik/MCH-foot_003_rocker_01/MCH-foot_003_rocker_02/MCH-foot_003_roll_01/MCH-toe_003_socket1/MCH-toe_003_parent/toe_003
+        weight: 1
+      - path: rig/root/foot_ik
+        weight: 1
+      - path: rig/root/foot_ik/foot_roll_ik
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01/MCH-foot_rocker_02
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01/MCH-foot_rocker_02/MCH-foot_roll_01
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01/MCH-foot_rocker_02/MCH-foot_roll_01/MCH-foot_roll_02
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01/MCH-foot_rocker_02/MCH-foot_roll_01/MCH-foot_roll_02/MCH-foot_005
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01/MCH-foot_rocker_02/MCH-foot_roll_01/MCH-toe_socket1
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01/MCH-foot_rocker_02/MCH-foot_roll_01/MCH-toe_socket1/MCH-toe_parent
+        weight: 1
+      - path: rig/root/foot_ik/MCH-foot_rocker_01/MCH-foot_rocker_02/MCH-foot_roll_01/MCH-toe_socket1/MCH-toe_parent/toe
+        weight: 1
+      - path: rig/root/MCH-head_socket2
+        weight: 1
+      - path: rig/root/MCH-head_socket2/head
+        weight: 1
+      - path: rig/root/MCH-head_socket2/head/MCH-head
+        weight: 1
+      - path: rig/root/MCH-hips_fk_ns_ch
+        weight: 1
+      - path: rig/root/MCH-hips_fk_ns_ch/MCH-thigh_001_fk_socket1
+        weight: 1
+      - path: rig/root/MCH-hips_fk_ns_ch_001
+        weight: 1
+      - path: rig/root/MCH-hips_fk_ns_ch_001/MCH-thigh_003_fk_socket1
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch/knee_target_001_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch/MCH-shin_001_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch/MCH-thigh_001_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch/MCH-thigh_001_ik/MCH-shin_001_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch/MCH-thigh_001_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch/MCH-thigh_001_nostr_ik/MCH-shin_001_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch/MCH-thigh_001_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001/knee_target_003_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001/MCH-shin_003_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001/MCH-thigh_003_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001/MCH-thigh_003_ik/MCH-shin_003_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001/MCH-thigh_003_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001/MCH-thigh_003_nostr_ik/MCH-shin_003_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-hips_ik_ns_ch_001/MCH-thigh_003_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch/DEF-thigh_001_01
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch/MCH-knee_hose_001_parent
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch/MCH-knee_hose_001_parent/knee_hose_001
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch/MCH-shin_001_hose_parent
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch/MCH-shin_001_hose_parent/shin_001_hose
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch/MCH-thigh_001_hose_parent
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch/MCH-thigh_001_hose_parent/thigh_001_hose
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001/DEF-thigh_003_01
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001/MCH-knee_hose_003_parent
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001/MCH-knee_hose_003_parent/knee_hose_003
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001/MCH-shin_003_hose_parent
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001/MCH-shin_003_hose_parent/shin_003_hose
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001/MCH-thigh_003_hose_parent
+        weight: 1
+      - path: rig/root/MCH-hips_rh_ns_ch_001/MCH-thigh_003_hose_parent/thigh_003_hose
+        weight: 1
+      - path: rig/root/MCH-ribs_fk_ns_ch
+        weight: 1
+      - path: rig/root/MCH-ribs_fk_ns_ch/MCH-thigh_fk_socket1
+        weight: 1
+      - path: rig/root/MCH-ribs_fk_ns_ch_001
+        weight: 1
+      - path: rig/root/MCH-ribs_fk_ns_ch_001/MCH-thigh_002_fk_socket1
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch/knee_target_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch/MCH-shin_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch/MCH-thigh_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch/MCH-thigh_ik/MCH-shin_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch/MCH-thigh_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch/MCH-thigh_nostr_ik/MCH-shin_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch/MCH-thigh_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001/knee_target_002_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001/MCH-shin_002_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001/MCH-thigh_002_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001/MCH-thigh_002_ik/MCH-shin_002_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001/MCH-thigh_002_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001/MCH-thigh_002_nostr_ik/MCH-shin_002_nostr_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_ik_ns_ch_001/MCH-thigh_002_stretch_ik
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch/DEF-thigh_01
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch/MCH-knee_hose__parent
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch/MCH-knee_hose__parent/knee_hose_
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch/MCH-shin_hose_parent
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch/MCH-shin_hose_parent/shin_hose
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch/MCH-thigh_hose_parent
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch/MCH-thigh_hose_parent/thigh_hose
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001/DEF-thigh_002_01
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001/MCH-knee_hose_002_parent
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001/MCH-knee_hose_002_parent/knee_hose_002
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001/MCH-shin_002_hose_parent
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001/MCH-shin_002_hose_parent/shin_002_hose
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001/MCH-thigh_002_hose_parent
+        weight: 1
+      - path: rig/root/MCH-ribs_rh_ns_ch_001/MCH-thigh_002_hose_parent/thigh_002_hose
+        weight: 1
+      - path: rig/root/MCH-thigh_001_fk_socket2
+        weight: 1
+      - path: rig/root/MCH-thigh_001_fk_socket2/thigh_001_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_001_fk_socket2/thigh_001_fk/MCH-thigh_001_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_001_fk_socket2/thigh_001_fk/MCH-thigh_001_antistr_fk/shin_001_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_001_fk_socket2/thigh_001_fk/MCH-thigh_001_antistr_fk/shin_001_fk/MCH-shin_001_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_001_fk_socket2/thigh_001_fk/MCH-thigh_001_antistr_fk/shin_001_fk/MCH-shin_001_antistr_fk/foot_001_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_001_fk_socket2/thigh_001_fk/MCH-thigh_001_antistr_fk/shin_001_fk/MCH-shin_001_antistr_fk/foot_001_fk/MCH-foot_001
+        weight: 1
+      - path: rig/root/MCH-thigh_002_fk_socket2
+        weight: 1
+      - path: rig/root/MCH-thigh_002_fk_socket2/thigh_002_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_002_fk_socket2/thigh_002_fk/MCH-thigh_002_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_002_fk_socket2/thigh_002_fk/MCH-thigh_002_antistr_fk/shin_002_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_002_fk_socket2/thigh_002_fk/MCH-thigh_002_antistr_fk/shin_002_fk/MCH-shin_002_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_002_fk_socket2/thigh_002_fk/MCH-thigh_002_antistr_fk/shin_002_fk/MCH-shin_002_antistr_fk/foot_002_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_002_fk_socket2/thigh_002_fk/MCH-thigh_002_antistr_fk/shin_002_fk/MCH-shin_002_antistr_fk/foot_002_fk/MCH-foot_006
+        weight: 1
+      - path: rig/root/MCH-thigh_003_fk_socket2
+        weight: 1
+      - path: rig/root/MCH-thigh_003_fk_socket2/thigh_003_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_003_fk_socket2/thigh_003_fk/MCH-thigh_003_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_003_fk_socket2/thigh_003_fk/MCH-thigh_003_antistr_fk/shin_003_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_003_fk_socket2/thigh_003_fk/MCH-thigh_003_antistr_fk/shin_003_fk/MCH-shin_003_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_003_fk_socket2/thigh_003_fk/MCH-thigh_003_antistr_fk/shin_003_fk/MCH-shin_003_antistr_fk/foot_003_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_003_fk_socket2/thigh_003_fk/MCH-thigh_003_antistr_fk/shin_003_fk/MCH-shin_003_antistr_fk/foot_003_fk/MCH-foot_003
+        weight: 1
+      - path: rig/root/MCH-thigh_fk_socket2
+        weight: 1
+      - path: rig/root/MCH-thigh_fk_socket2/thigh_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_fk_socket2/thigh_fk/MCH-thigh_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_fk_socket2/thigh_fk/MCH-thigh_antistr_fk/shin_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_fk_socket2/thigh_fk/MCH-thigh_antistr_fk/shin_fk/MCH-shin_antistr_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_fk_socket2/thigh_fk/MCH-thigh_antistr_fk/shin_fk/MCH-shin_antistr_fk/foot_fk
+        weight: 1
+      - path: rig/root/MCH-thigh_fk_socket2/thigh_fk/MCH-thigh_antistr_fk/shin_fk/MCH-shin_antistr_fk/foot_fk/MCH-foot
+        weight: 1
+      - path: rig/root/ORG-hips
+        weight: 1
+      - path: rig/root/ORG-hips/bone_01
+        weight: 1
+      - path: rig/root/ORG-hips/bone_01/bone_02
+        weight: 1
+      - path: rig/root/ORG-hips/bone_01/bone_02/bone_03
+        weight: 1
+      - path: rig/root/ORG-hips/bone_01/bone_02/bone_03/bone_004
+        weight: 1
+      - path: rig/root/ORG-hips/DEF-bone_01
+        weight: 1
+      - path: rig/root/ORG-hips/DEF-bone_01/DEF-bone_02
+        weight: 1
+      - path: rig/root/ORG-hips/DEF-bone_01/DEF-bone_02/DEF-bone_03
+        weight: 1
+      - path: rig/root/ORG-hips/DEF-bone_01/DEF-bone_02/DEF-bone_03/DEF-bone_004
+        weight: 1
+      - path: rig/root/ORG-hips/DEF-spine
+        weight: 1
+      - path: rig/root/ORG-hips/MCH-hips_fk_ns_intr
+        weight: 1
+      - path: rig/root/ORG-hips/MCH-hips_fk_ns_intr_001
+        weight: 1
+      - path: rig/root/ORG-hips/MCH-hips_ik_ns_intr
+        weight: 1
+      - path: rig/root/ORG-hips/MCH-hips_ik_ns_intr_001
+        weight: 1
+      - path: rig/root/ORG-hips/MCH-hips_rh_ns_intr
+        weight: 1
+      - path: rig/root/ORG-hips/MCH-hips_rh_ns_intr_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-bone_01
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-bone_01/ORG-bone_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-bone_01/ORG-bone_02/ORG-bone_03
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-bone_01/ORG-bone_02/ORG-bone_03/ORG-bone_004
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/DEF-ribs
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/DEF-neck
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-head_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-head_02/MCH-head_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-head_socket1
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-neck_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-neck_02/MCH-neck
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-neck_follow
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-neck_follow/neck
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-neck_follow/neck/MCH-neck_child
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-ribs_fk_ns_intr
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-ribs_fk_ns_intr_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-ribs_ik_ns_intr
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-ribs_ik_ns_intr_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-ribs_rh_ns_intr
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/MCH-ribs_rh_ns_intr_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-neck
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-neck/DEF-head
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-neck/ORG-head
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/DEF-thigh_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/DEF-thigh_02/DEF-shin_01
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/MCH-shin_junc
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/DEF-shin_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/ORG-foot
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/ORG-foot/DEF-foot
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/ORG-foot/MCH-toe_socket2
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/ORG-foot/ORG-toe
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/ORG-foot/ORG-toe/DEF-toe
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/ORG-heel
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh/ORG-shin/ORG-heel/ORG-heel_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/DEF-thigh_002_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/DEF-thigh_002_02/DEF-shin_002_01
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/MCH-shin_002_junc
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/DEF-shin_002_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/ORG-foot_002
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/ORG-foot_002/DEF-foot_002
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/ORG-foot_002/MCH-toe_002_socket2
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/ORG-foot_002/ORG-toe_002
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/ORG-foot_002/ORG-toe_002/DEF-toe_002
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/ORG-heel_002
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-spine/ORG-ribs/ORG-thigh_002/ORG-shin_002/ORG-heel_002/ORG-heel_004
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/DEF-thigh_001_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/DEF-thigh_001_02/DEF-shin_001_01
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/MCH-shin_001_junc
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/DEF-shin_001_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/ORG-foot_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/ORG-foot_001/DEF-foot_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/ORG-foot_001/MCH-toe_001_socket2
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/ORG-foot_001/ORG-toe_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/ORG-foot_001/ORG-toe_001/DEF-toe_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/ORG-heel_001
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_001/ORG-shin_001/ORG-heel_001/ORG-heel_003
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/DEF-thigh_003_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/DEF-thigh_003_02/DEF-shin_003_01
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/MCH-shin_003_junc
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/DEF-shin_003_02
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/ORG-foot_003
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/ORG-foot_003/DEF-foot_003
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/ORG-foot_003/MCH-toe_003_socket2
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/ORG-foot_003/ORG-toe_003
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/ORG-foot_003/ORG-toe_003/DEF-toe_003
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/ORG-heel_005
+        weight: 1
+      - path: rig/root/ORG-hips/ORG-thigh_003/ORG-shin_003/ORG-heel_005/ORG-heel_006
+        weight: 1
+      - path: rig/root/torso
+        weight: 1
+      - path: rig/root/torso/hips
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex/MCH-hips_reverse
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex/MCH-spine_flex_s
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex/MCH-spine_flex_s/MCH-spine_flex
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex/MCH-spine_flex_s/MCH-spine_flex/MCH-ribs_flex_s
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex/MCH-spine_flex_s/MCH-spine_flex/MCH-ribs_flex_s/MCH-ribs_flex
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex/MCH-spine_flex_s/MCH-spine_flex/MCH-ribs_flex_s/MCH-ribs_flex/MCH-ribs_reverse
+        weight: 1
+      - path: rig/root/torso/hips/MCH-hips_flex_s/MCH-hips_flex/MCH-spine_flex_s/MCH-spine_flex/MCH-spine_reverse
+        weight: 1
+      - path: rig/root/torso/hips/MCH-sub_hips
+        weight: 1
+      - path: rig/root/torso/MCH-par_spine
+        weight: 1
+      - path: rig/root/torso/MCH-par_spine/spine
+        weight: 1
+      - path: rig/root/torso/MCH-par_spine/spine/MCH-sub_spine
+        weight: 1
+      - path: rig/root/torso/ribs
+        weight: 1
+      - path: rig/root/torso/ribs/MCH-sub_ribs
+        weight: 1
+      - path: rig/root/VIS-foot_001_ik
+        weight: 1
+      - path: rig/root/VIS-foot_002_ik
+        weight: 1
+      - path: rig/root/VIS-foot_003_ik
+        weight: 1
+      - path: rig/root/VIS-foot_ik
+        weight: 1
+      - path: rig/root/VIS-thigh_001_pole_ik
+        weight: 1
+      - path: rig/root/VIS-thigh_002_pole_ik
+        weight: 1
+      - path: rig/root/VIS-thigh_003_pole_ik
+        weight: 1
+      - path: rig/root/VIS-thigh_pole_ik
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .699999988
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
