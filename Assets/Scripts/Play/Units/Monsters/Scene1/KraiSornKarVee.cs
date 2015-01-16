@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DuRongKraiSorn : Monster
+public class KraiSornKarVee : Monster
 {
 
-    // Use this for initialization
+	// Use this for initialization
     protected override void Start()
     {
-        MaxHp = 900;
-        DamageBase = 55;
+        MaxHp = 1200;
+        DamageBase = 63;
         base.Start();
     }
 }
