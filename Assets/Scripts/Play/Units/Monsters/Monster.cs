@@ -427,7 +427,14 @@ public abstract class Monster : Unit
 
     IEnumerator WaitingDieAnimationToDestroy()
     {
-        yield return new WaitForSeconds(1f);
+        var dieAnimationState = thisAnimation["Die"];
+        float waitTime = 0.5f;
+        if (dieAnimationState != null)
+        {
+            thisAnimation.CrossFade("Die");
+            waitTime += dieAnimationState.length;
+        }
+        yield return new WaitForSeconds(waitTime);
 
         listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
         {
