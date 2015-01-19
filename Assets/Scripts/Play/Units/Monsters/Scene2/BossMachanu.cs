@@ -15,14 +15,13 @@ public class BossMachanu : Monster
 
     bool isDown = false;
 
-    // Use this for initialization
-    protected override void Start()
+    protected override void Awake()
     {
-        MaxHp = 10000;
+        base.Awake();
+        MaxHp = 6000;
         DamageBase = 176;
         listBossMachanuState.Add(BossMachanuState.JumpDown);
         listBossMachanuState.Add(BossMachanuState.JumpPounded);
-        base.Start();
     }
 
     protected override void MonsterBehaviour()

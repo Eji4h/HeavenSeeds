@@ -138,8 +138,8 @@ public class SceneController : MonoBehaviour
         Instantiate(Resources.Load(sceneSetPath));
 
         //For monsters test
-        //sceneSelected = 2;
-        //monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
+        sceneSelected = 2;
+        monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
 
         switch (sceneSelected)
         {
@@ -157,8 +157,14 @@ public class SceneController : MonoBehaviour
                 break;
             case 2:
                 Monster
+                    hemrach = InstantiateMonster(monsterPath + "/hemrach").GetComponent<Monster>(),
+                    toad = InstantiateMonster(monsterPath + "/Toad").GetComponent<Monster>(),
+                    turtle = InstantiateMonster(monsterPath + "/Turtle").GetComponent<Monster>(),
                     bossMachanu = InstantiateMonster(monsterPath + "/BossMachanu").GetComponent<Monster>();
 
+                listMonster.Add(hemrach);
+                listMonster.Add(toad);
+                listMonster.Add(turtle);
                 listMonster.Add(bossMachanu);
                 break;
             case 3:
