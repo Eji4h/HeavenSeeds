@@ -188,7 +188,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             listMagicPointsUpstairs.Add(magicCircleIn[i]);
         listMagicPointsUpstairs.Add(magicPointCenter);
         listMagicPointsUpstairs.ForEach(magicPoint =>
-            magicPoint.collider2D.enabled = true);
+            magicPoint.Collider2DEnabled = true);
     }
 
     public void ChangeMgFieldState(bool toWaitingCommand)
@@ -196,16 +196,10 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         if (toWaitingCommand)
         {
             MgFieldState = MagicFieldState.WaitingCommand;
-            magicFieldBG.spriteName = "lightMagicBG";
-            listMagicPoints.ForEach(magicPoint =>
-                magicPoint.Color = Color.white);
         }
         else
         {
             MgFieldState = MagicFieldState.WaitingMonsterTurn;
-            magicFieldBG.spriteName = "darkMagicBG";
-            listMagicPoints.ForEach(magicPoint =>
-                magicPoint.Color = Color.gray);
             RotateMagicCircle(magicCircleOutIndexChangePerMove, magicCircleInIndexChangePerMove);
         }
     }
@@ -216,6 +210,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         WaitingCommandUIControllerClear();
         ResetMagicPointIsSelected();
         SetMagicPointsUpstairs();
+        magicFieldBG.spriteName = "lightMagicBG";
 
         for (; ; )
         {
@@ -344,6 +339,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     IEnumerator WaitingRotation()
     {
+        SetMagicPointCollider(false);
         UIController.EndTurnButton.Enabled = false;
         UIController.SpinButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
@@ -367,6 +363,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     IEnumerator WaitingMonsterTurn()
     {
+        SetMagicPointCollider(false);
+        magicFieldBG.spriteName = "darkMagicBG";
         UIController.EndTurnButton.Enabled = false;
         UIController.SpinButton.Enabled = false;
         yield return null;
@@ -394,7 +392,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     void SetMagicPointCollider(bool enabled)
     {
         listMagicPoints.ForEach(magicPoint =>
-            magicPoint.collider2D.enabled = enabled);
+                magicPoint.Collider2DEnabled = enabled);
     }
 
     #region RotateMagicCircle Controller

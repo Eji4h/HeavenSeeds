@@ -98,10 +98,14 @@ public class MagicPoint : MonoBehaviour
         }
     }
 
-    public Color Color
+    public bool Collider2DEnabled
     {
-        get { return uiSprite.color; }
-        set { uiSprite.color = value; }
+        get { return collider2D.enabled; }
+        set
+        {
+            collider2D.enabled = value;
+            uiSprite.color = value ? Color.white : Color.gray;
+        }
     }
 
     void Awake()
