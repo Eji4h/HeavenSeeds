@@ -34,16 +34,15 @@ public class BossKhchsingh : Monster
         }
     }
 
-    // Use this for initialization
-    protected override void Start()
+    protected override void Awake()
     {
+        base.Awake();
         MaxHp = 5000;
         DamageBase = 143;
         listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ChargeToDash);
         listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ThrashTrunk3Time);
         listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ThrowATree);
         listBossKhchsinghStateCanUse.Add(BossKhchsinghState.Trample);
-        base.Start();
     }
 
     protected override void MonsterBehaviour()

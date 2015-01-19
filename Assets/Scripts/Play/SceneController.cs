@@ -22,6 +22,7 @@ public class SceneController : MonoBehaviour
     static MagicFieldController magicFieldController;
 
     static TurnController turnController;
+    static bool startMonsterNextQueue = true;
 
     public static Camera MainCamera
     {
@@ -85,6 +86,27 @@ public class SceneController : MonoBehaviour
             currentMonster = queueMonster.Dequeue();
             Unit.Monster = currentMonster;
             currentMonster.gameObject.SetActive(true);
+            if (turnController.PlayerTurn)
+            {
+                if (CharacterController.CheckCostLessthanLowestCost())
+                {
+                    if (magicFieldController.IsWaitingRotation)
+                        magicFieldController.WhenFinishRotationWillEndTurn = true;
+                    else
+                        turnController.TurnChange();
+                }
+            }
+            else if (startMonsterNextQueue)
+                startMonsterNextQueue = false;
+            else
+                currentMonster.StartState();
+        }
+        else
+        {
+            currentMonster = null;
+            Unit.Monster = null;
+            if (turnController.PlayerTurn)
+                turnController.TurnChange();
         }
     }
 

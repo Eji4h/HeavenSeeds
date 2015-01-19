@@ -127,6 +127,7 @@ public abstract class Monster : Unit
         {
             base.MaxHp = value;
             UIController.MonsterHpBar.MaxValue = MaxHp;
+            Hp = MaxHp;
         }
     }
 
@@ -249,8 +250,6 @@ public abstract class Monster : Unit
             DamageMinimumMultiply = 0.9f;
         if (damageMaximumMultiply == 0f)
             DamageMaximumMultiply = 1.1f;
-        UIController.MonsterHpBar.MaxValue = MaxHp;
-        Hp = MaxHp;
 
         Collider thisCollider = collider;
         slashParticleLocalPosition =
@@ -441,9 +440,11 @@ public abstract class Monster : Unit
             gameObjectTransformInParent.parent = null;
             gameObjectTransformInParent.gameObject.SetActive(false);
         });
-        Destroy(gameObject);
+
         SceneController.NextMonsterQueue();
-        CharacterController.CheckCostLessthanLowestCost();
+            
+        Destroy(gameObject);
+        Destroy(this);
     }
     #endregion
 
