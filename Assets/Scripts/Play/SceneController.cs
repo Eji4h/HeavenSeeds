@@ -138,8 +138,8 @@ public class SceneController : MonoBehaviour
         Instantiate(Resources.Load(sceneSetPath));
 
         //For monsters test
-        sceneSelected = 2;
-        monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
+        //sceneSelected = 2;
+        //monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
 
         switch (sceneSelected)
         {
