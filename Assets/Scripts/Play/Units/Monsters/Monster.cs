@@ -120,17 +120,6 @@ public abstract class Monster : Unit
         set { thisTransform.localPosition = new Vector3(thisTransform.position.x, thisTransform.position.y, value); }
     }
 
-    protected override int MaxHp
-    {
-        get { return base.MaxHp; }
-        set
-        {
-            base.MaxHp = value;
-            UIController.MonsterHpBar.MaxValue = MaxHp;
-            Hp = MaxHp;
-        }
-    }
-
     public virtual int Hp
     {
         get { return hp / randomNumSecurity; }
@@ -250,6 +239,9 @@ public abstract class Monster : Unit
             DamageMinimumMultiply = 0.9f;
         if (damageMaximumMultiply == 0f)
             DamageMaximumMultiply = 1.1f;
+
+        UIController.MonsterHpBar.MaxValue = MaxHp;
+        Hp = MaxHp;
 
         Collider thisCollider = collider;
         slashParticleLocalPosition =
