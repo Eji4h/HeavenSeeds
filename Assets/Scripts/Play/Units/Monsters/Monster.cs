@@ -283,15 +283,15 @@ public abstract class Monster : Unit
 
     protected virtual void EndTurn()
     {
-        EndTurnBehaviour(true);
+        StartCoroutine(EndTurnBehaviour(true));
     }
 
     protected virtual void EndTurnNoCrossFadeToIdle()
     {
-        EndTurnBehaviour(false);
+        StartCoroutine(EndTurnBehaviour(false));
     }
 
-    protected virtual void EndTurnBehaviour(bool isCrossFadeToIdle)
+    protected virtual IEnumerator EndTurnBehaviour(bool isCrossFadeToIdle)
     {
         if (Hp > 0)
         {
@@ -299,7 +299,7 @@ public abstract class Monster : Unit
                 thisAnimation.CrossFade("Idle");
 
             if (isBurn)
-                StartCoroutine(BurnReceiveBehaviour());
+                yield return StartCoroutine(BurnReceiveBehaviour());
             LowAttackDamageTurn--;
             StunTurn--;
 
