@@ -272,13 +272,13 @@ public class CharacterController : Unit
         listCharacterController.Add(shieldCharacterController);
         listCharacterController.Add(scrollCharacterController);
 
-        barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Player/Attack/NewBarrier"), 
-            Vector3.forward * 3.5f, Quaternion.identity) as GameObject;
+        barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Player/Attack/NewBarrier")) as GameObject;
+        barrierGameObject.transform.position = new Vector3(0f, 0f, -1.5f);
         barrierHpPopUpPos = barrierGameObject.transform.position + Vector3.up * 3f;
         barrierGameObject.SetActive(false);
 
         healGameObject = Instantiate(Resources.Load("Prefabs/Particle/Heal")) as GameObject;
-        healGameObject.transform.position = new Vector3(0f, 7f, 0f);
+        healGameObject.transform.position = Vector3.zero;
         healGameObject.SetActive(false);
 
         Cost = PlayerPrefs.GetInt("startCost", 15);
