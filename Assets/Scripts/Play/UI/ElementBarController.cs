@@ -1,25 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ElementBarController : MonoBehaviour
+public class ElementBarController : UIProgressBar
 {
     static int numberOfSteps = 26;
 
-    UIProgressBar progressBar;
     public ElementType element;
     float oneStepValue;
     int count = 0;
 
     float Value
     {
-        get { return progressBar.value; }
+        get { return value; }
         set 
         {
-            progressBar.value = value;
-            if (progressBar.value >= 0.99f)
+            this.value = value;
+            if (this.value >= 0.99f)
             {
                 Unit.Monster.ReceiveAttackQueue(element);
-                progressBar.value = 0f;
+                this.value = 0f;
             }
         }
     }
@@ -27,7 +26,6 @@ public class ElementBarController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        progressBar = GetComponent<UIProgressBar>();
         oneStepValue = 1f / numberOfSteps;
     }
 
