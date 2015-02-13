@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using PlayerPrefs = PreviewLabs.PlayerPrefs;
@@ -34,7 +35,7 @@ public abstract class Unit : MonoBehaviour
     #region Static Method
     public static void GenRandomNumSecurity()
     {
-        randomNumSecurity = Random.Range(0, 1000);
+        randomNumSecurity = UnityEngine.Random.Range(0, 1000);
     }
 
     public static void SetInit()
@@ -67,7 +68,22 @@ public abstract class Unit : MonoBehaviour
     protected Transform thisTransform;
     protected Animation thisAnimation;
 
+    [SerializeField]
+    [Range(0, 10000)]
     int maxHp;
+
+    GateBarController gateBarController;
+
+    [SerializeField]
+    [Range(0, 10)]
+    int maxGate;
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    float gateBarRegenPerSecond;
+
+    Predicate<int> checkGateCountIsTarget;
+    Action gateCountTargetAction;
 
     protected List<Transform> listGameObjectTransformInParent = new List<Transform>(8);
     #endregion
@@ -89,6 +105,8 @@ public abstract class Unit : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        gateBarController.SetInit(maxGate, gateBarRegenPerSecond,
+            checkGateCountIsTarget, gateCountTargetAction);
     }
 
     protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, bool parent)
@@ -96,7 +114,7 @@ public abstract class Unit : MonoBehaviour
         ReuseGameObject(gameObject, localPosition, parent, thisTransform);
     }
 
-    protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, 
+    protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition,
         bool parent, Transform parentTransform)
     {
         Transform gameObjectTransform = gameObject.transform;
@@ -105,7 +123,7 @@ public abstract class Unit : MonoBehaviour
         gameObjectTransform.localPosition = localPosition;
         if (!parent)
             gameObjectTransform.parent = null;
-        else if(!listGameObjectTransformInParent.Contains(gameObjectTransform))
+        else if (!listGameObjectTransformInParent.Contains(gameObjectTransform))
             listGameObjectTransformInParent.Add(gameObjectTransform);
         gameObject.SetActive(false);
         gameObject.SetActive(true);
