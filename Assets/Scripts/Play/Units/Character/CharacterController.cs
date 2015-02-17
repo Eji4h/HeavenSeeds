@@ -4,15 +4,6 @@ using System.Collections.Generic;
 
 public class CharacterController : Unit
 {
-    static bool actionIsUpdate = false;
-    static int cost;
-    static int swordCost,
-        bowCost,
-        wandCost,
-        shieldCost,
-        scrollCost,
-        lowestCost;
-
     static int sumHp, maxSumHp,
         barrierHp, barrierTurn;
 
@@ -36,51 +27,6 @@ public class CharacterController : Unit
         poisonTurn,
         stunTurn,
         freezeTurn;
-
-    public static bool ActionIsUpdate
-    {
-        get { return CharacterController.actionIsUpdate; }
-    }
-    public static int Cost
-    {
-        get { return CharacterController.cost / randomNumSecurity; }
-        set 
-        {
-            if (value > 99)
-                value = 99;
-            CharacterController.cost = value * randomNumSecurity;
-            UIController.ManaCost = Cost;
-        }
-    }
-    public static int SwordCost
-    {
-        get { return CharacterController.swordCost; }
-    }
-
-    public static int BowCost
-    {
-        get { return CharacterController.bowCost; }
-    }
-
-    public static int WandCost
-    {
-        get { return CharacterController.wandCost; }
-    }
-
-    public static int ShieldCost
-    {
-        get { return CharacterController.shieldCost; }
-    }
-
-    public static int ScrollCost
-    {
-        get { return CharacterController.scrollCost; }
-    }
-
-    public static int LowestCost
-    {
-        get { return CharacterController.lowestCost; }
-    }
 
     static int SumHp
     {
@@ -280,13 +226,6 @@ public class CharacterController : Unit
         healGameObject = Instantiate(Resources.Load("Prefabs/Particle/Heal")) as GameObject;
         healGameObject.transform.position = Vector3.zero;
         healGameObject.SetActive(false);
-
-        Cost = PlayerPrefs.GetInt("startCost", 15);
-    }
-
-    public static bool CheckCostLessthanLowestCost()
-    {
-        return Cost < LowestCost;
     }
 
     public static void ReceiveDamage(int dmg)
@@ -456,8 +395,6 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.SwordValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
-                    swordCost = 8 + characterStatus.SwordCostChange;
-                    lowestCost = swordCost;
                 }
                 break;
             case CharacterActionState.BowAction:
@@ -465,7 +402,6 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.BowValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
-                    bowCost = 9 + characterStatus.BowCostChange;
                 }
                 break;
             case CharacterActionState.WandAction:
@@ -473,7 +409,6 @@ public class CharacterController : Unit
                     AttackWeapon attackWeapon = weaponGameObject.GetComponent<AttackWeapon>();
                     iActionBehaviour = new AttackBehaviour(characterStatus.WandValue,
                         attackWeapon.minimumDmgMultiply, attackWeapon.maximumDmgMultiply);
-                    wandCost = 7 + characterStatus.WandCostChange;
                 }
                 break;
             case CharacterActionState.ShieldAction:
@@ -481,7 +416,6 @@ public class CharacterController : Unit
                     DefenceWeapon defenceWeapon = weaponGameObject.GetComponent<DefenceWeapon>();
                     iActionBehaviour = new DefenceBehaviour(defenceWeapon.barrierHp,
                         characterStatus.ShiedlValue * 0.0025f);
-                    shieldCost = 20 + characterStatus.ShieldCostChange;
                 }
                 break;
             case CharacterActionState.ScrollAction:
@@ -490,7 +424,6 @@ public class CharacterController : Unit
                     iActionBehaviour = new HealAndBuffBehaviour(characterStatus.ScrollValue,
                         healAndBuffWeapon.atkPercentIncrease, healAndBuffWeapon.barrierHpPercentIncrease,
                         healAndBuffWeapon.healPercentIncrease);
-                    scrollCost = 5 + characterStatus.ScrollCostChange;
                 }
                 break;
         }
@@ -586,7 +519,6 @@ public class CharacterController : Unit
 
     IEnumerator UpdateAction()
     {
-        actionIsUpdate = true;
         if (!IsFall)
         {
             thisAnimation.Play(actionStr);
@@ -624,9 +556,6 @@ public class CharacterController : Unit
             yield return new WaitForSeconds(1f);
             PoisonTurn--;
         }
-        if(CheckCostLessthanLowestCost())
-            magicFieldController.WhenFinishRotationWillEndTurn = true;
-        actionIsUpdate = false;
     }
 
     public void SetToFall(int turnFall)

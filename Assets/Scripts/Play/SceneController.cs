@@ -88,7 +88,7 @@ public class SceneController : MonoBehaviour
             currentMonster.gameObject.SetActive(true);
             if (turnController.PlayerTurn)
             {
-                if (CharacterController.CheckCostLessthanLowestCost())
+                //if (CharacterController.CheckCostLessthanLowestCost())
                 {
                     if (magicFieldController.IsWaitingRotation)
                         magicFieldController.WhenFinishRotationWillEndTurn = true;

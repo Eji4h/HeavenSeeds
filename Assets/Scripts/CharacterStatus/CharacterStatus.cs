@@ -83,12 +83,6 @@ public abstract class CharacterStatus : MonoBehaviour
         scrollValue,
         hp;
 
-    protected int swordCostChange,
-        bowCostChange,
-        wandCostChange,
-        shieldCostChange,
-        scrollCostChange;
-
     string characterName;
 
     public int Lv
@@ -151,31 +145,6 @@ public abstract class CharacterStatus : MonoBehaviour
     public int Hp
     {
         get { return hp; }
-    }
-
-    public int SwordCostChange
-    {
-        get { return swordCostChange; }
-    }
-
-    public int BowCostChange
-    {
-        get { return bowCostChange; }
-    }
-
-    public int WandCostChange
-    {
-        get { return wandCostChange; }
-    }
-
-    public int ShieldCostChange
-    {
-        get { return shieldCostChange; }
-    }
-
-    public int ScrollCostChange
-    {
-        get { return scrollCostChange; }
     }
 
     protected abstract void SetInitValue();

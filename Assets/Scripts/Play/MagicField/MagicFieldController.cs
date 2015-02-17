@@ -248,60 +248,80 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     void CheckSelectedMagicPoint()
     {
+        //if (CheckCompletePointNumSet(swordPointNumSet))
+        //{
+        //    if (CharacterController.Cost >= CharacterController.SwordCost)
+        //    {
+        //        CharacterController.Cost -= CharacterController.SwordCost;
+        //        ChaActionState = CharacterActionState.SwordAction;
+        //        return;
+        //    }
+        //    else
+        //        MgFieldState = MagicFieldState.WaitingCommand;
+        //}
+        //else if (CheckCompletePointNumSet(bowPointNumSet))
+        //{
+        //    if (CharacterController.Cost >= CharacterController.BowCost)
+        //    {
+        //        CharacterController.Cost -= CharacterController.BowCost;
+        //        ChaActionState = CharacterActionState.BowAction;
+        //        return;
+        //    }
+        //    else
+        //        MgFieldState = MagicFieldState.WaitingCommand;
+        //}
+        //else if (CheckCompletePointNumSet(wandPointNumSet))
+        //{
+        //    if (CharacterController.Cost >= CharacterController.WandCost)
+        //    {
+        //        CharacterController.Cost -= CharacterController.WandCost;
+        //        ChaActionState = CharacterActionState.WandAction;
+        //        return;
+        //    }
+        //    else
+        //        MgFieldState = MagicFieldState.WaitingCommand;
+        //}
+        //else if (CheckCompletePointNumSet(shieldPointNumSet))
+        //{
+        //    if (CharacterController.Cost >= CharacterController.ShieldCost)
+        //    {
+        //        CharacterController.Cost -= CharacterController.ShieldCost;
+        //        ChaActionState = CharacterActionState.ShieldAction;
+        //        return;
+        //    }
+        //    else
+        //        MgFieldState = MagicFieldState.WaitingCommand;
+        //}
+        //else if (CheckCompletePointNumSet(scrollPointNumSet))
+        //{
+        //    if (CharacterController.Cost >= CharacterController.ScrollCost)
+        //    {
+        //        CharacterController.Cost -= CharacterController.ScrollCost;
+        //        ChaActionState = CharacterActionState.ScrollAction;
+        //        return;
+        //    }
+        //    else
+        //        MgFieldState = MagicFieldState.WaitingCommand;
+        //}
         if (CheckCompletePointNumSet(swordPointNumSet))
         {
-            if (CharacterController.Cost >= CharacterController.SwordCost)
-            {
-                CharacterController.Cost -= CharacterController.SwordCost;
-                ChaActionState = CharacterActionState.SwordAction;
-                return;
-            }
-            else
-                MgFieldState = MagicFieldState.WaitingCommand;
+            ChaActionState = CharacterActionState.SwordAction;
         }
         else if (CheckCompletePointNumSet(bowPointNumSet))
         {
-            if (CharacterController.Cost >= CharacterController.BowCost)
-            {
-                CharacterController.Cost -= CharacterController.BowCost;
-                ChaActionState = CharacterActionState.BowAction;
-                return;
-            }
-            else
-                MgFieldState = MagicFieldState.WaitingCommand;
+            ChaActionState = CharacterActionState.BowAction;
         }
         else if (CheckCompletePointNumSet(wandPointNumSet))
         {
-            if (CharacterController.Cost >= CharacterController.WandCost)
-            {
-                CharacterController.Cost -= CharacterController.WandCost;
-                ChaActionState = CharacterActionState.WandAction;
-                return;
-            }
-            else
-                MgFieldState = MagicFieldState.WaitingCommand;
+            ChaActionState = CharacterActionState.WandAction;
         }
         else if (CheckCompletePointNumSet(shieldPointNumSet))
         {
-            if (CharacterController.Cost >= CharacterController.ShieldCost)
-            {
-                CharacterController.Cost -= CharacterController.ShieldCost;
-                ChaActionState = CharacterActionState.ShieldAction;
-                return;
-            }
-            else
-                MgFieldState = MagicFieldState.WaitingCommand;
+            ChaActionState = CharacterActionState.ShieldAction;
         }
         else if (CheckCompletePointNumSet(scrollPointNumSet))
         {
-            if (CharacterController.Cost >= CharacterController.ScrollCost)
-            {
-                CharacterController.Cost -= CharacterController.ScrollCost;
-                ChaActionState = CharacterActionState.ScrollAction;
-                return;
-            }
-            else
-                MgFieldState = MagicFieldState.WaitingCommand;
+            ChaActionState = CharacterActionState.ScrollAction;
         }
         else if (isSelectedCount > 5)
         {
@@ -343,8 +363,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         UIController.EndTurnButton.Enabled = false;
         UIController.SpinButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
-            yield return null;
-        while (CharacterController.ActionIsUpdate)
             yield return null;
         if (whenFinishRotationWillEndTurn)
         {

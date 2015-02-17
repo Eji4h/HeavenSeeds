@@ -31,7 +31,7 @@ public class TurnController : MonoBehaviour
         playerTurn = !playerTurn;
         if (playerTurn)
         {
-            CharacterController.Cost += incomeCost;
+            //CharacterController.Cost += incomeCost;
             CharacterController.TurnEffectDecrease();
             if (CharacterController.IsStun)
             {

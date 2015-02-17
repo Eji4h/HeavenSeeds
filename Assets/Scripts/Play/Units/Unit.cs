@@ -70,13 +70,13 @@ public abstract class Unit : MonoBehaviour
 
     [SerializeField]
     [Range(0, 10000)]
-    int maxHp;
+    protected int maxHp;
 
     GateBarController gateBarController;
 
     [SerializeField]
     [Range(0, 10)]
-    int maxGate;
+    protected int maxGate;
 
     [SerializeField]
     [Range(0f, 1f)]
