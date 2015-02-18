@@ -14,7 +14,6 @@ public class UIController : MonoBehaviour
 
     static UILabel manaLabel;
 
-    static EndTurnButton endTurnButton;
     static SpinButton spinButton;
     static UIButton pauseButton;
 
@@ -41,11 +40,6 @@ public class UIController : MonoBehaviour
     public static PayUIProgressBar MonsterHpBar
     {
         get { return UIController.monsterHpBar; }
-    }
-
-    public static EndTurnButton EndTurnButton
-    {
-        get { return UIController.endTurnButton; }
     }
 
     public static SpinButton SpinButton
@@ -85,7 +79,6 @@ public class UIController : MonoBehaviour
         manaBar = GameObject.Find("ManaBar").GetComponent<PayUIProgressBar>();
         manaBar.MaxValue = 99;
         manaLabel = GameObject.Find("ManaLabel").GetComponent<UILabel>();
-        endTurnButton = GameObject.FindObjectOfType<EndTurnButton>();
         spinButton = GameObject.Find("SpinButton").GetComponent<SpinButton>();
         pauseButton = GameObject.Find("PauseButton").GetComponent<UIButton>();
 

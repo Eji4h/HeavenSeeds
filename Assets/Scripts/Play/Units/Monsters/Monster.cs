@@ -302,8 +302,6 @@ public abstract class Monster : Unit
                 yield return StartCoroutine(BurnReceiveBehaviour());
             LowAttackDamageTurn--;
             StunTurn--;
-
-            turnController.TurnChange();
         }
     }
 
@@ -432,8 +430,6 @@ public abstract class Monster : Unit
             gameObjectTransformInParent.parent = null;
             gameObjectTransformInParent.gameObject.SetActive(false);
         });
-
-        SceneController.NextMonsterQueue();
             
         Destroy(gameObject);
         Destroy(this);

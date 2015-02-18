@@ -21,7 +21,6 @@ public class SceneController : MonoBehaviour
 
     static MagicFieldController magicFieldController;
 
-    static TurnController turnController;
     static bool startMonsterNextQueue = true;
 
     public static Camera MainCamera
@@ -74,42 +73,6 @@ public class SceneController : MonoBehaviour
         get { return SceneController.magicFieldController; }
     }
 
-    public static TurnController TurnController
-    {
-        get { return SceneController.turnController; }
-    }
-
-    public static void NextMonsterQueue()
-    {
-        if (queueMonster.Count > 0)
-        {
-            currentMonster = queueMonster.Dequeue();
-            Unit.Monster = currentMonster;
-            currentMonster.gameObject.SetActive(true);
-            if (turnController.PlayerTurn)
-            {
-                //if (CharacterController.CheckCostLessthanLowestCost())
-                {
-                    if (magicFieldController.IsWaitingRotation)
-                        magicFieldController.WhenFinishRotationWillEndTurn = true;
-                    else
-                        turnController.TurnChange();
-                }
-            }
-            else if (startMonsterNextQueue)
-                startMonsterNextQueue = false;
-            else
-                currentMonster.StartState();
-        }
-        else
-        {
-            currentMonster = null;
-            Unit.Monster = null;
-            if (turnController.PlayerTurn)
-                turnController.TurnChange();
-        }
-    }
-
     void Awake()
     {
         Unit.GenRandomNumSecurity();
@@ -117,7 +80,6 @@ public class SceneController : MonoBehaviour
         SetCameraObjects();
         SetMagicFieldController();
         SetCharacters();
-        SetTurnController();
     }
 
     // Use this for initialization
@@ -210,8 +172,6 @@ public class SceneController : MonoBehaviour
                 monster.gameObject.SetActive(false);
                 queueMonster.Enqueue(monster);
             });
-
-        NextMonsterQueue();
     }
 
     Monster InstantiateMonster(string path)
@@ -328,10 +288,5 @@ public class SceneController : MonoBehaviour
         //MagicFieldController.wandFxAnimation.SetActive(false);
         MagicFieldController.shieldFxAnimation.SetActive(false);
         //MagicFieldController.scrollFxAnimation.SetActive(false);
-    }
-
-    void SetTurnController()
-    {
-        turnController = GameObject.FindObjectOfType<TurnController>();
     }
 }

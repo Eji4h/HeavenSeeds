@@ -21,7 +21,6 @@ public abstract class Unit : MonoBehaviour
     protected static List<CharacterController> listCharacterControllerIsFall = new List<CharacterController>(5);
 
     protected static MagicFieldController magicFieldController;
-    protected static TurnController turnController;
     #endregion
 
     #region Static Properties
@@ -49,7 +48,6 @@ public abstract class Unit : MonoBehaviour
         monster = SceneController.CurrentMonster;
 
         magicFieldController = SceneController.MagicFieldController;
-        turnController = SceneController.TurnController;
     }
 
     public static void SetCharactersController(CharacterController swordCharacterController,

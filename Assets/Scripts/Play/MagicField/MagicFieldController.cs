@@ -360,22 +360,10 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     IEnumerator WaitingRotation()
     {
         SetMagicPointCollider(false);
-        UIController.EndTurnButton.Enabled = false;
         UIController.SpinButton.Enabled = false;
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
-        if (whenFinishRotationWillEndTurn)
-        {
-            SceneController.TurnController.TurnChange();
-            whenFinishRotationWillEndTurn = false;
-        }
-        else
-        {
-            if (SceneController.TurnController.PlayerTurn)
-                MgFieldState = MagicFieldState.WaitingCommand;
-            else
-                MgFieldState = MagicFieldState.WaitingMonsterTurn;
-        }
+        MgFieldState = MagicFieldState.WaitingCommand;
     }
 
 
@@ -383,7 +371,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     {
         SetMagicPointCollider(false);
         magicFieldBG.spriteName = "darkMagicBG";
-        UIController.EndTurnButton.Enabled = false;
         UIController.SpinButton.Enabled = false;
         yield return null;
     }
@@ -397,8 +384,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     void WaitingCommandUIControllerClear()
     {
-        UIController.EndTurnButton.Enabled = true;
-        UIController.EndTurnButton.ResetDefaultColor();
         UIController.SpinButton.Enabled = true;
         UIController.SpinButton.ResetDefaultColor();
         UIController.FireElementBarController.ResetCount();

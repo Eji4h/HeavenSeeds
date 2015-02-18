@@ -10,7 +10,6 @@ public class PauseButton : UIButtonMonoBehaviour
     {
         isPause = !isPause;
         GameManager.Instance.Pause = isPause;
-        UIController.EndTurnButton.Enabled = !isPause;
         UIController.SpinButton.Enabled = !isPause;
         //UIController.PauseButton.isEnabled = !isPause;
 
