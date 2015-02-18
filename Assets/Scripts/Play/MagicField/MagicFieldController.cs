@@ -17,8 +17,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     enum MagicFieldState
     {
         WaitingCommand,
-        WaitingRotation,
-        WaitingMonsterTurn
+        WaitingRotation
     }
 
     int randomNumSecurity;
@@ -191,19 +190,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             magicPoint.Collider2DEnabled = true);
     }
 
-    public void ChangeMgFieldState(bool toWaitingCommand)
-    {
-        if (toWaitingCommand)
-        {
-            MgFieldState = MagicFieldState.WaitingCommand;
-        }
-        else
-        {
-            MgFieldState = MagicFieldState.WaitingMonsterTurn;
-            RotateMagicCircle(magicCircleOutIndexChangePerMove, magicCircleInIndexChangePerMove);
-        }
-    }
-
     #region Waiting Command Method
     IEnumerator WaitingCommand()
     {
@@ -361,18 +347,10 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     {
         SetMagicPointCollider(false);
         UIController.SpinButton.Enabled = false;
+        magicFieldBG.spriteName = "darkMagicBG";
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
             yield return null;
         MgFieldState = MagicFieldState.WaitingCommand;
-    }
-
-
-    IEnumerator WaitingMonsterTurn()
-    {
-        SetMagicPointCollider(false);
-        magicFieldBG.spriteName = "darkMagicBG";
-        UIController.SpinButton.Enabled = false;
-        yield return null;
     }
 
     public void ResetMagicPointIsSelected()
