@@ -24,7 +24,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     Camera uiCamera;
 
     public List<MagicPoint> listMagicPoints = new List<MagicPoint>(13),
-        listMagicPointsUpstairs = new List<MagicPoint>(9);
+        listMagicPointsUpstair = new List<MagicPoint>(9);
 
     int isSelectedCount = 0;
 
@@ -46,8 +46,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     MagicFieldState mgFieldState;
     CharacterActionState chaActionState;
-
-    bool whenFinishRotationWillEndTurn = false;
 
     bool randomChaActionState = false;
     int randomChaActionStateCount = 0;
@@ -104,7 +102,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                     selectedCharacterController = SceneController.SwordCharacterController;
                     break;
             }
-            listMagicPointsUpstairs.ForEach(magicPoint =>
+            listMagicPointsUpstair.ForEach(magicPoint =>
                 {
                     if (magicPoint.IsSelected)
                         magicPoint.UseMagicPoint();
@@ -123,17 +121,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         }
     }
 
-    public bool WhenFinishRotationWillEndTurn
-    {
-        get { return whenFinishRotationWillEndTurn; }
-        set { whenFinishRotationWillEndTurn = value; }
-    }
-
-    public bool RandomChaActionState
-    {
-        get { return randomChaActionState; }
-    }
-
     public int RandomChaActionStateCount
     {
         get { return randomChaActionStateCount / randomNumSecurity; }
@@ -142,11 +129,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
             randomChaActionStateCount = value * randomNumSecurity;
             randomChaActionState = RandomChaActionStateCount > 0;
         }
-    }
-
-    public bool IsWaitingRotation
-    {
-        get { return MgFieldState == MagicFieldState.WaitingRotation; }
     }
 
     // Use this for initialization
@@ -177,16 +159,16 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         magicFieldBG = transform.Find("MagicFieldBG").GetComponent<UISprite>();
     }
 
-    void SetMagicPointsUpstairs()
+    void SetMagicPointsUpstair()
     {
-        SetMagicPointCollider(false);
-        listMagicPointsUpstairs.Clear();
+        SetMagicPointsCollider(false);
+        listMagicPointsUpstair.Clear();
         for (int i = 0; i < 5; i++)
-            listMagicPointsUpstairs.Add(magicCircleOut[i]);
+            listMagicPointsUpstair.Add(magicCircleOut[i]);
         for (int i = 0; i < 3; i++)
-            listMagicPointsUpstairs.Add(magicCircleIn[i]);
-        listMagicPointsUpstairs.Add(magicPointCenter);
-        listMagicPointsUpstairs.ForEach(magicPoint =>
+            listMagicPointsUpstair.Add(magicCircleIn[i]);
+        listMagicPointsUpstair.Add(magicPointCenter);
+        listMagicPointsUpstair.ForEach(magicPoint =>
             magicPoint.Collider2DEnabled = true);
     }
 
@@ -194,8 +176,8 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     IEnumerator WaitingCommand()
     {
         WaitingCommandUIControllerClear();
-        ResetMagicPointIsSelected();
-        SetMagicPointsUpstairs();
+        ResetMagicPointsIsSelected();
+        SetMagicPointsUpstair();
         magicFieldBG.spriteName = "lightMagicBG";
 
         for (; ; )
@@ -317,13 +299,13 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     bool CheckCompletePointNumSet(int[] pointNumSetCheck)
     {
-        if (listMagicPointsUpstairs[pointNumSetCheck[0]].IsSelected &
-            listMagicPointsUpstairs[pointNumSetCheck[1]].IsSelected &
-            listMagicPointsUpstairs[pointNumSetCheck[2]].IsSelected &
-            listMagicPointsUpstairs[pointNumSetCheck[3]].IsSelected &
-            listMagicPointsUpstairs[pointNumSetCheck[4]].IsSelected)
+        if (listMagicPointsUpstair[pointNumSetCheck[0]].IsSelected &
+            listMagicPointsUpstair[pointNumSetCheck[1]].IsSelected &
+            listMagicPointsUpstair[pointNumSetCheck[2]].IsSelected &
+            listMagicPointsUpstair[pointNumSetCheck[3]].IsSelected &
+            listMagicPointsUpstair[pointNumSetCheck[4]].IsSelected)
         {
-            for (int i = 0; i < listMagicPointsUpstairs.Count; i++)
+            for (int i = 0; i < listMagicPointsUpstair.Count; i++)
             {
                 bool hasEqual = false;
                 foreach (int j in pointNumSetCheck)
@@ -335,7 +317,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
                     }
                 }
                 if (!hasEqual)
-                    listMagicPointsUpstairs[i].IsSelected = false;
+                    listMagicPointsUpstair[i].IsSelected = false;
             }
             return true;
         }
@@ -345,7 +327,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     IEnumerator WaitingRotation()
     {
-        SetMagicPointCollider(false);
+        SetMagicPointsCollider(false);
         UIController.SpinButton.Enabled = false;
         magicFieldBG.spriteName = "darkMagicBG";
         while (magicCircleOut.NowRotate && magicCircleIn.NowRotate)
@@ -353,7 +335,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         MgFieldState = MagicFieldState.WaitingCommand;
     }
 
-    public void ResetMagicPointIsSelected()
+    public void ResetMagicPointsIsSelected()
     {
         isSelectedCount = 0;
         listMagicPoints.ForEach(magicPoint =>
@@ -370,7 +352,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         UIController.WoodElementBarController.ResetCount();
     }
 
-    void SetMagicPointCollider(bool enabled)
+    void SetMagicPointsCollider(bool enabled)
     {
         listMagicPoints.ForEach(magicPoint =>
                 magicPoint.Collider2DEnabled = enabled);
