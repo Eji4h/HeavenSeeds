@@ -109,7 +109,6 @@ public abstract class CharacterStatus : MonoBehaviour
             while (nextLvExp > 0 && 
                 currentExp >= nextLvExp)
             {
-                int remainExp = nextLvExp - currentExp;
                 currentExp -= nextLvExp;
                 Lv++;
             }

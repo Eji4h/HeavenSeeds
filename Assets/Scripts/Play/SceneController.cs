@@ -21,8 +21,6 @@ public class SceneController : MonoBehaviour
 
     static MagicFieldController magicFieldController;
 
-    static bool startMonsterNextQueue = true;
-
     public static Camera MainCamera
     {
         get { return SceneController.mainCamera; }
