@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ElementBarController : UIProgressBar
 {
-    static int numberOfSteps = 26;
+    new static int numberOfSteps = 26;
 
     public ElementType element;
     float oneStepValue;
@@ -24,9 +24,10 @@ public class ElementBarController : UIProgressBar
     }
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         oneStepValue = 1f / numberOfSteps;
+        base.Start();
     }
 
     public void Increase()

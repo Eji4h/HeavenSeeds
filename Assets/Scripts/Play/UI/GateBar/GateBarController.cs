@@ -54,8 +54,9 @@ public class GateBarController : UIProgressBar
     }
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
+        base.Start();
         StartCoroutine(UpdateGateValue());
     }
 
