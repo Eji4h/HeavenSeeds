@@ -75,7 +75,6 @@ public class SceneController : MonoBehaviour
 
     void Awake()
     {
-        Unit.GenRandomNumSecurity();
         queueMonster.Clear();
         SetCameraObjects();
         SetMagicFieldController();

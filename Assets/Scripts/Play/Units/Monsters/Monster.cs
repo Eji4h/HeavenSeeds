@@ -122,13 +122,13 @@ public abstract class Monster : Unit
 
     public virtual int Hp
     {
-        get { return hp / randomNumSecurity; }
+        get { return hp / NumberSecurity.RandomNumSecurity; }
         set
         {
             if (value > MaxHp)
-                hp = MaxHp * randomNumSecurity;
+                hp = MaxHp * NumberSecurity.RandomNumSecurity;
             else
-                hp = value * randomNumSecurity;
+                hp = value * NumberSecurity.RandomNumSecurity;
 
             UIController.MonsterHpBar.Value = Hp;
 
@@ -142,20 +142,20 @@ public abstract class Monster : Unit
 
     protected int DamageBase
     {
-        get { return damageBase / randomNumSecurity; }
-        set { damageBase = value * randomNumSecurity; }
+        get { return damageBase / NumberSecurity.RandomNumSecurity; }
+        set { damageBase = value * NumberSecurity.RandomNumSecurity; }
     }
 
     protected float DamageMinimumMultiply
     {
-        get { return damageMinimumMultiply / randomNumSecurity; }
-        set { damageMinimumMultiply = value * randomNumSecurity; }
+        get { return damageMinimumMultiply / NumberSecurity.RandomNumSecurity; }
+        set { damageMinimumMultiply = value * NumberSecurity.RandomNumSecurity; }
     }
 
     protected float DamageMaximumMultiply
     {
-        get { return damageMaximumMultiply / randomNumSecurity; }
-        set { damageMaximumMultiply = value * randomNumSecurity; }
+        get { return damageMaximumMultiply / NumberSecurity.RandomNumSecurity; }
+        set { damageMaximumMultiply = value * NumberSecurity.RandomNumSecurity; }
     }
 
     public bool IsImmortal
@@ -185,10 +185,10 @@ public abstract class Monster : Unit
 
     int BurnTurn
     {
-        get { return burnTurn / randomNumSecurity; }
+        get { return burnTurn / NumberSecurity.RandomNumSecurity; }
         set
         {
-            burnTurn = value * randomNumSecurity;
+            burnTurn = value * NumberSecurity.RandomNumSecurity;
             isBurn = BurnTurn > 0;
             burnParticle.SetActive(isBurn);
         }
@@ -196,10 +196,10 @@ public abstract class Monster : Unit
 
     int LowAttackDamageTurn
     {
-        get { return lowAttackDamageTurn / randomNumSecurity; }
+        get { return lowAttackDamageTurn / NumberSecurity.RandomNumSecurity; }
         set
         {
-            lowAttackDamageTurn = value * randomNumSecurity;
+            lowAttackDamageTurn = value * NumberSecurity.RandomNumSecurity;
             isLowAttackDamage = LowAttackDamageTurn > 0;
             vortexParticle.SetActive(isLowAttackDamage);
         }
@@ -207,10 +207,10 @@ public abstract class Monster : Unit
 
     int StunTurn
     {
-        get { return stunTurn / randomNumSecurity; }
+        get { return stunTurn / NumberSecurity.RandomNumSecurity; }
         set
         {
-            stunTurn = value * randomNumSecurity;
+            stunTurn = value * NumberSecurity.RandomNumSecurity;
             isStun = StunTurn > 0;
             stunParticle.SetActive(isStun);
         }
@@ -218,10 +218,10 @@ public abstract class Monster : Unit
 
     int MoreReceiveDamageTurn
     {
-        get { return moreReceiveDamageTurn / randomNumSecurity; }
+        get { return moreReceiveDamageTurn / NumberSecurity.RandomNumSecurity; }
         set
         {
-            moreReceiveDamageTurn = value * randomNumSecurity;
+            moreReceiveDamageTurn = value * NumberSecurity.RandomNumSecurity;
             isMoreReceiveDamage = MoreReceiveDamageTurn > 0;
             rootParticle.SetActive(isMoreReceiveDamage);
         }

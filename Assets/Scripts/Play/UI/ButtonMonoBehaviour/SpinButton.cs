@@ -6,7 +6,6 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 public class SpinButton : UIButtonMonoBehaviour
 {
     #region Variable
-    int randomNumSecurity;
     int spinAmount;
     float timeMove = 1.5f;
 
@@ -18,10 +17,10 @@ public class SpinButton : UIButtonMonoBehaviour
     #region Properties
     public int SpinAmount
     {
-        get { return spinAmount / randomNumSecurity; }
+        get { return spinAmount / NumberSecurity.RandomNumSecurity; }
         set 
         { 
-            spinAmount = value * randomNumSecurity;
+            spinAmount = value * NumberSecurity.RandomNumSecurity;
             PlayerPrefs.SetInt("SpinAmount", SpinAmount);
             if (SpinAmount > 0)
             {
@@ -43,7 +42,6 @@ public class SpinButton : UIButtonMonoBehaviour
     protected override void Start()
     {
         base.Start();
-        randomNumSecurity = Random.Range(0, 1000);
         spinAmountLabel = GetComponentInChildren<UILabel>();
         spinAmountLabelWidget = spinAmountLabel.GetComponent<UIWidget>();
         tweenRotation = GetComponent<TweenRotation>();

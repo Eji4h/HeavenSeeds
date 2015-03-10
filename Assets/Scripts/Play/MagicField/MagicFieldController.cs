@@ -20,7 +20,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         WaitingRotation
     }
 
-    int randomNumSecurity;
     Camera uiCamera;
 
     public List<MagicPoint> listMagicPoints = new List<MagicPoint>(13),
@@ -123,10 +122,10 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
 
     public int RandomChaActionStateCount
     {
-        get { return randomChaActionStateCount / randomNumSecurity; }
+        get { return randomChaActionStateCount / NumberSecurity.RandomNumSecurity; }
         set
         {
-            randomChaActionStateCount = value * randomNumSecurity;
+            randomChaActionStateCount = value * NumberSecurity.RandomNumSecurity;
             randomChaActionState = RandomChaActionStateCount > 0;
         }
     }
@@ -134,7 +133,6 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     // Use this for initialization
     void Start()
     {
-        randomNumSecurity = Random.Range(0, 1000);
         uiCamera = SceneController.UICamera;
         for (int i = 1; i < 14; i++)
             listMagicPoints.Add(GameObject.Find("Point" + i).GetComponent<MagicPoint>());

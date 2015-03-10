@@ -6,8 +6,6 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public abstract class Unit : MonoBehaviour
 {
-    protected static int randomNumSecurity;
-
     protected static List<CharacterController> listCharacterController = new List<CharacterController>(5);
     protected static CharacterController swordCharacterController,
         bowCharacterController,
@@ -18,11 +16,6 @@ public abstract class Unit : MonoBehaviour
     protected static List<CharacterController> listCharacterControllerIsFall = new List<CharacterController>(5);
 
     protected static MagicFieldController magicFieldController;
-
-    public static void GenRandomNumSecurity()
-    {
-        randomNumSecurity = UnityEngine.Random.Range(0, 1000);
-    }
 
     public static void SetInit()
     {
@@ -70,8 +63,8 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual int MaxHp
     {
-        get { return maxHp / randomNumSecurity; }
-        set { maxHp = value * randomNumSecurity; }
+        get { return maxHp / NumberSecurity.RandomNumSecurity; }
+        set { maxHp = value * NumberSecurity.RandomNumSecurity; }
     }
 
     protected virtual void Awake()
