@@ -8,7 +8,7 @@ public static class NumberSecurity
         get { return NumberSecurity.randomNumSecurity; }
     }
 
-    public static NumberSecurity()
+    static NumberSecurity()
     {
         randomNumSecurity = UnityEngine.Random.Range(0, 1000);
     }
