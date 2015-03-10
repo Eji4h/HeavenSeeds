@@ -6,10 +6,7 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public abstract class Unit : MonoBehaviour
 {
-    #region Static Variable
     protected static int randomNumSecurity;
-
-    protected static Monster monster;
 
     protected static List<CharacterController> listCharacterController = new List<CharacterController>(5);
     protected static CharacterController swordCharacterController,
@@ -21,17 +18,7 @@ public abstract class Unit : MonoBehaviour
     protected static List<CharacterController> listCharacterControllerIsFall = new List<CharacterController>(5);
 
     protected static MagicFieldController magicFieldController;
-    #endregion
 
-    #region Static Properties
-    public static Monster Monster
-    {
-        get { return Unit.monster; }
-        set { Unit.monster = value; }
-    }
-    #endregion
-
-    #region Static Method
     public static void GenRandomNumSecurity()
     {
         randomNumSecurity = UnityEngine.Random.Range(0, 1000);
@@ -44,8 +31,6 @@ public abstract class Unit : MonoBehaviour
         wandCharacterController = SceneController.WandCharacterController;
         shieldCharacterController = SceneController.ShieldCharacterController;
         scrollCharacterController = SceneController.ScrollCharacterController;
-
-        monster = SceneController.CurrentMonster;
 
         magicFieldController = SceneController.MagicFieldController;
     }
@@ -60,9 +45,7 @@ public abstract class Unit : MonoBehaviour
         Monster.shieldCharacterController = shieldCharacterController;
         Monster.scrollCharacterController = scrollCharacterController;
     }
-    #endregion
 
-    #region Variable
     protected Transform thisTransform;
     protected Animation thisAnimation;
 
@@ -84,15 +67,12 @@ public abstract class Unit : MonoBehaviour
     Action gateCountTargetAction;
 
     protected List<Transform> listGameObjectTransformInParent = new List<Transform>(8);
-    #endregion
 
-    #region Properties
     protected virtual int MaxHp
     {
         get { return maxHp / randomNumSecurity; }
         set { maxHp = value * randomNumSecurity; }
     }
-    #endregion
 
     protected virtual void Awake()
     {
