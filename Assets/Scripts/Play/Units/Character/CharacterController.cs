@@ -525,7 +525,7 @@ public class CharacterController : Unit
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
             if (iActionBehaviour is AttackBehaviour)
-                monster.ShowParticleReceiveDamage(chaActionState);
+                SceneController.CurrentMonster.ShowParticleReceiveDamage(chaActionState);
             else if (iActionBehaviour is HealAndBuffBehaviour)
                 ShowHealParticle();
             yield return new WaitForSeconds(timeAfterMonsterListShowParticleReceiveDamage);
@@ -537,10 +537,10 @@ public class CharacterController : Unit
             thisAnimation.Play(idleStr);
         }
 
-        while (Monster.QueueElementIsRunning)
+        while (SceneController.CurrentMonster.QueueElementIsRunning)
             yield return null;
 
-        while (Monster.NowBurning)
+        while (SceneController.CurrentMonster.NowBurning)
             yield return null;
 
         if (isBurn)
