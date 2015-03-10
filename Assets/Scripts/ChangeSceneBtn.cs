@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ChangeSceneBtn : MonoBehaviour
 {
-    public string sceneGoToStr;
+    [SerializeField]
+    public string sceneGoToString;
 
     // Use this for initialization
     void Start()
@@ -13,6 +14,6 @@ public class ChangeSceneBtn : MonoBehaviour
 
     void ChangeSceneBtnOnClick()
     {
-        Application.LoadLevel(sceneGoToStr);
+        Application.LoadLevel(sceneGoToString);
     }
 }
