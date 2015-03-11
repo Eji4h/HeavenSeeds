@@ -111,27 +111,27 @@ public class CharacterController : Unit
 
     public static int SwordValue
     {
-        get { return swordCharacterController.characterStatus.SwordValue; }
+        get { return SwordCharacterController.characterStatus.SwordValue; }
     }
 
     public static int BowValue
     {
-        get { return bowCharacterController.characterStatus.BowValue; }
+        get { return BowCharacterController.characterStatus.BowValue; }
     }
 
     public static int WandValue
     {
-        get { return wandCharacterController.characterStatus.WandValue; }
+        get { return WandCharacterController.characterStatus.WandValue; }
     }
 
     public static int ShieldValue
     {
-        get { return shieldCharacterController.characterStatus.ShiedlValue; }
+        get { return ShieldCharacterController.characterStatus.ShiedlValue; }
     }
 
     public static int ScrollValue
     {
-        get { return scrollCharacterController.characterStatus.ScrollValue; }
+        get { return ScrollCharacterController.characterStatus.ScrollValue; }
     }
 
     public static bool IsBurn
@@ -196,27 +196,21 @@ public class CharacterController : Unit
 
     public static new void SetInit()
     {
-        swordCharacterController = SceneController.SwordCharacterController;
-        bowCharacterController = SceneController.BowCharacterController;
-        wandCharacterController = SceneController.WandCharacterController;
-        shieldCharacterController = SceneController.ShieldCharacterController;
-        scrollCharacterController = SceneController.ScrollCharacterController;
-
-        MaxSumHp = swordCharacterController.MaxHp +
-            bowCharacterController.MaxHp +
-            wandCharacterController.MaxHp +
-            shieldCharacterController.MaxHp +
-            scrollCharacterController.MaxHp;
+        MaxSumHp = SwordCharacterController.MaxHp +
+            BowCharacterController.MaxHp +
+            WandCharacterController.MaxHp +
+            ShieldCharacterController.MaxHp +
+            ScrollCharacterController.MaxHp;
 
         UIController.PlayerHpBar.MaxValue = MaxSumHp;
         SumHp = MaxSumHp;
 
-        listCharacterController.Clear();
-        listCharacterController.Add(swordCharacterController);
-        listCharacterController.Add(bowCharacterController);
-        listCharacterController.Add(wandCharacterController);
-        listCharacterController.Add(shieldCharacterController);
-        listCharacterController.Add(scrollCharacterController);
+        ListCharacterController.Clear();
+        ListCharacterController.Add(SwordCharacterController);
+        ListCharacterController.Add(BowCharacterController);
+        ListCharacterController.Add(WandCharacterController);
+        ListCharacterController.Add(ShieldCharacterController);
+        ListCharacterController.Add(ScrollCharacterController);
 
         barrierGameObject = Instantiate(Resources.Load("Prefabs/Particle/Player/Attack/NewBarrier")) as GameObject;
         barrierGameObject.transform.position = new Vector3(0f, 0f, -1.5f);
@@ -246,12 +240,12 @@ public class CharacterController : Unit
         if (dmg > 0)
         {
             SumHp -= dmg;
-            UIController.ShowHpPopUp(dmg, swordCharacterController.thisTransform.position, receiveDamageHpPopUpColor);
-            listCharacterController.ForEach(characterController =>
+            UIController.ShowHpPopUp(dmg, SwordCharacterController.ThisTransform.position, receiveDamageHpPopUpColor);
+            ListCharacterController.ForEach(characterController =>
                 {
-                    characterController.thisAnimation.Stop();
-                    characterController.thisAnimation.Play(characterController.hurtStr);
-                    characterController.thisAnimation.CrossFadeQueued(characterController.IsFall ?
+                    characterController.ThisAnimation.Stop();
+                    characterController.ThisAnimation.Play(characterController.hurtStr);
+                    characterController.ThisAnimation.CrossFadeQueued(characterController.IsFall ?
                         characterController.fallStr : characterController.idleStr);
                 });
         }
@@ -265,7 +259,7 @@ public class CharacterController : Unit
     public static void ReceiveHeal(int heal)
     {
         SumHp += Mathf.RoundToInt(heal * (1f + HealPercentIncrease));
-        UIController.ShowHpPopUp(heal, swordCharacterController.thisTransform.position, healHpPopUpColor);
+        UIController.ShowHpPopUp(heal, SwordCharacterController.ThisTransform.position, healHpPopUpColor);
     }
 
     static void ShowHealParticle()
@@ -297,19 +291,19 @@ public class CharacterController : Unit
     {
         BurnTurn = 0;
         PoisonTurn = 0;
-        int listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
+        int listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
 
-        for (int i = 0; i < listCharacterControllerIsFall.Count; i++)
+        for (int i = 0; i < ListCharacterControllerIsFall.Count; i++)
         {
-            listCharacterControllerIsFall[i].TurnFall = 0;
-            if (listCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
+            ListCharacterControllerIsFall[i].TurnFall = 0;
+            if (ListCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
             {
                 i--;
-                listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
+                listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
             }
         }
-        magicFieldController.RandomChaActionStateCount = 0;
-        magicFieldController.listMagicPoints.ForEach(magicPoint =>
+        MagicFieldController.RandomChaActionStateCount = 0;
+        MagicFieldController.listMagicPoints.ForEach(magicPoint =>
                 magicPoint.IsSkull = false);
     }
 
@@ -324,15 +318,15 @@ public class CharacterController : Unit
     {
         ClearBuff();
 
-        int listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
+        int listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
 
-        for(int i = 0; i < listCharacterControllerIsFall.Count; i++)
+        for(int i = 0; i < ListCharacterControllerIsFall.Count; i++)
         {
-            listCharacterControllerIsFall[i].TurnFall--;
-            if (listCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
+            ListCharacterControllerIsFall[i].TurnFall--;
+            if (ListCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
             {
                 i--;
-                listCharacterControllerIsFallCount = listCharacterControllerIsFall.Count;
+                listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
             }
         }
 
@@ -364,13 +358,13 @@ public class CharacterController : Unit
             isFall = value;
             if (isFall)
             {
-                listCharacterControllerIsFall.Add(this);
-                thisAnimation.CrossFade(fallStr);
+                ListCharacterControllerIsFall.Add(this);
+                ThisAnimation.CrossFade(fallStr);
             }
             else
             {
-                listCharacterControllerIsFall.Remove(this);
-                thisAnimation.CrossFade(idleStr);
+                ListCharacterControllerIsFall.Remove(this);
+                ThisAnimation.CrossFade(idleStr);
             }
         }
     }
@@ -439,7 +433,7 @@ public class CharacterController : Unit
     // Use this for initialization
     protected override void Start()
     {
-        thisAnimation.Play(idleStr);
+        ThisAnimation.Play(idleStr);
         base.Start();
     }
 
@@ -521,7 +515,7 @@ public class CharacterController : Unit
     {
         if (!IsFall)
         {
-            thisAnimation.Play(actionStr);
+            ThisAnimation.Play(actionStr);
 
             yield return new WaitForSeconds(timeBeforeMonsterListShowParticleReceiveDamage);
             if (iActionBehaviour is AttackBehaviour)
@@ -532,9 +526,9 @@ public class CharacterController : Unit
 
             iActionBehaviour.Action();
 
-            while (thisAnimation.isPlaying)
+            while (ThisAnimation.isPlaying)
                 yield return null;
-            thisAnimation.Play(idleStr);
+            ThisAnimation.Play(idleStr);
         }
 
         while (SceneController.CurrentMonster.QueueElementIsRunning)

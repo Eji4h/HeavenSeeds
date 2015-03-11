@@ -104,20 +104,20 @@ public abstract class Monster : Unit
 
     protected float LocalPositionX
     {
-        get { return thisTransform.localPosition.x; }
-        set { thisTransform.localPosition = new Vector3(value, thisTransform.position.y, thisTransform.position.z); }
+        get { return ThisTransform.localPosition.x; }
+        set { ThisTransform.localPosition = new Vector3(value, ThisTransform.position.y, ThisTransform.position.z); }
     }
 
     protected float LocalPositionY
     {
-        get { return thisTransform.localPosition.y; }
-        set { thisTransform.localPosition = new Vector3(thisTransform.position.x, value, thisTransform.position.z); }
+        get { return ThisTransform.localPosition.y; }
+        set { ThisTransform.localPosition = new Vector3(ThisTransform.position.x, value, ThisTransform.position.z); }
     }
 
     protected float LocalPositionZ
     {
-        get { return thisTransform.localPosition.z; }
-        set { thisTransform.localPosition = new Vector3(thisTransform.position.x, thisTransform.position.y, value); }
+        get { return ThisTransform.localPosition.z; }
+        set { ThisTransform.localPosition = new Vector3(ThisTransform.position.x, ThisTransform.position.y, value); }
     }
 
     public virtual int Hp
@@ -249,21 +249,21 @@ public abstract class Monster : Unit
         arrowHitParticleLocalPosition =
             new Vector3(0f, thisCollider.bounds.center.y - 0.25f, thisCollider.bounds.extents.z + 0.5f);
 
-        burnParticle.transform.parent = thisTransform;
+        burnParticle.transform.parent = ThisTransform;
         burnParticle.transform.localPosition = Vector3.zero;
         listGameObjectTransformInParent.Add(burnParticle.transform);
 
-        vortexParticle.transform.parent = thisTransform;
+        vortexParticle.transform.parent = ThisTransform;
         vortexParticle.transform.localPosition = Vector3.zero;
         listGameObjectTransformInParent.Add(vortexParticle.transform);
 
-        stunParticle.transform.parent = thisTransform;
+        stunParticle.transform.parent = ThisTransform;
         stunParticle.transform.localPosition = new Vector3(0f, 
-            thisCollider.bounds.max.y / thisTransform.localScale.y, 
-            (thisCollider.bounds.extents.z + 0.1f) / thisTransform.localScale.z);
+            thisCollider.bounds.max.y / ThisTransform.localScale.y, 
+            (thisCollider.bounds.extents.z + 0.1f) / ThisTransform.localScale.z);
         listGameObjectTransformInParent.Add(stunParticle.transform);
 
-        rootParticle.transform.parent = thisTransform;
+        rootParticle.transform.parent = ThisTransform;
         rootParticle.transform.localPosition = Vector3.zero;
         listGameObjectTransformInParent.Add(rootParticle.transform);
 
@@ -296,7 +296,7 @@ public abstract class Monster : Unit
         if (Hp > 0)
         {
             if (isCrossFadeToIdle)
-                thisAnimation.CrossFade("Idle");
+                ThisAnimation.CrossFade("Idle");
 
             if (isBurn)
                 yield return StartCoroutine(BurnReceiveBehaviour());
@@ -310,7 +310,7 @@ public abstract class Monster : Unit
         if (!isImmortal)
         {
             dmg = Mathf.RoundToInt(dmg * (isMoreReceiveDamage ? 1.2f : 1f));
-            UIController.ShowHpPopUp(dmg, thisTransform.position, receiveDamageHpPopColor);
+            UIController.ShowHpPopUp(dmg, ThisTransform.position, receiveDamageHpPopColor);
             Hp -= dmg;
             MoreReceiveDamageTurn--;
         }
@@ -318,7 +318,7 @@ public abstract class Monster : Unit
 
     public virtual void ReceiveHeal(int heal)
     {
-        UIController.ShowHpPopUp(heal, thisTransform.position, healHpPopUpColor);
+        UIController.ShowHpPopUp(heal, ThisTransform.position, healHpPopUpColor);
         Hp += heal;
     }
 
@@ -384,23 +384,23 @@ public abstract class Monster : Unit
 
     protected void NormalAttack()
     {
-        thisAnimation.CrossFade("Attack");
-        StartCoroutineRunWaitTimeToEndTurn(thisAnimation["Attack"].length);
+        ThisAnimation.CrossFade("Attack");
+        StartCoroutineRunWaitTimeToEndTurn(ThisAnimation["Attack"].length);
     }
 
     protected void ResetLocalPositionToZero()
     {
-        thisTransform.localPosition = Vector3.zero;
+        ThisTransform.localPosition = Vector3.zero;
     }
 
     protected void PlayAnimation(string animationNameToPlay)
     {
-        thisAnimation.Play(animationNameToPlay);
+        ThisAnimation.Play(animationNameToPlay);
     }
 
     protected void CrossFadeAnimation(string animationNameToCrossFade)
     {
-        thisAnimation.CrossFade(animationNameToCrossFade);
+        ThisAnimation.CrossFade(animationNameToCrossFade);
     }
 
     protected void StartCoroutineRunWaitTimeToEndTurn(float timeToWait)
@@ -416,11 +416,11 @@ public abstract class Monster : Unit
 
     IEnumerator WaitingDieAnimationToDestroy()
     {
-        var dieAnimationState = thisAnimation["Die"];
+        var dieAnimationState = ThisAnimation["Die"];
         float waitTime = 0.5f;
         if (dieAnimationState != null)
         {
-            thisAnimation.CrossFade("Die");
+            ThisAnimation.CrossFade("Die");
             waitTime += dieAnimationState.length;
         }
         yield return new WaitForSeconds(waitTime);
@@ -532,22 +532,22 @@ public abstract class Monster : Unit
 
     public void RotateMagicCircle(int indexMagicCircleChange)
     {
-        magicFieldController.RotateMagicCircle(indexMagicCircleChange, -indexMagicCircleChange);
+        MagicFieldController.RotateMagicCircle(indexMagicCircleChange, -indexMagicCircleChange);
     }
 
     public void RandomRotateMagicCircle()
     {
-        magicFieldController.RotateMagicCircle(RandomNumberSpin(5, 10), RandomNumberSpin(5, 10));
+        MagicFieldController.RotateMagicCircle(RandomNumberSpin(5, 10), RandomNumberSpin(5, 10));
     }
 
     public void RandomRotateMagicCircleOut()
     {
-        magicFieldController.RotateMagicCircle(RandomNumberSpin(5, 10), 0);
+        MagicFieldController.RotateMagicCircle(RandomNumberSpin(5, 10), 0);
     }
 
     public void RandomRotateMagicCircleIn()
     {
-        magicFieldController.RotateMagicCircle(0, RandomNumberSpin(5, 10));
+        MagicFieldController.RotateMagicCircle(0, RandomNumberSpin(5, 10));
     }
 
     int RandomNumberSpin(int minNum, int maxNum)
@@ -560,17 +560,17 @@ public abstract class Monster : Unit
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
         {
-            if (listCharacterControllerIsFall.Count < 5)
+            if (ListCharacterControllerIsFall.Count < 5)
             {
                 turnFall++;
                 CharacterController selectedCharacterController;
                 List<CharacterController> listUnFallCharacterController =
                     new List<CharacterController>(5);
 
-                listCharacterController.ForEach(characterController =>
+                ListCharacterController.ForEach(characterController =>
                     listUnFallCharacterController.Add(characterController));
 
-                listCharacterControllerIsFall.ForEach(characterController =>
+                ListCharacterControllerIsFall.ForEach(characterController =>
                     listUnFallCharacterController.Remove(characterController));
                 selectedCharacterController = listUnFallCharacterController
                     [Random.Range(0, listUnFallCharacterController.Count)];
@@ -583,7 +583,7 @@ public abstract class Monster : Unit
     public void MagicFieldRandomAction(int randomCount)
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
-            magicFieldController.RandomChaActionStateCount = randomCount;
+            MagicFieldController.RandomChaActionStateCount = randomCount;
     }
 
     public void CharacterBurn(int burnTurn)
@@ -612,12 +612,12 @@ public abstract class Monster : Unit
 
     public void OrbBurn(int numberOrbBurn)
     {
-        magicFieldController.OrbBurn(numberOrbBurn);
+        MagicFieldController.OrbBurn(numberOrbBurn);
     }
 
     public void OrbSkull(int numberOrbSkull)
     {
-        magicFieldController.OrbSkull(numberOrbSkull);
+        MagicFieldController.OrbSkull(numberOrbSkull);
     }
     #endregion
 }

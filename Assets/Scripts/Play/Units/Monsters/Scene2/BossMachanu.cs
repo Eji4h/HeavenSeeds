@@ -27,13 +27,13 @@ public class BossMachanu : Monster
     protected override void MonsterBehaviour()
     {
         if (isDown)
-            thisAnimation.CrossFade("JumpUp");
+            ThisAnimation.CrossFade("JumpUp");
         else
         {
             if (attackUpStack < 6)
-                thisAnimation.CrossFade(listBossMachanuState[Random.Range(0, listBossMachanuState.Count)].ToString());
+                ThisAnimation.CrossFade(listBossMachanuState[Random.Range(0, listBossMachanuState.Count)].ToString());
             else
-                thisAnimation.CrossFade("Ultimate");
+                ThisAnimation.CrossFade("Ultimate");
         }
     }
 

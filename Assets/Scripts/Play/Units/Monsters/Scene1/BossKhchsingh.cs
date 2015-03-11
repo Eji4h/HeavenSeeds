@@ -47,6 +47,6 @@ public class BossKhchsingh : Monster
 
     protected override void MonsterBehaviour()
     {
-        thisAnimation.CrossFade(listBossKhchsinghStateCanUse[Random.Range(0, listBossKhchsinghStateCanUse.Count)].ToString());
+        ThisAnimation.CrossFade(listBossKhchsinghStateCanUse[Random.Range(0, listBossKhchsinghStateCanUse.Count)].ToString());
     }
 }

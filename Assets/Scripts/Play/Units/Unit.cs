@@ -6,16 +6,57 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public abstract class Unit : MonoBehaviour
 {
-    protected static List<CharacterController> listCharacterController = new List<CharacterController>(5);
-    protected static CharacterController swordCharacterController,
+    static List<CharacterController> listCharacterController = new List<CharacterController>(5);
+
+    static CharacterController swordCharacterController,
         bowCharacterController,
         wandCharacterController,
         shieldCharacterController,
         scrollCharacterController;
 
-    protected static List<CharacterController> listCharacterControllerIsFall = new List<CharacterController>(5);
+    static List<CharacterController> listCharacterControllerIsFall = new List<CharacterController>(5);
 
-    protected static MagicFieldController magicFieldController;
+    static MagicFieldController magicFieldController;
+
+    protected static List<CharacterController> ListCharacterController
+    {
+        get { return Unit.listCharacterController; }
+    }
+
+    protected static CharacterController SwordCharacterController
+    {
+        get { return Unit.swordCharacterController; }
+    }
+
+    protected static CharacterController BowCharacterController
+    {
+        get { return Unit.bowCharacterController; }
+    }
+
+    protected static CharacterController WandCharacterController
+    {
+        get { return Unit.wandCharacterController; }
+    }
+
+    protected static CharacterController ShieldCharacterController
+    {
+        get { return Unit.shieldCharacterController; }
+    }
+
+    protected static CharacterController ScrollCharacterController
+    {
+        get { return Unit.scrollCharacterController; }
+    }
+
+    protected static List<CharacterController> ListCharacterControllerIsFall
+    {
+        get { return Unit.listCharacterControllerIsFall; }
+    }
+
+    protected static MagicFieldController MagicFieldController
+    {
+        get { return Unit.magicFieldController; }
+    }
 
     public static void SetInit()
     {
@@ -39,12 +80,12 @@ public abstract class Unit : MonoBehaviour
         Monster.scrollCharacterController = scrollCharacterController;
     }
 
-    protected Transform thisTransform;
-    protected Animation thisAnimation;
+    Transform thisTransform;
+    Animation thisAnimation;
 
     [SerializeField]
     [Range(0, 10000)]
-    protected int maxHp;
+    int maxHp;
 
     GateBarController gateBarController;
 
@@ -60,6 +101,16 @@ public abstract class Unit : MonoBehaviour
     Action gateCountTargetAction;
 
     protected List<Transform> listGameObjectTransformInParent = new List<Transform>(8);
+
+    protected Transform ThisTransform
+    {
+        get { return thisTransform; }
+    }
+
+    protected Animation ThisAnimation
+    {
+        get { return thisAnimation; }
+    }
 
     protected virtual int MaxHp
     {
