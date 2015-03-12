@@ -85,7 +85,7 @@ public abstract class Unit : MonoBehaviour
 
     [SerializeField]
     [Range(0, 10000)]
-    int maxHp;
+    protected int maxHp;
 
     GateBarController gateBarController;
 
@@ -112,10 +112,9 @@ public abstract class Unit : MonoBehaviour
         get { return thisAnimation; }
     }
 
-    protected virtual int MaxHp
+    public virtual int MaxHp
     {
-        get { return maxHp / NumberSecurity.RandomNumSecurity; }
-        set { maxHp = value * NumberSecurity.RandomNumSecurity; }
+        get { return maxHp; }
     }
 
     protected virtual void Awake()

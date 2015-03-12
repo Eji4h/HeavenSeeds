@@ -6,7 +6,7 @@ public class Turtle : Monster
     protected override void Awake()
     {
         base.Awake();
-        MaxHp = 2100;
+        maxHp = 2100;
         DamageBase = 80;
     }
 }

@@ -6,7 +6,7 @@ public class DuRongKraiSorn : Monster
     protected override void Awake()
     {
         base.Awake();
-        MaxHp = 900;
+        maxHp = 900;
         DamageBase = 55;
     }
 }

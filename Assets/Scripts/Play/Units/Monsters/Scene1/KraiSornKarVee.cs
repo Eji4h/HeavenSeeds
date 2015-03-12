@@ -6,7 +6,7 @@ public class KraiSornKarVee : Monster
     protected override void Awake()
     {
         base.Awake();
-        MaxHp = 1200;
+        maxHp = 1200;
         DamageBase = 63;
     }
 }

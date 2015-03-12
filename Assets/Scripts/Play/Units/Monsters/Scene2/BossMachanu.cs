@@ -18,7 +18,7 @@ public class BossMachanu : Monster
     protected override void Awake()
     {
         base.Awake();
-        MaxHp = 6000;
+        maxHp = 6000;
         DamageBase = 176;
         listBossMachanuState.Add(BossMachanuState.JumpDown);
         listBossMachanuState.Add(BossMachanuState.JumpPounded);

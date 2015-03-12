@@ -421,7 +421,7 @@ public class CharacterController : Unit
                 }
                 break;
         }
-        MaxHp = characterStatus.Hp;
+        maxHp = characterStatus.Hp;
     }
 
     protected override void Awake()
