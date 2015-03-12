@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PlayerPrefs = PreviewLabs.PlayerPrefs;
 using PayUnity;
 
-public abstract class Monster : Unit
+public class Monster : Unit
 {
     static GameObject slashParticle,
         arrowHitParticle,
@@ -69,8 +69,12 @@ public abstract class Monster : Unit
     }
 
     protected Rigidbody thisRigidbody;
-    int hp,
-        damageBase;
+
+    int hp;
+
+    [SerializeField]
+    [Range(0, 100000)]
+    protected int damageBase;
 
     float damageMinimumMultiply,
         damageMaximumMultiply;
@@ -142,8 +146,7 @@ public abstract class Monster : Unit
 
     protected int DamageBase
     {
-        get { return damageBase / NumberSecurity.RandomNumSecurity; }
-        set { damageBase = value * NumberSecurity.RandomNumSecurity; }
+        get { return damageBase; }
     }
 
     protected float DamageMinimumMultiply

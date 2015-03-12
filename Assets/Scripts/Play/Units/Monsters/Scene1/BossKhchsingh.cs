@@ -37,8 +37,6 @@ public class BossKhchsingh : Monster
     protected override void Awake()
     {
         base.Awake();
-        maxHp = 5000;
-        DamageBase = 143;
         listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ChargeToDash);
         listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ThrashTrunk3Time);
         listBossKhchsinghStateCanUse.Add(BossKhchsinghState.ThrowATree);

@@ -84,7 +84,7 @@ public abstract class Unit : MonoBehaviour
     Animation thisAnimation;
 
     [SerializeField]
-    [Range(0, 10000)]
+    [Range(0, 1000000)]
     protected int maxHp;
 
     GateBarController gateBarController;
