@@ -134,7 +134,7 @@ public class Monster : Unit
             else
                 hp = value * NumberSecurity.RandomNumSecurity;
 
-            UIController.MonsterHpBar.Value = Hp;
+            //UIController.MonsterHpBar.Value = Hp;
 
             if (Hp <= 0)
             {
@@ -243,7 +243,7 @@ public class Monster : Unit
         if (damageMaximumMultiply == 0f)
             DamageMaximumMultiply = 1.1f;
 
-        UIController.MonsterHpBar.MaxValue = MaxHp;
+        //UIController.MonsterHpBar.MaxValue = MaxHp;
         Hp = MaxHp;
 
         Collider thisCollider = collider;

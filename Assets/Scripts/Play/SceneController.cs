@@ -161,6 +161,8 @@ public class SceneController : MonoBehaviour
                 break;
         }
 
+        UIController.SetInitBar(listMonster.Count);
+
         listMonster.ForEach(monster =>
             {
                 monster.transform.parent = monstersParentTransform;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UIController : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class UIController : MonoBehaviour
         hpPopUpCount = 20;
 
     static PayUIProgressBar playerHpBar;
+    static List<PayUIProgressBar> listMonsterHpBar;
+
+    static List<GateBarController> listGateBarController;
 
     static SpinButton spinButton;
     static UIButton pauseButton;
@@ -21,6 +25,16 @@ public class UIController : MonoBehaviour
     public static PayUIProgressBar PlayerHpBar
     {
         get { return UIController.playerHpBar; }
+    }
+
+    public static List<PayUIProgressBar> ListMonsterHpBar
+    {
+        get { return UIController.listMonsterHpBar; }
+    }
+
+    public static List<GateBarController> ListGateBarController
+    {
+        get { return UIController.listGateBarController; }
     }
 
     public static SpinButton SpinButton
@@ -56,13 +70,30 @@ public class UIController : MonoBehaviour
     public static void SetInit()
     {
         playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<PayUIProgressBar>();
+
+        SetButtons();
+        SetElementBars();
+        SetInitHpPopUp();
+    }
+
+    static void SetButtons()
+    {
         spinButton = GameObject.Find("SpinButton").GetComponent<SpinButton>();
         pauseButton = GameObject.Find("PauseButton").GetComponent<UIButton>();
+    }
 
+    static void SetElementBars()
+    {
         fireElementBarController = GameObject.Find("FireElementBar").GetComponent<ElementBarController>();
         waterElementBarController = GameObject.Find("WaterElementBar").GetComponent<ElementBarController>();
         earthElementBarController = GameObject.Find("EarthElementBar").GetComponent<ElementBarController>();
         woodElementBarController = GameObject.Find("WoodElementBar").GetComponent<ElementBarController>();
+    }
+
+    public static void SetInitBar(int monsterAmount)
+    {
+        SetInitMonsterHpBar(monsterAmount);
+        SetInitGateBar(monsterAmount);
     }
 
     public static void ShowHpPopUp(int value, Vector3 targetPos, Color32 color)
@@ -71,8 +102,27 @@ public class UIController : MonoBehaviour
         hpPopUpCurrentIndex %= hpPopUpCount;
     }
 
-    // Use this for initialization
-    void Start()
+    static void SetInitMonsterHpBar(int monsterAmount)
+    {
+        PayUIProgressBar monsterHpBarPrefab = Resources.Load<PayUIProgressBar>("Prefabs/UI/monsterHpBarPrefab");
+
+        listMonsterHpBar = new List<PayUIProgressBar>(monsterAmount);
+
+        for (int i = 0; i < listMonsterHpBar.Count; i++)
+            listMonsterHpBar.Add(Instantiate(monsterHpBarPrefab) as PayUIProgressBar);
+    }
+
+    static void SetInitGateBar(int monsterAmount)
+    {
+        GateBarController gateBarPrefab = Resources.Load<GateBarController>("Prefabs/UI/GateBarPrefab");
+
+        listGateBarController = new List<GateBarController>(monsterAmount + 5);
+
+        for (int i = 0; i < listGateBarController.Count; i++)
+            listGateBarController.Add(Instantiate(gateBarPrefab) as GateBarController);
+    }
+
+    static void SetInitHpPopUp()
     {
         HpPopUp.SetCamera();
         HpPopUp hpPopUpPrefab = Resources.Load<HpPopUp>("Prefabs/UI/HpPopUp");
