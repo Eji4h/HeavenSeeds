@@ -8,11 +8,7 @@ public class UIController : MonoBehaviour
     static int hpPopUpCurrentIndex = 0,
         hpPopUpCount = 20;
 
-    static PayUIProgressBar playerHpBar,
-        monsterHpBar, 
-        manaBar;
-
-    static UILabel manaLabel;
+    static PayUIProgressBar playerHpBar;
 
     static SpinButton spinButton;
     static UIButton pauseButton;
@@ -22,24 +18,9 @@ public class UIController : MonoBehaviour
         earthElementBarController,
         woodElementBarController;
 
-    public static int ManaCost
-    {
-        get { return Convert.ToInt32(manaLabel.text); }
-        set 
-        {
-            manaBar.Value = value;
-            manaLabel.text = value.ToString();
-        }
-    }
-
     public static PayUIProgressBar PlayerHpBar
     {
         get { return UIController.playerHpBar; }
-    }
-
-    public static PayUIProgressBar MonsterHpBar
-    {
-        get { return UIController.monsterHpBar; }
     }
 
     public static SpinButton SpinButton
@@ -75,10 +56,6 @@ public class UIController : MonoBehaviour
     public static void SetInit()
     {
         playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<PayUIProgressBar>();
-        monsterHpBar = GameObject.Find("MonsterHpBar").GetComponent<PayUIProgressBar>();
-        manaBar = GameObject.Find("ManaBar").GetComponent<PayUIProgressBar>();
-        manaBar.MaxValue = 99;
-        manaLabel = GameObject.Find("ManaLabel").GetComponent<UILabel>();
         spinButton = GameObject.Find("SpinButton").GetComponent<SpinButton>();
         pauseButton = GameObject.Find("PauseButton").GetComponent<UIButton>();
 
