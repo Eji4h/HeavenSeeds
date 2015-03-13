@@ -434,7 +434,6 @@ public class CharacterController : Unit
     protected override void Start()
     {
         ThisAnimation.Play(idleStr);
-        base.Start();
     }
 
     public void SetWeapon(CharacterActionState chaActionState, GameObject weaponGameObject)
@@ -504,6 +503,14 @@ public class CharacterController : Unit
                 timeAfterMonsterListShowParticleReceiveDamage = 1f;
                 break;
         }
+    }
+
+    public override void SetGateBarController(GateBarController gateBarController)
+    {
+        gateBarController.transform.position = OftenMethod.NGUITargetWorldPoint(
+            ThisTransform.position, new Vector2(0f, -0.05f),
+            SceneController.MainCamera, SceneController.UICamera);
+        base.SetGateBarController(gateBarController);
     }
 
     public void Action()

@@ -15,6 +15,9 @@ public class SceneController : MonoBehaviour
         shieldCharacterController,
         scrollCharacterController;
 
+    static List<CharacterController> listCharacterController = new List<CharacterController>(5),
+        listCharacterControllerIsFall = new List<CharacterController>(5);
+
     static Transform monstersParentTransform;
     static Monster currentMonster;
     static Queue<Monster> queueMonster = new Queue<Monster>(3);
@@ -61,6 +64,16 @@ public class SceneController : MonoBehaviour
         get { return scrollCharacterController; }
     }
 
+    public static List<CharacterController> ListCharacterController
+    {
+        get { return SceneController.listCharacterController; }
+    }
+
+    public static List<CharacterController> ListCharacterControllerIsFall
+    {
+        get { return SceneController.listCharacterControllerIsFall; }
+    }
+
     public static Monster CurrentMonster
     {
         get { return SceneController.currentMonster; }
@@ -84,84 +97,41 @@ public class SceneController : MonoBehaviour
     {
         UIController.SetInit();
         MagicPoint.SetInit();
-        Unit.SetInit();
         Monster.SetInit();
         CharacterController.SetInit();
 
         monstersParentTransform = GameObject.Find("Monsters").transform;
         int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
+        //For monsters test
+        //sceneSelected = 2;
         string monsterPath = "Prefabs/Monsters/Scene" + sceneSelected,
             sceneSetPath = "Prefabs/Scenes/SceneSet" + sceneSelected;
-        List<Monster> listMonster = new List<Monster>(5);
 
         Instantiate(Resources.Load(sceneSetPath));
 
-        //For monsters test
-        //sceneSelected = 2;
-        //monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
+        var monstersPrefab = Resources.LoadAll<Monster>(monsterPath);
+        var listMonster = new List<Monster>(monstersPrefab.Length);
 
-        switch (sceneSelected)
-        {
-            case 1:
-                Monster
-                    duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
-                    payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
-                    kraiSornKarVee = InstantiateMonster(monsterPath + "/KraiSornKarVee").GetComponent<Monster>(),
-                    bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
-
-                listMonster.Add(duRongKraiSorn);
-                listMonster.Add(kraiSornKarVee);
-                listMonster.Add(payakKraiSorn);
-                listMonster.Add(bossKhchsingh);
-                break;
-            case 2:
-                Monster
-                    hemrach = InstantiateMonster(monsterPath + "/hemrach").GetComponent<Monster>(),
-                    toad = InstantiateMonster(monsterPath + "/Toad").GetComponent<Monster>(),
-                    turtle = InstantiateMonster(monsterPath + "/Turtle").GetComponent<Monster>(),
-                    bossMachanu = InstantiateMonster(monsterPath + "/BossMachanu").GetComponent<Monster>();
-
-                listMonster.Add(hemrach);
-                listMonster.Add(toad);
-                listMonster.Add(turtle);
-                listMonster.Add(bossMachanu);
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
-                break;
-            case 7:
-
-                break;
-            case 8:
-
-                break;
-            case 9:
-
-                break;
-            case 10:
-
-                break;
-            case 11:
-
-                break;
-            case 12:
-
-                break;
-            case 13:
-
-                break;
-        }
+        foreach(var monsterPrefab in monstersPrefab)
+            listMonster.Add(Instantiate(monsterPrefab) as Monster);
 
         UIController.SetInitBar(listMonster.Count);
+
+        for (int i = 0; i < listMonster.Count; i++)
+            listMonster[i].HpBar = UIController.ListMonsterHpBar[i];
+
+        int indexGateBar = 0;
+
+        listCharacterController.ForEach(characterController =>
+            {
+                characterController.SetGateBarController(UIController.ListGateBarController[indexGateBar]);
+                indexGateBar++;
+            });
+        listMonster.ForEach(monster =>
+            {
+                monster.SetGateBarController(UIController.ListGateBarController[indexGateBar]);
+                indexGateBar++;
+            });
 
         listMonster.ForEach(monster =>
             {
@@ -171,11 +141,11 @@ public class SceneController : MonoBehaviour
                 monster.gameObject.SetActive(false);
                 queueMonster.Enqueue(monster);
             });
-    }
 
-    Monster InstantiateMonster(string path)
-    {
-        return Instantiate(Resources.Load<Monster>(path)) as Monster;
+        listMonster[0].gameObject.SetActive(true);
+
+        //for (int i = listMonster.Count - 1; i >= 0; i--)
+        //    listMonster[i].transform.localPosition = new Vector3(3f * (i - 1), 2f);
     }
 
     void SetCameraObjects()

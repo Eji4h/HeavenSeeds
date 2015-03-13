@@ -6,78 +6,44 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public abstract class Unit : MonoBehaviour
 {
-    static List<CharacterController> listCharacterController = new List<CharacterController>(5);
-
-    static CharacterController swordCharacterController,
-        bowCharacterController,
-        wandCharacterController,
-        shieldCharacterController,
-        scrollCharacterController;
-
-    static List<CharacterController> listCharacterControllerIsFall = new List<CharacterController>(5);
-
-    static MagicFieldController magicFieldController;
-
     protected static List<CharacterController> ListCharacterController
     {
-        get { return Unit.listCharacterController; }
+        get { return SceneController.ListCharacterController; }
     }
 
     protected static CharacterController SwordCharacterController
     {
-        get { return Unit.swordCharacterController; }
+        get { return SceneController.SwordCharacterController; }
     }
 
     protected static CharacterController BowCharacterController
     {
-        get { return Unit.bowCharacterController; }
+        get { return SceneController.BowCharacterController; }
     }
 
     protected static CharacterController WandCharacterController
     {
-        get { return Unit.wandCharacterController; }
+        get { return SceneController.WandCharacterController; }
     }
 
     protected static CharacterController ShieldCharacterController
     {
-        get { return Unit.shieldCharacterController; }
+        get { return SceneController.ShieldCharacterController; }
     }
 
     protected static CharacterController ScrollCharacterController
     {
-        get { return Unit.scrollCharacterController; }
+        get { return SceneController.ScrollCharacterController; }
     }
 
     protected static List<CharacterController> ListCharacterControllerIsFall
     {
-        get { return Unit.listCharacterControllerIsFall; }
+        get { return SceneController.ListCharacterControllerIsFall; }
     }
 
     protected static MagicFieldController MagicFieldController
     {
-        get { return Unit.magicFieldController; }
-    }
-
-    public static void SetInit()
-    {
-        swordCharacterController = SceneController.SwordCharacterController;
-        bowCharacterController = SceneController.BowCharacterController;
-        wandCharacterController = SceneController.WandCharacterController;
-        shieldCharacterController = SceneController.ShieldCharacterController;
-        scrollCharacterController = SceneController.ScrollCharacterController;
-
-        magicFieldController = SceneController.MagicFieldController;
-    }
-
-    public static void SetCharactersController(CharacterController swordCharacterController,
-        CharacterController bowCharacterController, CharacterController wandCharacterController,
-        CharacterController shieldCharacterController, CharacterController scrollCharacterController)
-    {
-        Monster.swordCharacterController = swordCharacterController;
-        Monster.bowCharacterController = bowCharacterController;
-        Monster.wandCharacterController = wandCharacterController;
-        Monster.shieldCharacterController = shieldCharacterController;
-        Monster.scrollCharacterController = scrollCharacterController;
+        get { return SceneController.MagicFieldController; }
     }
 
     Transform thisTransform;
@@ -91,11 +57,11 @@ public abstract class Unit : MonoBehaviour
 
     [SerializeField]
     [Range(0, 10)]
-    protected int maxGate;
+    protected int maxGate = 1;
 
     [SerializeField]
     [Range(0f, 1f)]
-    float gateBarRegenPerSecond;
+    float gateBarRegenFull1GatePerSecond;
 
     Predicate<int> checkGateCountIsTarget;
     Action gateCountTargetAction;
@@ -124,10 +90,12 @@ public abstract class Unit : MonoBehaviour
     }
 
     // Use this for initialization
-    protected virtual void Start()
+    protected abstract void Start();
+
+    public virtual void SetGateBarController(GateBarController gateBarController)
     {
-        gateBarController.SetInit(maxGate, gateBarRegenPerSecond,
-            checkGateCountIsTarget, gateCountTargetAction);
+        this.gateBarController = gateBarController;
+        gateBarController.SetInit(maxGate, gateBarRegenFull1GatePerSecond);
     }
 
     protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, bool parent)

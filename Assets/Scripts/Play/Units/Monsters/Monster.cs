@@ -71,6 +71,8 @@ public class Monster : Unit
 
     int hp;
 
+    PayUIProgressBar hpBar;
+
     [SerializeField]
     [Range(0, 100000)]
     protected int damageBase;
@@ -105,6 +107,20 @@ public class Monster : Unit
     protected bool isAttackUp = false;
     protected int attackUpStack = 0;
 
+    public PayUIProgressBar HpBar
+    {
+        get { return hpBar; }
+        set 
+        {
+            hpBar = value;
+
+            hpBar.transform.position = OftenMethod.NGUITargetWorldPoint(ThisTransform.position, 
+                new Vector2(0f, 0.5f), SceneController.MainCamera, SceneController.UICamera);
+            hpBar.transform.parent = UIController.BarsTransform;
+            hpBar.transform.localScale = Vector3.one;
+        }
+    }
+
     protected float LocalPositionX
     {
         get { return ThisTransform.localPosition.x; }
@@ -133,7 +149,7 @@ public class Monster : Unit
             else
                 hp = value * NumberSecurity.RandomNumSecurity;
 
-            //UIController.MonsterHpBar.Value = Hp;
+            hpBar.Value = Hp;
 
             if (Hp <= 0)
             {
@@ -242,7 +258,7 @@ public class Monster : Unit
         if (damageMaximumMultiply == 0f)
             DamageMaximumMultiply = 1.1f;
 
-        //UIController.MonsterHpBar.MaxValue = MaxHp;
+        hpBar.MaxValue = MaxHp;
         Hp = MaxHp;
 
         Collider thisCollider = collider;
@@ -268,8 +284,14 @@ public class Monster : Unit
         rootParticle.transform.parent = ThisTransform;
         rootParticle.transform.localPosition = Vector3.zero;
         listGameObjectTransformInParent.Add(rootParticle.transform);
+    }
 
-        base.Start();
+    public override void SetGateBarController(GateBarController gateBarController)
+    {
+        gateBarController.transform.position = OftenMethod.NGUITargetWorldPoint(
+            ThisTransform.position, new Vector2(0f, 0.1f),
+            SceneController.MainCamera, SceneController.UICamera);
+        base.SetGateBarController(gateBarController);
     }
 
     public void StartState()

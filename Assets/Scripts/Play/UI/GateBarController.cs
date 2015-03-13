@@ -7,9 +7,9 @@ public class GateBarController : UIProgressBar
     int gateCount,
         maxGate;
 
-    float changePerSecond;
-    float valuePerGate;
-    float totalValueElapsedToGateUp;
+    float changePerSecond, 
+        valuePerGate,
+        totalValueElapsedToGateUp;
 
     Predicate<int> checkGateCountIsTarget;
     Action gateCountTargetAction;
@@ -34,7 +34,7 @@ public class GateBarController : UIProgressBar
         }
     }
 
-    public int MaxGate
+    int MaxGate
     {
         get { return maxGate; }
         set
@@ -47,13 +47,30 @@ public class GateBarController : UIProgressBar
         }
     }
 
-    public void SetInit(int maxGate, float changePerSecond,
-        Predicate<int> checkGateCountIsTarget, Action gateCountTargetAction)
+    public float ChangePerSecond
     {
+        get { return changePerSecond; }
+        set { changePerSecond = value / MaxGate; }
+    }
+
+    public Predicate<int> CheckGateCountIsTarget
+    {
+        get { return checkGateCountIsTarget; }
+        set { checkGateCountIsTarget = value; }
+    }
+
+    public Action GateCountTargetAction
+    {
+        get { return gateCountTargetAction; }
+        set { gateCountTargetAction = value; }
+    }
+
+    public void SetInit(int maxGate, float changePerSecond)
+    {
+        transform.parent = UIController.BarsTransform;
+        transform.localScale = Vector3.one;
         MaxGate = maxGate;
-        this.changePerSecond = changePerSecond;
-        this.checkGateCountIsTarget = checkGateCountIsTarget;
-        this.gateCountTargetAction = gateCountTargetAction;
+        ChangePerSecond = changePerSecond;
     }
 
     // Use this for initialization

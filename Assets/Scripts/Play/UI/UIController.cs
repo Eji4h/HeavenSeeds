@@ -22,6 +22,9 @@ public class UIController : MonoBehaviour
         earthElementBarController,
         woodElementBarController;
 
+    static Transform allHpPopUpParentTransform,
+        barsTransform;
+
     public static PayUIProgressBar PlayerHpBar
     {
         get { return UIController.playerHpBar; }
@@ -67,6 +70,16 @@ public class UIController : MonoBehaviour
         get { return UIController.woodElementBarController; }
     }
 
+    public static Transform AllHpPopUpParentTransform
+    {
+        get { return UIController.allHpPopUpParentTransform; }
+    }
+
+    public static Transform BarsTransform
+    {
+        get { return UIController.barsTransform; }
+    }
+
     public static void SetInit()
     {
         playerHpBar = GameObject.Find("PlayerHpBar").GetComponent<PayUIProgressBar>();
@@ -92,6 +105,7 @@ public class UIController : MonoBehaviour
 
     public static void SetInitBar(int monsterAmount)
     {
+        barsTransform = GameObject.Find("Bars").transform;
         SetInitMonsterHpBar(monsterAmount);
         SetInitGateBar(monsterAmount);
     }
@@ -104,27 +118,27 @@ public class UIController : MonoBehaviour
 
     static void SetInitMonsterHpBar(int monsterAmount)
     {
-        PayUIProgressBar monsterHpBarPrefab = Resources.Load<PayUIProgressBar>("Prefabs/UI/monsterHpBarPrefab");
+        var monsterHpBarPrefab = Resources.Load<PayUIProgressBar>("Prefabs/UI/MonsterHpBar");
 
         listMonsterHpBar = new List<PayUIProgressBar>(monsterAmount);
 
-        for (int i = 0; i < listMonsterHpBar.Count; i++)
+        for (int i = 0; i < listMonsterHpBar.Capacity; i++)
             listMonsterHpBar.Add(Instantiate(monsterHpBarPrefab) as PayUIProgressBar);
     }
 
     static void SetInitGateBar(int monsterAmount)
     {
-        GateBarController gateBarPrefab = Resources.Load<GateBarController>("Prefabs/UI/GateBarPrefab");
+        var gateBarPrefab = Resources.Load<GateBarController>("Prefabs/UI/GateBar");
 
         listGateBarController = new List<GateBarController>(monsterAmount + 5);
 
-        for (int i = 0; i < listGateBarController.Count; i++)
+        for (int i = 0; i < listGateBarController.Capacity; i++)
             listGateBarController.Add(Instantiate(gateBarPrefab) as GateBarController);
     }
 
     static void SetInitHpPopUp()
     {
-        HpPopUp.SetCamera();
+        allHpPopUpParentTransform = GameObject.Find("AllHpPopUp").transform;
         HpPopUp hpPopUpPrefab = Resources.Load<HpPopUp>("Prefabs/UI/HpPopUp");
 
         hpPopUpArray = new HpPopUp[hpPopUpCount];
