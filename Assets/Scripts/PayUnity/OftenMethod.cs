@@ -30,4 +30,15 @@ public static class OftenMethod
         }
         return 0;
     }
+
+    public static Vector3 NGUITargetWorldPoint(Vector3 targetPos, 
+        Vector3 DistanceFromTarget, Camera mainCamera, Camera uiCamera)
+    {
+        Vector3 targetScreenPoint = mainCamera.WorldToScreenPoint(targetPos),
+            UIPos = uiCamera.ScreenToWorldPoint(targetScreenPoint);
+
+        Vector3 SumPos = UIPos + DistanceFromTarget;
+
+        return new Vector2(SumPos.x, SumPos.y);
+    }
 }
