@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using PayUnity;
 using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class SpinButton : UIButtonMonoBehaviour
