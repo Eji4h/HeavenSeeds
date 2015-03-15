@@ -12,12 +12,13 @@ public class TestDrag : MonoBehaviour {
         startpos = startB.transform.position;
         
     }
+    void Start()
+    {
+        EventDelegate.Add(GetComponent<UIButton>().onClick,Dragggg);
+    }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            isspring = true;
-        }
+       
         if (Input.GetMouseButtonUp(0))
         {
             if(isspring)
@@ -28,10 +29,21 @@ public class TestDrag : MonoBehaviour {
     void OnTriggerStay(Collider coll)
     {
     
+       
         if (coll.gameObject.tag == "CharacterBoarder")
         {
-           
-            isspring = false;
+            if(Input.GetMouseButtonUp(0))
+            {
+               
+                isspring = false;
+            }
+        }
+        else if (coll.gameObject.tag == gameObject.tag)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                transform.position = startpos;
+            }
         }
         else
         {
@@ -47,5 +59,9 @@ public class TestDrag : MonoBehaviour {
         {
             isspring = true;
         }
+    }
+    void Dragggg()
+    {
+        isspring = true;
     }
 }

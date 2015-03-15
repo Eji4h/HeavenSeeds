@@ -6,11 +6,11 @@ public class Boarder : MonoBehaviour {
     public enum WeaponClass { Sword, Bow, Wand, Scroll, Shield, };
    public  WeaponClass weapon;
    public GameObject btn,colli,lokinbtn;
-   private bool hasCard;
+  public bool hasCard;
 
   void Update()
   {
-
+      print(transform.name + "   " + hasCard);
       EventDelegate.Add(lokinbtn.GetComponent<UIButton>().onClick, lockinBtnOnclick);
   }
    void lockinBtnOnclick()
@@ -107,7 +107,8 @@ public class Boarder : MonoBehaviour {
                     hasCard = true;
                     colli = coll.gameObject;
                 }
-            } 
+                
+            }        
     }
-
+ 
 }
