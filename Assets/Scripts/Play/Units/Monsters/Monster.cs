@@ -99,6 +99,9 @@ public abstract class Monster : Unit
 
     float percentDebuffToCharacter;
 
+    protected bool isAttackUp = false;
+    protected int attackUpStack = 0;
+
     protected float LocalPositionX
     {
         get { return thisTransform.localPosition.x; }
@@ -115,16 +118,6 @@ public abstract class Monster : Unit
     {
         get { return thisTransform.localPosition.z; }
         set { thisTransform.localPosition = new Vector3(thisTransform.position.x, thisTransform.position.y, value); }
-    }
-
-    protected override int MaxHp
-    {
-        get { return base.MaxHp; }
-        set
-        {
-            base.MaxHp = value;
-            UIController.MonsterHpBar.MaxValue = MaxHp;
-        }
     }
 
     public virtual int Hp
@@ -246,6 +239,7 @@ public abstract class Monster : Unit
             DamageMinimumMultiply = 0.9f;
         if (damageMaximumMultiply == 0f)
             DamageMaximumMultiply = 1.1f;
+
         UIController.MonsterHpBar.MaxValue = MaxHp;
         Hp = MaxHp;
 
@@ -289,15 +283,15 @@ public abstract class Monster : Unit
 
     protected virtual void EndTurn()
     {
-        EndTurnBehaviour(true);
+        StartCoroutine(EndTurnBehaviour(true));
     }
 
     protected virtual void EndTurnNoCrossFadeToIdle()
     {
-        EndTurnBehaviour(false);
+        StartCoroutine(EndTurnBehaviour(false));
     }
 
-    protected virtual void EndTurnBehaviour(bool isCrossFadeToIdle)
+    protected virtual IEnumerator EndTurnBehaviour(bool isCrossFadeToIdle)
     {
         if (Hp > 0)
         {
@@ -305,7 +299,7 @@ public abstract class Monster : Unit
                 thisAnimation.CrossFade("Idle");
 
             if (isBurn)
-                StartCoroutine(BurnReceiveBehaviour());
+                yield return StartCoroutine(BurnReceiveBehaviour());
             LowAttackDamageTurn--;
             StunTurn--;
 
@@ -354,10 +348,35 @@ public abstract class Monster : Unit
 
     public void SendDamageToCharacter(float damageBaseMultiply)
     {
+        float damageBaseCal = DamageBase * (1f + (isAttackUp ? 0.4f : 0f) + attackUpStack * 0.1f);
         CharacterController.ReceiveDamage(
-            OftenMethod.ProbabilityDistribution(DamageBase * damageBaseMultiply *
+            OftenMethod.ProbabilityDistribution(damageBaseCal * damageBaseMultiply *
             (isLowAttackDamage ? 0.8f : 1f), DamageMinimumMultiply, DamageMaximumMultiply, 3));
     }
+
+    #region AttackUp
+
+    public void SetIsAttackUpIsTrue()
+    {
+        isAttackUp = true;
+    }
+
+    public void SetIsAttackUpIsFalse()
+    {
+        isAttackUp = false;
+    }
+
+    public void ResetAttackUpStack()
+    {
+        attackUpStack = 0;
+    }
+
+    public void IncreaseAttackUpStack()
+    {
+        attackUpStack++;
+    }
+
+    #endregion
 
     #region MonsterBehaviour
     protected virtual void MonsterBehaviour()
@@ -399,16 +418,25 @@ public abstract class Monster : Unit
 
     IEnumerator WaitingDieAnimationToDestroy()
     {
-        yield return new WaitForSeconds(1f);
+        var dieAnimationState = thisAnimation["Die"];
+        float waitTime = 0.5f;
+        if (dieAnimationState != null)
+        {
+            thisAnimation.CrossFade("Die");
+            waitTime += dieAnimationState.length;
+        }
+        yield return new WaitForSeconds(waitTime);
 
         listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
         {
             gameObjectTransformInParent.parent = null;
             gameObjectTransformInParent.gameObject.SetActive(false);
         });
-        Destroy(gameObject);
+
         SceneController.NextMonsterQueue();
-        CharacterController.CheckCostLessthanLowestCost();
+            
+        Destroy(gameObject);
+        Destroy(this);
     }
     #endregion
 

@@ -3,12 +3,10 @@ using System.Collections;
 
 public class DuRongKraiSorn : Monster
 {
-
-    // Use this for initialization
-    protected override void Start()
+    protected override void Awake()
     {
-        MaxHp = 1350;
+        base.Awake();
+        MaxHp = 900;
         DamageBase = 55;
-        base.Start();
     }
 }

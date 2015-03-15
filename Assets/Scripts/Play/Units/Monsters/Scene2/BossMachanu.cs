@@ -14,16 +14,14 @@ public class BossMachanu : Monster
     List<BossMachanuState> listBossMachanuState = new List<BossMachanuState>(3);
 
     bool isDown = false;
-    int waterCorrect = 0;
 
-    // Use this for initialization
-    protected override void Start()
+    protected override void Awake()
     {
-        MaxHp = 10000;
+        base.Awake();
+        MaxHp = 6000;
         DamageBase = 176;
         listBossMachanuState.Add(BossMachanuState.JumpDown);
         listBossMachanuState.Add(BossMachanuState.JumpPounded);
-        base.Start();
     }
 
     protected override void MonsterBehaviour()
@@ -32,7 +30,7 @@ public class BossMachanu : Monster
             thisAnimation.CrossFade("JumpUp");
         else
         {
-            if (waterCorrect < 6)
+            if (attackUpStack < 6)
                 thisAnimation.CrossFade(listBossMachanuState[Random.Range(0, listBossMachanuState.Count)].ToString());
             else
                 thisAnimation.CrossFade("Ultimate");
@@ -49,21 +47,6 @@ public class BossMachanu : Monster
     {
         isDown = false;
         isImmortal = false;
-    }
-
-    public void ResetWaterCollect()
-    {
-        waterCorrect = 0;
-    }
-
-    public void IncreaseWaterCollect()
-    {
-        waterCorrect++;
-    }
-
-    public void SendDamgeSpecific(float damageBaseMultiply)
-    {
-        SendDamageToCharacter(damageBaseMultiply * (1 + waterCorrect * 0.05f));
     }
 
 }

@@ -22,6 +22,7 @@ public class SceneController : MonoBehaviour
     static MagicFieldController magicFieldController;
 
     static TurnController turnController;
+    static bool startMonsterNextQueue = true;
 
     public static Camera MainCamera
     {
@@ -85,6 +86,27 @@ public class SceneController : MonoBehaviour
             currentMonster = queueMonster.Dequeue();
             Unit.Monster = currentMonster;
             currentMonster.gameObject.SetActive(true);
+            if (turnController.PlayerTurn)
+            {
+                if (CharacterController.CheckCostLessthanLowestCost())
+                {
+                    if (magicFieldController.IsWaitingRotation)
+                        magicFieldController.WhenFinishRotationWillEndTurn = true;
+                    else
+                        turnController.TurnChange();
+                }
+            }
+            else if (startMonsterNextQueue)
+                startMonsterNextQueue = false;
+            else
+                currentMonster.StartState();
+        }
+        else
+        {
+            currentMonster = null;
+            Unit.Monster = null;
+            if (turnController.PlayerTurn)
+                turnController.TurnChange();
         }
     }
 
@@ -116,25 +138,33 @@ public class SceneController : MonoBehaviour
         Instantiate(Resources.Load(sceneSetPath));
 
         //For monsters test
-        sceneSelected = 2;
-        monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
+        //sceneSelected = 2;
+        //monsterPath = monsterPath.Substring(0, monsterPath.Length - 1) + sceneSelected;
 
         switch (sceneSelected)
         {
             case 1:
                 Monster
-                    //duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
-                    //payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
+                    duRongKraiSorn = InstantiateMonster(monsterPath + "/DuRongKraiSorn").GetComponent<Monster>(),
+                    payakKraiSorn = InstantiateMonster(monsterPath + "/PayakKraiSorn").GetComponent<Monster>(),
+                    kraiSornKarVee = InstantiateMonster(monsterPath + "/KraiSornKarVee").GetComponent<Monster>(),
                     bossKhchsingh = InstantiateMonster(monsterPath + "/BossKhchsingh").GetComponent<Monster>();
 
-                //listMonster.Add(duRongKraiSorn);
-                //listMonster.Add(payakKraiSorn);
+                listMonster.Add(duRongKraiSorn);
+                listMonster.Add(kraiSornKarVee);
+                listMonster.Add(payakKraiSorn);
                 listMonster.Add(bossKhchsingh);
                 break;
             case 2:
                 Monster
+                    hemrach = InstantiateMonster(monsterPath + "/hemrach").GetComponent<Monster>(),
+                    toad = InstantiateMonster(monsterPath + "/Toad").GetComponent<Monster>(),
+                    turtle = InstantiateMonster(monsterPath + "/Turtle").GetComponent<Monster>(),
                     bossMachanu = InstantiateMonster(monsterPath + "/BossMachanu").GetComponent<Monster>();
 
+                listMonster.Add(hemrach);
+                listMonster.Add(toad);
+                listMonster.Add(turtle);
                 listMonster.Add(bossMachanu);
                 break;
             case 3:

@@ -33,19 +33,23 @@ public class TurnController : MonoBehaviour
         {
             CharacterController.Cost += incomeCost;
             CharacterController.TurnEffectDecrease();
-            if(CharacterController.IsStun)
+            if (CharacterController.IsStun)
             {
                 CharacterController.StunTurn--;
                 playerTurn = false;
             }
-            else if(CharacterController.IsFreeze)
+            else if (CharacterController.IsFreeze)
             {
                 CharacterController.FreezeTurn--;
                 playerTurn = false;
             }
         }
         else
-            SceneController.CurrentMonster.StartState();
+        {
+            Monster currentMonster = SceneController.CurrentMonster;
+            if (currentMonster != null)
+                currentMonster.StartState();
+        }
 
         SceneController.MagicFieldController.ChangeMgFieldState(playerTurn);
         UIController.EndTurnButton.TurnChange(playerTurn);
