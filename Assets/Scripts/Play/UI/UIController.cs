@@ -107,7 +107,7 @@ public class UIController : MonoBehaviour
     {
         barsTransform = GameObject.Find("Bars").transform;
         SetInitMonsterHpBar(monsterAmount);
-        SetInitGateBar(monsterAmount);
+        SetInitGateBar(monsterAmount + 5);
     }
 
     public static void ShowHpPopUp(int value, Vector3 targetPos, Color32 color)
@@ -116,21 +116,21 @@ public class UIController : MonoBehaviour
         hpPopUpCurrentIndex %= hpPopUpCount;
     }
 
-    static void SetInitMonsterHpBar(int monsterAmount)
+    static void SetInitMonsterHpBar(int monsterHpBarAmount)
     {
         var monsterHpBarPrefab = Resources.Load<PayUIProgressBar>("Prefabs/UI/MonsterHpBar");
 
-        listMonsterHpBar = new List<PayUIProgressBar>(monsterAmount);
+        listMonsterHpBar = new List<PayUIProgressBar>(monsterHpBarAmount);
 
         for (int i = 0; i < listMonsterHpBar.Capacity; i++)
             listMonsterHpBar.Add(Instantiate(monsterHpBarPrefab) as PayUIProgressBar);
     }
 
-    static void SetInitGateBar(int monsterAmount)
+    static void SetInitGateBar(int gateBarAmount)
     {
         var gateBarPrefab = Resources.Load<GateBarController>("Prefabs/UI/GateBar");
 
-        listGateBarController = new List<GateBarController>(monsterAmount + 5);
+        listGateBarController = new List<GateBarController>(gateBarAmount);
 
         for (int i = 0; i < listGateBarController.Capacity; i++)
             listGateBarController.Add(Instantiate(gateBarPrefab) as GateBarController);
