@@ -14,7 +14,7 @@ public class MenuButton : MonoBehaviour {
     void BtnOnClick()
     {
         StartCoroutine(fin());
-        next.active = true;
+        next.SetActive(true);
         cam.GetComponent<TweenTransform>().ResetToBeginning();
         cam.GetComponent<TweenTransform>().delay = 0f;
        cam.GetComponent<TweenTransform>().from  = current.transform;
@@ -29,7 +29,7 @@ public class MenuButton : MonoBehaviour {
    IEnumerator fin()
     {
         yield return new WaitForSeconds(.5f);
-        current.active = false;
+        current.SetActive(false);
         StopAllCoroutines();
     }
 }

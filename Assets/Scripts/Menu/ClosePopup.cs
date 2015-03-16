@@ -12,6 +12,6 @@ public class ClosePopup : MonoBehaviour {
 
     void CloseOnClick()
     {
-        transform.parent.gameObject.active = false;
+        transform.parent.gameObject.SetActive(false);
     }
 }

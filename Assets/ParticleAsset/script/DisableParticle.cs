@@ -12,7 +12,7 @@ public class DisableParticle : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        if (gameObject.active)
+        if (gameObject.activeInHierarchy)
         {
             ftime -= Time.deltaTime;
             if (ftime <= 0)
