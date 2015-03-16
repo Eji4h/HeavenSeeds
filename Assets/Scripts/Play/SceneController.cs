@@ -241,21 +241,21 @@ public class SceneController : MonoBehaviour
             shieldFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + shieldWeaponName) as GameObject,
             scrollFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + scrollWeaponName) as GameObject;
 
-        MagicFieldController.swordFxAnimation = Instantiate(swordFxAnimationPrefab, 
+        MagicFieldController.swordFxAnimation = Instantiate(swordFxAnimationPrefab,
             swordFxAnimationPrefab.transform.position, swordFxAnimationPrefab.transform.rotation) as GameObject;
         MagicFieldController.bowFxAnimation = Instantiate(bowFxAnimationPrefab,
             bowFxAnimationPrefab.transform.position, bowFxAnimationPrefab.transform.rotation) as GameObject;
-        //MagicFieldController.wandFxAnimation = Instantiate(wandFxAnimationPrefab,
-        //    wandFxAnimationPrefab.transform.position, wandFxAnimationPrefab.transform.rotation) as GameObject;
+        MagicFieldController.wandFxAnimation = Instantiate(wandFxAnimationPrefab,
+            wandFxAnimationPrefab.transform.position, wandFxAnimationPrefab.transform.rotation) as GameObject;
         MagicFieldController.shieldFxAnimation = Instantiate(shieldFxAnimationPrefab,
             shieldFxAnimationPrefab.transform.position, shieldFxAnimationPrefab.transform.rotation) as GameObject;
-        //MagicFieldController.scrollFxAnimation = Instantiate(scrollFxAnimationPrefab,
-        //    scrollFxAnimationPrefab.transform.position, scrollFxAnimationPrefab.transform.rotation) as GameObject;
+        MagicFieldController.scrollFxAnimation = Instantiate(scrollFxAnimationPrefab,
+            scrollFxAnimationPrefab.transform.position, scrollFxAnimationPrefab.transform.rotation) as GameObject;
 
         MagicFieldController.swordFxAnimation.SetActive(false);
         MagicFieldController.bowFxAnimation.SetActive(false);
-        //MagicFieldController.wandFxAnimation.SetActive(false);
+        MagicFieldController.wandFxAnimation.SetActive(false);
         MagicFieldController.shieldFxAnimation.SetActive(false);
-        //MagicFieldController.scrollFxAnimation.SetActive(false);
+        MagicFieldController.scrollFxAnimation.SetActive(false);
     }
 }
