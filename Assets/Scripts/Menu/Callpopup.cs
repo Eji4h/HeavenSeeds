@@ -26,6 +26,6 @@ public class Callpopup : MonoBehaviour {
         Wnd.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().WandValue.ToString();
         Shd.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().ShiedlValue.ToString();
         Scl.GetComponent<UILabel>().text = GetComponent<CharacterStatus>().ScrollValue.ToString();
-        a.active = true;
+        a.SetActive(true);
     }
 }

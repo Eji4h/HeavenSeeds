@@ -194,7 +194,7 @@ public class CharacterController : Unit
         }
     }
 
-    public static new void SetInit()
+    public static void SetInit()
     {
         MaxSumHp = SwordCharacterController.MaxHp +
             BowCharacterController.MaxHp +

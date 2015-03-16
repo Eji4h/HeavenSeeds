@@ -22,7 +22,7 @@ public class Monster : Unit
     static Color32 receiveDamageHpPopColor = new Color32(235, 72, 7, 255),
         healHpPopUpColor = new Color32(0, 220, 0, 255);
 
-    public static new void SetInit()
+    public static void SetInit()
     {
         GameObject slashParticlePrefab = Resources.Load("Prefabs/Particle/Player/Attack/Slash 2") as GameObject, 
             arrowHitParticlePrefab = Resources.Load("Prefabs/Particle/ArrowHit") as GameObject, 
