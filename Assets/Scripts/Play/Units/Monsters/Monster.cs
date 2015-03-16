@@ -67,10 +67,7 @@ public class Monster : Unit
             CharacterController.ScrollValue) / 5;
     }
 
-    protected Rigidbody thisRigidbody;
-
     int hp;
-
     PayUIProgressBar hpBar;
 
     [SerializeField]
@@ -243,12 +240,6 @@ public class Monster : Unit
             isMoreReceiveDamage = MoreReceiveDamageTurn > 0;
             rootParticle.SetActive(isMoreReceiveDamage);
         }
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-        thisRigidbody = rigidbody;
     }
 
     protected override void Start()
