@@ -155,6 +155,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         magicCircleIn.SetMagicPoint(magicPointsIn);
 
         magicFieldBG = transform.Find("MagicFieldBG").GetComponent<UISprite>();
+        MgFieldState = MagicFieldState.WaitingCommand;
     }
 
     void SetMagicPointsUpstair()
