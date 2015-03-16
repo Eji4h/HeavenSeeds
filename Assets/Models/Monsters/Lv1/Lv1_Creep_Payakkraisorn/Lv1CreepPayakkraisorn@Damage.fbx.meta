@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 61433d5a4df6c4640a1134c26717930b
+guid: b7431a33f6e9f664b9aff935cbe13392
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -235,40 +235,39 @@ ModelImporter:
     100458: ORG-toe_001
     100460: ORG-toe_002
     100462: ORG-toe_003
-    100464: PayakKraiSornSD_Model
-    100466: ribs
-    100468: rig
-    100470: root
-    100472: shin_001_fk
-    100474: shin_001_hose
-    100476: shin_002_fk
-    100478: shin_002_hose
-    100480: shin_003_fk
-    100482: shin_003_hose
-    100484: shin_fk
-    100486: shin_hose
-    100488: spine
-    100490: thigh_001_fk
-    100492: thigh_001_hose
-    100494: thigh_002_fk
-    100496: thigh_002_hose
-    100498: thigh_003_fk
-    100500: thigh_003_hose
-    100502: thigh_fk
-    100504: thigh_hose
-    100506: toe
-    100508: toe_001
-    100510: toe_002
-    100512: toe_003
-    100514: torso
-    100516: VIS-foot_001_ik
-    100518: VIS-foot_002_ik
-    100520: VIS-foot_003_ik
-    100522: VIS-foot_ik
-    100524: VIS-thigh_001_pole_ik
-    100526: VIS-thigh_002_pole_ik
-    100528: VIS-thigh_003_pole_ik
-    100530: VIS-thigh_pole_ik
+    100464: ribs
+    100466: rig
+    100468: root
+    100470: shin_001_fk
+    100472: shin_001_hose
+    100474: shin_002_fk
+    100476: shin_002_hose
+    100478: shin_003_fk
+    100480: shin_003_hose
+    100482: shin_fk
+    100484: shin_hose
+    100486: spine
+    100488: thigh_001_fk
+    100490: thigh_001_hose
+    100492: thigh_002_fk
+    100494: thigh_002_hose
+    100496: thigh_003_fk
+    100498: thigh_003_hose
+    100500: thigh_fk
+    100502: thigh_hose
+    100504: toe
+    100506: toe_001
+    100508: toe_002
+    100510: toe_003
+    100512: torso
+    100514: VIS-foot_001_ik
+    100516: VIS-foot_002_ik
+    100518: VIS-foot_003_ik
+    100520: VIS-foot_ik
+    100522: VIS-thigh_001_pole_ik
+    100524: VIS-thigh_002_pole_ik
+    100526: VIS-thigh_003_pole_ik
+    100528: VIS-thigh_pole_ik
     400000: bone_004
     400002: bone_01
     400004: bone_02
@@ -501,45 +500,42 @@ ModelImporter:
     400458: ORG-toe_001
     400460: ORG-toe_002
     400462: ORG-toe_003
-    400464: PayakKraiSornSD_Model
-    400466: ribs
-    400468: rig
-    400470: root
-    400472: shin_001_fk
-    400474: shin_001_hose
-    400476: shin_002_fk
-    400478: shin_002_hose
-    400480: shin_003_fk
-    400482: shin_003_hose
-    400484: shin_fk
-    400486: shin_hose
-    400488: spine
-    400490: thigh_001_fk
-    400492: thigh_001_hose
-    400494: thigh_002_fk
-    400496: thigh_002_hose
-    400498: thigh_003_fk
-    400500: thigh_003_hose
-    400502: thigh_fk
-    400504: thigh_hose
-    400506: toe
-    400508: toe_001
-    400510: toe_002
-    400512: toe_003
-    400514: torso
-    400516: VIS-foot_001_ik
-    400518: VIS-foot_002_ik
-    400520: VIS-foot_003_ik
-    400522: VIS-foot_ik
-    400524: VIS-thigh_001_pole_ik
-    400526: VIS-thigh_002_pole_ik
-    400528: VIS-thigh_003_pole_ik
-    400530: VIS-thigh_pole_ik
-    4300000: PayakKraiSornSD_Model
-    7400000: Idle
+    400464: ribs
+    400466: rig
+    400468: root
+    400470: shin_001_fk
+    400472: shin_001_hose
+    400474: shin_002_fk
+    400476: shin_002_hose
+    400478: shin_003_fk
+    400480: shin_003_hose
+    400482: shin_fk
+    400484: shin_hose
+    400486: spine
+    400488: thigh_001_fk
+    400490: thigh_001_hose
+    400492: thigh_002_fk
+    400494: thigh_002_hose
+    400496: thigh_003_fk
+    400498: thigh_003_hose
+    400500: thigh_fk
+    400502: thigh_hose
+    400504: toe
+    400506: toe_001
+    400508: toe_002
+    400510: toe_003
+    400512: torso
+    400514: VIS-foot_001_ik
+    400516: VIS-foot_002_ik
+    400518: VIS-foot_003_ik
+    400520: VIS-foot_ik
+    400522: VIS-thigh_001_pole_ik
+    400524: VIS-thigh_002_pole_ik
+    400526: VIS-thigh_003_pole_ik
+    400528: VIS-thigh_pole_ik
+    7400000: GetDamage
     9500000: //RootNode
     11100000: //RootNode
-    13700000: PayakKraiSornSD_Model
   materials:
     importMaterials: 1
     materialName: 0
@@ -557,11 +553,11 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: GetDamage
       takeName: Default Take
       firstFrame: 0
-      lastFrame: 44
-      wrapMode: 2
+      lastFrame: 24
+      wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -581,8 +577,6 @@ ModelImporter:
       events: []
       transformMask:
       - path: 
-        weight: 1
-      - path: PayakKraiSornSD_Model
         weight: 1
       - path: rig
         weight: 1
