@@ -74,6 +74,8 @@ public class Monster : Unit
     [Range(0, 100000)]
     protected int damageBase;
 
+    [SerializeField]
+    [Range(0.1f, 5f)]
     float damageMinimumMultiply,
         damageMaximumMultiply;
 
@@ -161,16 +163,14 @@ public class Monster : Unit
         get { return damageBase; }
     }
 
-    protected float DamageMinimumMultiply
+    public float DamageMinimumMultiply
     {
-        get { return damageMinimumMultiply / NumberSecurity.RandomNumSecurity; }
-        set { damageMinimumMultiply = value * NumberSecurity.RandomNumSecurity; }
+        get { return damageMinimumMultiply; }
     }
 
-    protected float DamageMaximumMultiply
+    public float DamageMaximumMultiply
     {
-        get { return damageMaximumMultiply / NumberSecurity.RandomNumSecurity; }
-        set { damageMaximumMultiply = value * NumberSecurity.RandomNumSecurity; }
+        get { return damageMaximumMultiply; }
     }
 
     public bool IsImmortal
@@ -245,9 +245,9 @@ public class Monster : Unit
     protected override void Start()
     {
         if (damageMinimumMultiply == 0f)
-            DamageMinimumMultiply = 0.9f;
+            damageMinimumMultiply = 0.9f;
         if (damageMaximumMultiply == 0f)
-            DamageMaximumMultiply = 1.1f;
+            damageMaximumMultiply = 1.1f;
 
         hpBar.MaxValue = MaxHp;
         Hp = MaxHp;
