@@ -160,6 +160,16 @@ public class SceneController : MonoBehaviour
         magicFieldController = GameObject.FindObjectOfType<MagicFieldController>();
     }
 
+    enum WeaponType
+    {
+        Stone,
+        Iron,
+        Diamond
+    }
+
+    [SerializeField]
+    WeaponType weaponType = WeaponType.Stone;
+
     void SetCharacters()
     {
         GameObject allCharactersGameObject = GameObject.Find("Characters");
@@ -234,6 +244,12 @@ public class SceneController : MonoBehaviour
         scrollCharacterController.SetStatus();
 
         string prefabsWeaponOverlayFxPath = "Prefabs/Particle/Player/SpellCircle/";
+
+        swordWeaponType = weaponType.ToString();
+        bowWeaponType = weaponType.ToString();
+        wandWeaponType = weaponType.ToString();
+        shieldWeaponType = weaponType.ToString();
+        scrollWeaponType = weaponType.ToString();
 
         GameObject swordFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + "Sword_" + swordWeaponType) as GameObject,
             bowFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + "Bow_" + bowWeaponType) as GameObject,
