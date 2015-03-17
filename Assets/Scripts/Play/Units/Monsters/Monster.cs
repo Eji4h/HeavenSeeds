@@ -80,7 +80,8 @@ public class Monster : Unit
         damageMaximumMultiply;
 
     [SerializeField]
-    Vector3 bornPosition;
+    Vector3 bornPosition, 
+        distanceBarPosition;
 
     protected ElementType weaknessElement;
 
