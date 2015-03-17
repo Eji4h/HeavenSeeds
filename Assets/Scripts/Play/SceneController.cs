@@ -160,6 +160,16 @@ public class SceneController : MonoBehaviour
         magicFieldController = GameObject.FindObjectOfType<MagicFieldController>();
     }
 
+    enum WeaponType
+    {
+        Stone,
+        Iron,
+        Diamond
+    }
+
+    [SerializeField]
+    WeaponType weaponType = WeaponType.Stone;
+
     void SetCharacters()
     {
         GameObject allCharactersGameObject = GameObject.Find("Characters");
@@ -207,19 +217,19 @@ public class SceneController : MonoBehaviour
         shieldCharacterControllerTransform.localPosition = Vector3.zero;
         scrollCharacterControllerTransform.localPosition = Vector3.zero;
 
-        string swordWeaponName = PlayerPrefs.GetString("SwordWeapon", "Sword_Stone"),
-            bowWeaponName = PlayerPrefs.GetString("BowWeapon", "Bow_Stone"),
-            wandWeaponName = PlayerPrefs.GetString("WandWeapon", "Wand_Stone"),
-            shieldWeaponName = PlayerPrefs.GetString("ShieldWeapon", "Shield_Stone"),
-            scrollWeaponName = PlayerPrefs.GetString("ScrollWeapon", "Scroll_Stone");
+        string swordWeaponType = PlayerPrefs.GetString("SwordWeaponType", "Stone"),
+            bowWeaponType = PlayerPrefs.GetString("BowWeaponType", "Stone"),
+            wandWeaponType = PlayerPrefs.GetString("WandWeaponType", "Stone"),
+            shieldWeaponType = PlayerPrefs.GetString("ShieldWeaponType", "Stone"),
+            scrollWeaponType = PlayerPrefs.GetString("ScrollWeaponType", "Stone");
 
         string prefabsWeaponPath = "Prefabs/Weapons/";
 
-        GameObject swordWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + swordWeaponName)) as GameObject,
-            bowWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + bowWeaponName)) as GameObject,
-            wandWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + wandWeaponName)) as GameObject,
-            shieldWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + shieldWeaponName)) as GameObject,
-            scrollWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + scrollWeaponName)) as GameObject;
+        GameObject swordWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + "Sword_" + swordWeaponType)) as GameObject,
+            bowWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + "Bow_" + bowWeaponType)) as GameObject,
+            wandWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + "Wand_" + wandWeaponType)) as GameObject,
+            shieldWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + "Shield_" + shieldWeaponType)) as GameObject,
+            scrollWeaponGameObject = Instantiate(Resources.Load(prefabsWeaponPath + "Scroll_" + scrollWeaponType)) as GameObject;
 
         swordCharacterController.SetWeapon(CharacterActionState.SwordAction, swordWeaponGameObject);
         bowCharacterController.SetWeapon(CharacterActionState.BowAction, bowWeaponGameObject);
@@ -235,11 +245,17 @@ public class SceneController : MonoBehaviour
 
         string prefabsWeaponOverlayFxPath = "Prefabs/Particle/Player/SpellCircle/";
 
-        GameObject swordFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + swordWeaponName) as GameObject,
-            bowFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + bowWeaponName) as GameObject,
-            wandFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + wandWeaponName) as GameObject,
-            shieldFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + shieldWeaponName) as GameObject,
-            scrollFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + scrollWeaponName) as GameObject;
+        swordWeaponType = weaponType.ToString();
+        bowWeaponType = weaponType.ToString();
+        wandWeaponType = weaponType.ToString();
+        shieldWeaponType = weaponType.ToString();
+        scrollWeaponType = weaponType.ToString();
+
+        GameObject swordFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + "Sword_" + swordWeaponType) as GameObject,
+            bowFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + "Bow_" + bowWeaponType) as GameObject,
+            wandFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + "Wand_" + wandWeaponType) as GameObject,
+            shieldFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + "Shield_" + shieldWeaponType) as GameObject,
+            scrollFxAnimationPrefab = Resources.Load(prefabsWeaponOverlayFxPath + "Scroll_" + scrollWeaponType) as GameObject;
 
         MagicFieldController.swordFxAnimation = Instantiate(swordFxAnimationPrefab,
             swordFxAnimationPrefab.transform.position, swordFxAnimationPrefab.transform.rotation) as GameObject;
