@@ -422,6 +422,8 @@ public class CharacterController : Unit
                 break;
         }
         maxHp = characterStatus.Hp;
+        MaxGate = characterStatus.MaxGate;
+        GateBarRegenFull1GatePerSecond = characterStatus.RegenGateRate;
     }
 
     protected override void Awake()

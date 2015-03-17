@@ -57,7 +57,7 @@ public abstract class Unit : MonoBehaviour
 
     [SerializeField]
     [Range(1, 10)]
-    protected int maxGate = 1;
+    int maxGate = 1;
 
     [SerializeField]
     [Range(0f, 1f)]
@@ -68,7 +68,7 @@ public abstract class Unit : MonoBehaviour
 
     protected List<Transform> listGameObjectTransformInParent = new List<Transform>(8);
 
-    protected Transform ThisTransform
+    public Transform ThisTransform
     {
         get { return thisTransform; }
     }
@@ -81,6 +81,18 @@ public abstract class Unit : MonoBehaviour
     public virtual int MaxHp
     {
         get { return maxHp; }
+    }
+
+    protected int MaxGate
+    {
+        get { return maxGate; }
+        set { maxGate = value; }
+    }
+
+    protected float GateBarRegenFull1GatePerSecond
+    {
+        get { return gateBarRegenFull1GatePerSecond; }
+        set { gateBarRegenFull1GatePerSecond = value; }
     }
 
     protected virtual void Awake()

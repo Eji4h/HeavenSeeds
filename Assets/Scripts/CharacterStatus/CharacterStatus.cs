@@ -81,7 +81,10 @@ public abstract class CharacterStatus : MonoBehaviour
         wandValue,
         shiedlValue,
         scrollValue,
-        hp;
+        hp,
+        maxGate = 1;
+
+    float regenGateRate = 0.1f;
 
     string characterName;
 
@@ -144,6 +147,16 @@ public abstract class CharacterStatus : MonoBehaviour
     public int Hp
     {
         get { return hp; }
+    }
+
+    public int MaxGate
+    {
+        get { return maxGate; }
+    }
+
+    public float RegenGateRate
+    {
+        get { return regenGateRate; }
     }
 
     protected abstract void SetInitValue();
