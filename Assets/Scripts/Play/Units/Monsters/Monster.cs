@@ -118,7 +118,7 @@ public class Monster : Unit
             hpBar.transform.parent = UIController.BarsTransform;
             hpBar.transform.localScale = Vector3.one;
 
-            hpBar.GetComponent<UIOffset>().SetInit(offsetBarPos, ThisTransform,
+            hpBar.GetComponent<UIOffset>().SetInit(offsetBarPos + new Vector3(0f, .025f), ThisTransform,
                 SceneController.MainCamera, SceneController.UICamera);
         }
     }
@@ -282,7 +282,7 @@ public class Monster : Unit
 
     public override void SetGateBarController(GateBarController gateBarController)
     {
-        gateBarController.GetComponent<UIOffset>().SetInit(offsetBarPos + new Vector3(0f, .025f), ThisTransform,
+        gateBarController.GetComponent<UIOffset>().SetInit(offsetBarPos, ThisTransform,
             SceneController.MainCamera, SceneController.UICamera);
         base.SetGateBarController(gateBarController);
     }
