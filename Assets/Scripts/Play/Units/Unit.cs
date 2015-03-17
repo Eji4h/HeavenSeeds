@@ -56,7 +56,7 @@ public abstract class Unit : MonoBehaviour
     GateBarController gateBarController;
 
     [SerializeField]
-    [Range(0, 10)]
+    [Range(1, 10)]
     protected int maxGate = 1;
 
     [SerializeField]
