@@ -113,7 +113,8 @@ public class SceneController : MonoBehaviour
         var listMonster = new List<Monster>(monstersPrefab.Length);
 
         foreach(var monsterPrefab in monstersPrefab)
-            listMonster.Add(Instantiate(monsterPrefab) as Monster);
+            listMonster.Add(Instantiate(monsterPrefab, monsterPrefab.transform.position, 
+                monsterPrefab.transform.rotation) as Monster);
 
         UIController.SetInitBar(listMonster.Count);
 
@@ -136,8 +137,8 @@ public class SceneController : MonoBehaviour
         listMonster.ForEach(monster =>
             {
                 monster.transform.parent = monstersParentTransform;
-                monster.transform.localPosition = Vector3.up * 2f;
-                monster.transform.localRotation = Quaternion.AngleAxis(180f, Vector3.up);
+                //monster.transform.localPosition = Vector3.up * 2f;
+                //monster.transform.localRotation = Quaternion.AngleAxis(180f, Vector3.up);
                 monster.gameObject.SetActive(false);
                 queueMonster.Enqueue(monster);
             });
