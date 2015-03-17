@@ -80,7 +80,7 @@ public class Monster : Unit
         damageMaximumMultiply;
 
     [SerializeField]
-    Vector3 distanceBarPosition;
+    Vector3 offsetBarPos;
 
     protected ElementType weaknessElement;
 
@@ -115,11 +115,11 @@ public class Monster : Unit
         set 
         {
             hpBar = value;
-
-            hpBar.transform.position = OftenMethod.NGUITargetWorldPoint(ThisTransform.position, 
-                new Vector2(0f, 0.5f), SceneController.MainCamera, SceneController.UICamera);
             hpBar.transform.parent = UIController.BarsTransform;
             hpBar.transform.localScale = Vector3.one;
+
+            hpBar.GetComponent<UIOffset>().SetInit(offsetBarPos, ThisTransform,
+                SceneController.MainCamera, SceneController.UICamera);
         }
     }
 
@@ -282,8 +282,7 @@ public class Monster : Unit
 
     public override void SetGateBarController(GateBarController gateBarController)
     {
-        gateBarController.transform.position = OftenMethod.NGUITargetWorldPoint(
-            ThisTransform.position, new Vector2(0f, 0.1f),
+        gateBarController.GetComponent<UIOffset>().SetInit(offsetBarPos + new Vector3(0f, .025f), ThisTransform,
             SceneController.MainCamera, SceneController.UICamera);
         base.SetGateBarController(gateBarController);
     }
