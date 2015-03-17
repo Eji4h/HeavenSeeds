@@ -79,6 +79,9 @@ public class Monster : Unit
     float damageMinimumMultiply,
         damageMaximumMultiply;
 
+    [SerializeField]
+    Vector3 bornPosition;
+
     protected ElementType weaknessElement;
 
     protected bool isImmortal = false;
