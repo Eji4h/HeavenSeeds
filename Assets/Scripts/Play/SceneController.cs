@@ -139,11 +139,11 @@ public class SceneController : MonoBehaviour
                 monster.transform.parent = monstersParentTransform;
                 //monster.transform.localPosition = Vector3.up * 2f;
                 //monster.transform.localRotation = Quaternion.AngleAxis(180f, Vector3.up);
-                monster.gameObject.SetActive(false);
+                //monster.gameObject.SetActive(false);
                 queueMonster.Enqueue(monster);
             });
 
-        listMonster[0].gameObject.SetActive(true);
+        //listMonster[0].gameObject.SetActive(true);
 
         //for (int i = listMonster.Count - 1; i >= 0; i--)
         //    listMonster[i].transform.localPosition = new Vector3(3f * (i - 1), 2f);
