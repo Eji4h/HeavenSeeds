@@ -6,7 +6,7 @@ public class KillCurrentMonsterButton : UIButtonMonoBehaviour
 
     protected override void OnClickBehaviour()
     {
-        Monster currentMonster = SceneController.CurrentMonster;
+        Monster currentMonster = SceneController.ChooseMonster;
         if (currentMonster != null)
             currentMonster.Hp = 0;
     }

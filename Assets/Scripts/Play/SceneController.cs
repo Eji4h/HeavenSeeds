@@ -19,7 +19,7 @@ public class SceneController : MonoBehaviour
         listCharacterControllerIsFall = new List<CharacterController>(5);
 
     static Transform monstersParentTransform;
-    static Monster currentMonster;
+    static Monster chooseMonster;
     static Queue<Monster> queueMonster = new Queue<Monster>(3);
 
     static MagicFieldController magicFieldController;
@@ -74,9 +74,10 @@ public class SceneController : MonoBehaviour
         get { return SceneController.listCharacterControllerIsFall; }
     }
 
-    public static Monster CurrentMonster
+    public static Monster ChooseMonster
     {
-        get { return SceneController.currentMonster; }
+        get { return SceneController.chooseMonster; }
+        set { SceneController.chooseMonster = value; }
     }
 
     public static MagicFieldController MagicFieldController

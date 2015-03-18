@@ -17,7 +17,7 @@ public class ElementBarController : UIProgressBar
             this.value = value;
             if (this.value >= 0.99f)
             {
-                SceneController.CurrentMonster.ReceiveAttackQueue(element);
+                SceneController.ChooseMonster.ReceiveAttackQueue(element);
                 this.value = 0f;
             }
         }
