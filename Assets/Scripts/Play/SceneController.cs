@@ -19,7 +19,7 @@ public class SceneController : MonoBehaviour
         listCharacterControllerIsFall = new List<CharacterController>(5);
 
     static Transform monstersParentTransform;
-    static Monster chooseMonster;
+    static ChooseMonsterController chooseMonsterController;
     static Queue<Monster> queueMonster = new Queue<Monster>(3);
 
     static MagicFieldController magicFieldController;
@@ -76,8 +76,8 @@ public class SceneController : MonoBehaviour
 
     public static Monster ChooseMonster
     {
-        get { return SceneController.chooseMonster; }
-        set { SceneController.chooseMonster = value; }
+        get { return chooseMonsterController.ChooseMonster; }
+        set { chooseMonsterController.ChooseMonster = value; }
     }
 
     public static MagicFieldController MagicFieldController
@@ -102,6 +102,8 @@ public class SceneController : MonoBehaviour
         CharacterController.SetInit();
 
         monstersParentTransform = GameObject.Find("Monsters").transform;
+        chooseMonsterController = 
+            GameObject.Find("ChooseMonsterController").GetComponent<ChooseMonsterController>();
         int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
         //For monsters test
         //sceneSelected = 2;
