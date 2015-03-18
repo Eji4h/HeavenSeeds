@@ -61,7 +61,7 @@ public abstract class Unit : MonoBehaviour
 
     [SerializeField]
     [Range(0f, 1f)]
-    float gateBarRegenFull1GatePerSecond;
+    float gateBarRegenFullOneGate;
 
     Predicate<int> checkGateCountIsTarget;
     Action gateCountTargetAction;
@@ -83,16 +83,21 @@ public abstract class Unit : MonoBehaviour
         get { return maxHp; }
     }
 
+    protected GateBarController GateBarController
+    {
+        get { return gateBarController; }
+    }
+
     protected int MaxGate
     {
         get { return maxGate; }
         set { maxGate = value; }
     }
 
-    protected float GateBarRegenFull1GatePerSecond
+    protected float GateBarRegenFullOneGate
     {
-        get { return gateBarRegenFull1GatePerSecond; }
-        set { gateBarRegenFull1GatePerSecond = value; }
+        get { return gateBarRegenFullOneGate; }
+        set { gateBarRegenFullOneGate = value; }
     }
 
     protected virtual void Awake()
@@ -107,7 +112,7 @@ public abstract class Unit : MonoBehaviour
     public virtual void SetGateBarController(GateBarController gateBarController)
     {
         this.gateBarController = gateBarController;
-        gateBarController.SetInit(maxGate, gateBarRegenFull1GatePerSecond);
+        gateBarController.SetInit(maxGate, gateBarRegenFullOneGate);
     }
 
     protected void ReuseGameObject(GameObject gameObject, Vector3 localPosition, bool parent)
