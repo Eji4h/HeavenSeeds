@@ -341,6 +341,7 @@ public class CharacterController : Unit
         hurtStr, 
         fallStr;
 
+    bool moreThanFullOneGate;
     IActionBehaviour iActionBehaviour;
 
     //Action Time
@@ -349,6 +350,11 @@ public class CharacterController : Unit
 
     bool isFall = false;
     int turnFall = 0;
+
+    public bool CanAction
+    {
+        get { return moreThanFullOneGate; }
+    }
 
     public bool IsFall
     {
@@ -423,7 +429,7 @@ public class CharacterController : Unit
         }
         maxHp = characterStatus.Hp;
         MaxGate = characterStatus.MaxGate;
-        GateBarRegenFull1GatePerSecond = characterStatus.RegenGateRate;
+        GateBarRegenFullOneGate = characterStatus.RegenGateRate;
     }
 
     protected override void Awake()
@@ -512,7 +518,19 @@ public class CharacterController : Unit
         gateBarController.transform.position = OftenMethod.NGUITargetWorldPoint(
             ThisTransform.position, new Vector2(0f, -0.05f),
             SceneController.MainCamera, SceneController.UICamera);
+        gateBarController.CheckGateCountIsTarget = CheckGateCountMoreThanOne;
+        gateBarController.GateCountTargetAction = SetMoreThanFullOneGateToTrue;
         base.SetGateBarController(gateBarController);
+    }
+
+    bool CheckGateCountMoreThanOne(int gateCount)
+    {
+        return gateCount >= 1;
+    }
+
+    void SetMoreThanFullOneGateToTrue()
+    {
+        moreThanFullOneGate = true;
     }
 
     public void Action()
@@ -522,6 +540,7 @@ public class CharacterController : Unit
 
     IEnumerator UpdateAction()
     {
+        GateBarController.GateCount--;
         if (!IsFall)
         {
             ThisAnimation.Play(actionStr);
