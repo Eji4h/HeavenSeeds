@@ -10,14 +10,13 @@ public class ChooseMonsterController : MonoAndCoroutinePauseBehaviour
     public Monster ChooseMonster
     {
         get { return chooseMonster; }
-        set 
+        set
         {
             chooseMonster = value;
             thisTransform.parent = chooseMonster.transform;
             thisTransform.localPosition = Vector3.zero;
         }
     }
-
 
     // Use this for initialization
     void Start()
@@ -49,12 +48,16 @@ public class ChooseMonsterController : MonoAndCoroutinePauseBehaviour
         Ray ray = SceneController.MainCamera.ScreenPointToRay(posCheck);
         RaycastHit hitInfo;
 
-        if(Physics.Raycast(ray,out hitInfo))
+        if (Physics.Raycast(ray, out hitInfo))
         {
             Transform hitTransform = hitInfo.transform;
             if (hitTransform.tag == "Monster")
             {
-                ChooseMonster = hitTransform.GetComponent<Monster>();
+                SceneController.ListCurrentLineMonster.ForEach(monster =>
+                    {
+                        if (monster.transform == hitTransform)
+                            ChooseMonster = hitTransform.GetComponent<Monster>();
+                    });
             }
         }
     }

@@ -20,7 +20,8 @@ public class SceneController : MonoBehaviour
 
     static Transform monstersParentTransform;
     static ChooseMonsterController chooseMonsterController;
-    static Queue<Monster> queueMonster = new Queue<Monster>(3);
+    static List<Monster> listCurrentLineMonster;
+    static Queue<List<Monster>> queueLineMonster = new Queue<List<Monster>>(3);
 
     static MagicFieldController magicFieldController;
 
@@ -80,6 +81,11 @@ public class SceneController : MonoBehaviour
         set { chooseMonsterController.ChooseMonster = value; }
     }
 
+    public static List<Monster> ListCurrentLineMonster
+    {
+        get { return SceneController.listCurrentLineMonster; }
+    }
+
     public static MagicFieldController MagicFieldController
     {
         get { return SceneController.magicFieldController; }
@@ -87,7 +93,7 @@ public class SceneController : MonoBehaviour
 
     void Awake()
     {
-        queueMonster.Clear();
+        queueLineMonster.Clear();
         SetCameraObjects();
         SetMagicFieldController();
         SetCharacters();
@@ -102,8 +108,8 @@ public class SceneController : MonoBehaviour
         CharacterController.SetInit();
 
         monstersParentTransform = GameObject.Find("Monsters").transform;
-        chooseMonsterController = 
-            GameObject.Find("ChooseMonsterController").GetComponent<ChooseMonsterController>();
+        chooseMonsterController = GameObject.Find(
+            "ChooseMonsterController").GetComponent<ChooseMonsterController>();
         int sceneSelected = PlayerPrefs.GetInt("SceneSelected", 1);
         //For monsters test
         //sceneSelected = 2;
@@ -137,19 +143,22 @@ public class SceneController : MonoBehaviour
                 indexGateBar++;
             });
 
+        var ArrayListMonsterSeparateLine = new List<Monster>[3];
+
+        for (int i = 0; i < 3; i++)
+            ArrayListMonsterSeparateLine[i] = new List<Monster>(4);
+
         listMonster.ForEach(monster =>
             {
                 monster.transform.parent = monstersParentTransform;
-                //monster.transform.localPosition = Vector3.up * 2f;
-                //monster.transform.localRotation = Quaternion.AngleAxis(180f, Vector3.up);
-                //monster.gameObject.SetActive(false);
-                queueMonster.Enqueue(monster);
+                ArrayListMonsterSeparateLine[monster.NumberOfLine].Add(monster);
             });
 
-        //listMonster[0].gameObject.SetActive(true);
+        foreach (var listMonsterSeparate in ArrayListMonsterSeparateLine)
+            if (listMonsterSeparate.Count > 0)
+                queueLineMonster.Enqueue(listMonsterSeparate);
 
-        //for (int i = listMonster.Count - 1; i >= 0; i--)
-        //    listMonster[i].transform.localPosition = new Vector3(3f * (i - 1), 2f);
+        listCurrentLineMonster = queueLineMonster.Dequeue();
     }
 
     void SetCameraObjects()

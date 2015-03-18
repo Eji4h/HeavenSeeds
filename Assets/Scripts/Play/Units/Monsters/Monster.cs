@@ -71,6 +71,10 @@ public class Monster : Unit
     PayUIProgressBar hpBar;
 
     [SerializeField]
+    [Range(1, 3)]
+    int numberOfLine;
+
+    [SerializeField]
     [Range(0, 100000)]
     protected int damageBase;
 
@@ -121,6 +125,11 @@ public class Monster : Unit
             hpBar.GetComponent<UIOffset>().SetInit(offsetBarPos + new Vector3(0f, .025f), ThisTransform,
                 SceneController.MainCamera, SceneController.UICamera);
         }
+    }
+
+    public int NumberOfLine
+    {
+        get { return numberOfLine; }
     }
 
     protected float LocalPositionX
