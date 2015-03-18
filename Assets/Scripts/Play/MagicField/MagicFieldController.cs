@@ -197,7 +197,7 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
     void CheckRayHitMagicPoint(Vector3 posCheck)
     {
         Ray ray = uiCamera.ScreenPointToRay(posCheck);
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
         if (hit)
         {
             if (hit.transform.tag == "MagicPoint")
