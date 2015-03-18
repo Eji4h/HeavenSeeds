@@ -122,6 +122,9 @@ public class Monster : Unit
             hpBar.transform.parent = UIController.BarsTransform;
             hpBar.transform.localScale = Vector3.one;
 
+            hpBar.MaxValue = MaxHp;
+            Hp = MaxHp;
+
             hpBar.GetComponent<UIOffset>().SetInit(offsetBarPos + new Vector3(0f, .025f), ThisTransform,
                 SceneController.MainCamera, SceneController.UICamera);
         }
@@ -260,9 +263,6 @@ public class Monster : Unit
             damageMinimumMultiply = 0.9f;
         if (damageMaximumMultiply == 0f)
             damageMaximumMultiply = 1.1f;
-
-        hpBar.MaxValue = MaxHp;
-        Hp = MaxHp;
 
         Collider thisCollider = collider;
         slashParticleLocalPosition =

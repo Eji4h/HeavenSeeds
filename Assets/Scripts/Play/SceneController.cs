@@ -159,6 +159,8 @@ public class SceneController : MonoBehaviour
                 queueLineMonster.Enqueue(listMonsterSeparate);
 
         listCurrentLineMonster = queueLineMonster.Dequeue();
+        listCurrentLineMonster.ForEach(monster =>
+            monster.StartState());
     }
 
     void SetCameraObjects()
