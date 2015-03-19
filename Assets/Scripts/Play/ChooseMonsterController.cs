@@ -14,7 +14,7 @@ public class ChooseMonsterController : MonoAndCoroutinePauseBehaviour
         {
             chooseMonster = value;
             thisTransform.parent = chooseMonster.transform;
-            thisTransform.localPosition = Vector3.zero;
+            thisTransform.localPosition = new Vector3(0f, 0.1f);
         }
     }
 
@@ -22,6 +22,14 @@ public class ChooseMonsterController : MonoAndCoroutinePauseBehaviour
     void Start()
     {
         thisTransform = transform;
+        StartCoroutine(FirstChooseMonster());
+    }
+
+    IEnumerator FirstChooseMonster()
+    {
+        while (SceneController.ListCurrentLineMonster == null)
+            yield return null;
+        ChooseMonster = SceneController.ListCurrentLineMonster[0];
         StartCoroutine(CheckTouchBegin());
     }
 
