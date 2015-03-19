@@ -84,7 +84,7 @@ public class Monster : Unit
     int burnTurn = 0,
         lowAttackDamageTurn = 0,
         stunTurn = 0,
-        moreReceiveDamageTurn = 0;
+        moreReceiveDamageCount = 0;
 
     float percentDebuffToCharacter;
 
@@ -224,13 +224,13 @@ public class Monster : Unit
         }
     }
 
-    int MoreReceiveDamageTurn
+    int MoreReceiveDamageCount
     {
-        get { return moreReceiveDamageTurn / NumberSecurity.RandomNumSecurity; }
+        get { return moreReceiveDamageCount / NumberSecurity.RandomNumSecurity; }
         set
         {
-            moreReceiveDamageTurn = value * NumberSecurity.RandomNumSecurity;
-            isMoreReceiveDamage = MoreReceiveDamageTurn > 0;
+            moreReceiveDamageCount = value * NumberSecurity.RandomNumSecurity;
+            isMoreReceiveDamage = MoreReceiveDamageCount > 0;
             rootParticle.SetActive(isMoreReceiveDamage);
         }
     }
@@ -336,7 +336,7 @@ public class Monster : Unit
             dmg = Mathf.RoundToInt(dmg * (isMoreReceiveDamage ? 1.2f : 1f));
             UIController.ShowHpPopUp(dmg, ThisTransform.position, receiveDamageHpPopColor);
             Hp -= dmg;
-            MoreReceiveDamageTurn--;
+            MoreReceiveDamageCount--;
         }
     }
 
@@ -534,7 +534,7 @@ public class Monster : Unit
         ReuseGameObject(woodParticle, Vector3.zero, true);
         yield return new WaitForSeconds(6.5f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 0.95f, 1.05f, 3));
-        MoreReceiveDamageTurn = 3;
+        MoreReceiveDamageCount = 3;
     }
 
     IEnumerator BurnReceiveBehaviour()
