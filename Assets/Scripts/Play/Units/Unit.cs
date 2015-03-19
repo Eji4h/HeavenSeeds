@@ -66,8 +66,6 @@ public abstract class Unit : MonoBehaviour
     Predicate<int> checkGateCountIsTarget;
     Action gateCountTargetAction;
 
-    protected List<Transform> listGameObjectTransformInParent = new List<Transform>(8);
-
     public Transform ThisTransform
     {
         get { return thisTransform; }
@@ -129,8 +127,6 @@ public abstract class Unit : MonoBehaviour
         gameObjectTransform.localPosition = localPosition;
         if (!parent)
             gameObjectTransform.parent = null;
-        else if (!listGameObjectTransformInParent.Contains(gameObjectTransform))
-            listGameObjectTransformInParent.Add(gameObjectTransform);
         gameObject.SetActive(false);
         gameObject.SetActive(true);
     }

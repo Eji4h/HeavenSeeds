@@ -5,17 +5,17 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class Monster : Unit
 {
-    static GameObject slashParticlePrefab,
-            arrowHitParticlePrefab,
-            spellParticlePrefab,
-            fireParticlePrefab,
-            waterParticlePrefab,
-            earthParticlePrefab,
-            woodParticlePrefab,
-            burnParticlePrefab,
-            vortexParticlePrefab,
-            stunParticlePrefab,
-            rootParticlePrefab;
+    static GameObject slashParticlePrefab = Resources.Load("Prefabs/Particle/Player/Attack/Slash 2") as GameObject,
+            arrowHitParticlePrefab = Resources.Load("Prefabs/Particle/ArrowHit") as GameObject,
+            spellParticlePrefab = Resources.Load("Prefabs/Particle/Player/Attack/Spell2") as GameObject,
+            fireParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LatestFire") as GameObject,
+            waterParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Water") as GameObject,
+            earthParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Land") as GameObject,
+            woodParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LeafStrom") as GameObject,
+            burnParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Burn") as GameObject,
+            vortexParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/WaterVotex") as GameObject,
+            stunParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/NewStun") as GameObject,
+            rootParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Vineeee") as GameObject;
 
     static int elementDamageBase;
 
@@ -24,18 +24,6 @@ public class Monster : Unit
 
     public static void SetInit()
     {
-        GameObject slashParticlePrefab = Resources.Load("Prefabs/Particle/Player/Attack/Slash 2") as GameObject, 
-            arrowHitParticlePrefab = Resources.Load("Prefabs/Particle/ArrowHit") as GameObject, 
-            spellParticlePrefab = Resources.Load("Prefabs/Particle/Player/Attack/Spell2") as GameObject,
-            fireParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LatestFire") as GameObject,
-            waterParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Water") as GameObject,
-            earthParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/Land") as GameObject,
-            woodParticlePrefab = Resources.Load("Prefabs/Particle/Player/Ultimate/LeafStrom") as GameObject, 
-            burnParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Burn") as GameObject,
-            vortexParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/WaterVotex") as GameObject, 
-            stunParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/NewStun") as GameObject,
-            rootParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Vineeee") as GameObject;
-
         elementDamageBase = (CharacterController.SwordValue +
             CharacterController.BowValue +
             CharacterController.WandValue +
@@ -284,21 +272,17 @@ public class Monster : Unit
 
         burnParticle.transform.parent = ThisTransform;
         burnParticle.transform.localPosition = Vector3.zero;
-        listGameObjectTransformInParent.Add(burnParticle.transform);
 
         vortexParticle.transform.parent = ThisTransform;
         vortexParticle.transform.localPosition = Vector3.zero;
-        listGameObjectTransformInParent.Add(vortexParticle.transform);
 
         stunParticle.transform.parent = ThisTransform;
         stunParticle.transform.localPosition = new Vector3(0f, 
             thisCollider.bounds.max.y / ThisTransform.localScale.y, 
             (thisCollider.bounds.extents.z + 0.1f) / ThisTransform.localScale.z);
-        listGameObjectTransformInParent.Add(stunParticle.transform);
 
         rootParticle.transform.parent = ThisTransform;
         rootParticle.transform.localPosition = Vector3.zero;
-        listGameObjectTransformInParent.Add(rootParticle.transform);
     }
 
     public override void SetGateBarController(GateBarController gateBarController)
@@ -462,12 +446,6 @@ public class Monster : Unit
             waitTime += dieAnimationState.length;
         }
         yield return new WaitForSeconds(waitTime);
-
-        listGameObjectTransformInParent.ForEach(gameObjectTransformInParent =>
-        {
-            gameObjectTransformInParent.parent = null;
-            gameObjectTransformInParent.gameObject.SetActive(false);
-        });
 
         Destroy(HpBar.gameObject);
         Destroy(GateBarController.gameObject);
