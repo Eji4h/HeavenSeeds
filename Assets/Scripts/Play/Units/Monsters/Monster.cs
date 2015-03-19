@@ -5,17 +5,17 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class Monster : Unit
 {
-    static GameObject slashParticle,
-        arrowHitParticle,
-        spellParticle, 
-        fireParticle,
-        waterParticle,
-        earthParticle,
-        woodParticle, 
-        burnParticle, 
-        vortexParticle,
-        stunParticle,
-        rootParticle;
+    static GameObject slashParticlePrefab,
+            arrowHitParticlePrefab,
+            spellParticlePrefab,
+            fireParticlePrefab,
+            waterParticlePrefab,
+            earthParticlePrefab,
+            woodParticlePrefab,
+            burnParticlePrefab,
+            vortexParticlePrefab,
+            stunParticlePrefab,
+            rootParticlePrefab;
 
     static int elementDamageBase;
 
@@ -35,30 +35,6 @@ public class Monster : Unit
             vortexParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/WaterVotex") as GameObject, 
             stunParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/NewStun") as GameObject,
             rootParticlePrefab = Resources.Load("Prefabs/Particle/StatEffect/Vineeee") as GameObject;
-
-        slashParticle = Instantiate(slashParticlePrefab, Vector3.zero, Quaternion.AngleAxis(180f, Vector3.up)) as GameObject;
-        arrowHitParticle = Instantiate(arrowHitParticlePrefab, Vector3.zero, Quaternion.identity) as GameObject;
-        spellParticle = Instantiate(spellParticlePrefab, Vector3.zero, spellParticlePrefab.transform.rotation) as GameObject;
-        fireParticle = Instantiate(fireParticlePrefab) as GameObject;
-        waterParticle = Instantiate(waterParticlePrefab) as GameObject;
-        earthParticle = Instantiate(earthParticlePrefab) as GameObject;
-        woodParticle = Instantiate(woodParticlePrefab) as GameObject;
-        burnParticle = Instantiate(burnParticlePrefab) as GameObject;
-        vortexParticle = Instantiate(vortexParticlePrefab) as GameObject;
-        stunParticle = Instantiate(stunParticlePrefab) as GameObject;
-        rootParticle = Instantiate(rootParticlePrefab) as GameObject;
-
-        slashParticle.SetActive(false);
-        arrowHitParticle.SetActive(false);
-        spellParticle.SetActive(false);
-        fireParticle.SetActive(false);
-        waterParticle.SetActive(false);
-        earthParticle.SetActive(false);
-        woodParticle.SetActive(false);
-        burnParticle.SetActive(false);
-        vortexParticle.SetActive(false);
-        stunParticle.SetActive(false);
-        rootParticle.SetActive(false);
 
         elementDamageBase = (CharacterController.SwordValue +
             CharacterController.BowValue +
@@ -97,6 +73,18 @@ public class Monster : Unit
     Queue<IEnumerator> queueElementReceive = new Queue<IEnumerator>(4);
     bool queueElementIsRunning = false,
         nowBurning = false;
+
+    GameObject slashParticle,
+        arrowHitParticle,
+        spellParticle,
+        fireParticle,
+        waterParticle,
+        earthParticle,
+        woodParticle,
+        burnParticle,
+        vortexParticle,
+        stunParticle,
+        rootParticle;
 
     protected bool isBurn = false,
         isLowAttackDamage = false,
@@ -269,6 +257,30 @@ public class Monster : Unit
             new Vector3(0f, thisCollider.bounds.center.y, thisCollider.bounds.extents.z + 0.5f);
         arrowHitParticleLocalPosition =
             new Vector3(0f, thisCollider.bounds.center.y - 0.25f, thisCollider.bounds.extents.z + 0.5f);
+
+        slashParticle = Instantiate(slashParticlePrefab, Vector3.zero, Quaternion.AngleAxis(180f, Vector3.up)) as GameObject;
+        arrowHitParticle = Instantiate(arrowHitParticlePrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        spellParticle = Instantiate(spellParticlePrefab, Vector3.zero, spellParticlePrefab.transform.rotation) as GameObject;
+        fireParticle = Instantiate(fireParticlePrefab) as GameObject;
+        waterParticle = Instantiate(waterParticlePrefab) as GameObject;
+        earthParticle = Instantiate(earthParticlePrefab) as GameObject;
+        woodParticle = Instantiate(woodParticlePrefab) as GameObject;
+        burnParticle = Instantiate(burnParticlePrefab) as GameObject;
+        vortexParticle = Instantiate(vortexParticlePrefab) as GameObject;
+        stunParticle = Instantiate(stunParticlePrefab) as GameObject;
+        rootParticle = Instantiate(rootParticlePrefab) as GameObject;
+
+        slashParticle.SetActive(false);
+        arrowHitParticle.SetActive(false);
+        spellParticle.SetActive(false);
+        fireParticle.SetActive(false);
+        waterParticle.SetActive(false);
+        earthParticle.SetActive(false);
+        woodParticle.SetActive(false);
+        burnParticle.SetActive(false);
+        vortexParticle.SetActive(false);
+        stunParticle.SetActive(false);
+        rootParticle.SetActive(false);
 
         burnParticle.transform.parent = ThisTransform;
         burnParticle.transform.localPosition = Vector3.zero;
