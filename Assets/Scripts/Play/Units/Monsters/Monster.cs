@@ -82,7 +82,7 @@ public class Monster : Unit
         isMoreReceiveDamage = false;
 
     int burnTurn = 0,
-        lowAttackDamageTurn = 0,
+        lowAttackDamageCount = 0,
         stunTurn = 0,
         moreReceiveDamageCount = 0;
 
@@ -202,13 +202,13 @@ public class Monster : Unit
         }
     }
 
-    int LowAttackDamageTurn
+    int LowAttackDamageCount
     {
-        get { return lowAttackDamageTurn / NumberSecurity.RandomNumSecurity; }
+        get { return lowAttackDamageCount / NumberSecurity.RandomNumSecurity; }
         set
         {
-            lowAttackDamageTurn = value * NumberSecurity.RandomNumSecurity;
-            isLowAttackDamage = LowAttackDamageTurn > 0;
+            lowAttackDamageCount = value * NumberSecurity.RandomNumSecurity;
+            isLowAttackDamage = LowAttackDamageCount > 0;
             vortexParticle.SetActive(isLowAttackDamage);
         }
     }
@@ -324,7 +324,7 @@ public class Monster : Unit
 
             if (isBurn)
                 yield return StartCoroutine(BurnReceiveBehaviour());
-            LowAttackDamageTurn--;
+            LowAttackDamageCount--;
             StunTurn--;
         }
     }
@@ -511,7 +511,7 @@ public class Monster : Unit
             yield return new WaitForSeconds(0.5f);
             ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.75f, 1.1f, 3));
         }
-        LowAttackDamageTurn = 2;
+        LowAttackDamageCount = 2;
     }
 
     IEnumerator EarthReceiveBehaviour()
