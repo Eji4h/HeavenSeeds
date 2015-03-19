@@ -540,7 +540,7 @@ public class CharacterController : Unit
 
     IEnumerator UpdateAction()
     {
-        GateBarController.GateCount--;
+        moreThanFullOneGate = CheckGateCountMoreThanOne(--GateBarController.GateCount);
         if (!IsFall)
         {
             ThisAnimation.Play(actionStr);

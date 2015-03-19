@@ -84,7 +84,7 @@ public abstract class CharacterStatus : MonoBehaviour
         hp,
         maxGate = 1;
 
-    float regenGateRate = 0.1f;
+    float regenGateRate = 0.1667f;
 
     string characterName;
 
