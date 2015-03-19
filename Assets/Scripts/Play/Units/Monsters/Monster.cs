@@ -456,6 +456,11 @@ public class Monster : Unit
             gameObjectTransformInParent.parent = null;
             gameObjectTransformInParent.gameObject.SetActive(false);
         });
+
+        Destroy(HpBar.gameObject);
+        Destroy(GateBarController.gameObject);
+
+        SceneController.UpdateQueueLineMonster(this);
             
         Destroy(gameObject);
         Destroy(this);

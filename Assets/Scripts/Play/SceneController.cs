@@ -91,6 +91,22 @@ public class SceneController : MonoBehaviour
         get { return SceneController.magicFieldController; }
     }
 
+    public static void UpdateQueueLineMonster(Monster monster)
+    {
+        listCurrentLineMonster.Remove(monster);
+        if (listCurrentLineMonster.Count == 0)
+        {
+            if (queueLineMonster.Count > 0)
+                listCurrentLineMonster = queueLineMonster.Dequeue();
+            else
+            {
+                ;//End Scene
+                return;
+            }
+        }
+        chooseMonsterController.ChooseMonster = listCurrentLineMonster[0];
+    }
+
     void Awake()
     {
         queueLineMonster.Clear();
@@ -161,6 +177,7 @@ public class SceneController : MonoBehaviour
         listCurrentLineMonster = queueLineMonster.Dequeue();
         listCurrentLineMonster.ForEach(monster =>
             monster.StartState());
+        chooseMonsterController.ChooseMonster = listCurrentLineMonster[0];
     }
 
     void SetCameraObjects()

@@ -18,18 +18,14 @@ public class ChooseMonsterController : MonoAndCoroutinePauseBehaviour
         }
     }
 
+    void Awake()
+    {
+        thisTransform = transform;
+    }
+
     // Use this for initialization
     void Start()
     {
-        thisTransform = transform;
-        StartCoroutine(FirstChooseMonster());
-    }
-
-    IEnumerator FirstChooseMonster()
-    {
-        while (SceneController.ListCurrentLineMonster == null)
-            yield return null;
-        ChooseMonster = SceneController.ListCurrentLineMonster[0];
         StartCoroutine(CheckTouchBegin());
     }
 
