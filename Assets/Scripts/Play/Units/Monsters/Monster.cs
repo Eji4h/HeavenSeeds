@@ -287,36 +287,34 @@ public class Monster : Unit
     {
         gateBarController.GetComponent<UIOffset>().SetInit(offsetBarPos, ThisTransform,
             SceneController.MainCamera, SceneController.UICamera);
+        gateBarController.GateCountTarget = 1;
+        gateBarController.SetCheckGateCountIsTarget(true);
+        gateBarController.GateCountTargetAction = NormalAttack;
         base.SetGateBarController(gateBarController);
     }
 
-    public void RunBehaviour()
+    public virtual void RunBehaviour()
     {
-        MonsterBehaviour();
+
     }
 
     protected virtual void EndTurn()
     {
-        StartCoroutine(EndTurnBehaviour(true));
+        EndTurnBehaviour(true);
     }
 
     protected virtual void EndTurnNoCrossFadeToIdle()
     {
-        StartCoroutine(EndTurnBehaviour(false));
+        EndTurnBehaviour(false);
     }
 
-    protected virtual IEnumerator EndTurnBehaviour(bool isCrossFadeToIdle)
+    protected virtual void EndTurnBehaviour(bool isCrossFadeToIdle)
     {
-        yield return null;
         if (Hp > 0)
         {
             if (isCrossFadeToIdle)
                 ThisAnimation.CrossFade("Idle");
-
-            //if (isBurn)
-            //    yield return StartCoroutine(BurnReceiveBehaviour());
-            //LowAttackDamageCount--;
-            //StunRemainTime--;
+            MonsterBehaviour();
         }
     }
 
@@ -396,9 +394,6 @@ public class Monster : Unit
     #region MonsterBehaviour
     protected virtual void MonsterBehaviour()
     {
-        GateBarController.GateCountTarget = 1;
-        GateBarController.SetCheckGateCountIsTarget(true);
-        GateBarController.GateCountTargetAction = NormalAttack;
     }
 
     protected void NormalAttack()
@@ -449,12 +444,11 @@ public class Monster : Unit
             ThisAnimation.CrossFade("Die");
             waitTime += dieAnimationState.length;
         }
-        yield return new WaitForSeconds(waitTime);
-
         Destroy(HpBar.gameObject);
         Destroy(GateBarController.gameObject);
-
         SceneController.UpdateQueueLineMonster(this);
+
+        yield return new WaitForSeconds(waitTime);
             
         Destroy(gameObject);
         Destroy(this);

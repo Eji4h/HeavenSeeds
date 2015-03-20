@@ -59,8 +59,28 @@ public class BossKhchsingh : Monster
         BossKhchsinghStateUseGateDic.Add(BossKhchsinghState.IvoryBeam, 5);
 
         GateBarController.SetCheckGateCountIsTarget(true);
-        GateBarController.gameObject.SetActive(false);
+        GateBarController.enabled = false;
         GateBarController.GateCountTargetAction = BossKhchsinghAttack;
+    }
+
+    public override void RunBehaviour()
+    {
+        StartCoroutine(Walk());
+    }
+
+    IEnumerator Walk()
+    {
+        float speedWalk = 3f;
+        ThisAnimation.CrossFade("Walk");
+        while (ThisTransform.localPosition.z > 0f)
+        {
+            ThisTransform.Translate(Vector3.forward * Time.deltaTime * speedWalk);
+            yield return null;
+        }
+        ThisTransform.localPosition = Vector3.zero;
+        ThisAnimation.CrossFade("Idle");
+        GateBarController.enabled = true;
+        MonsterBehaviour();
     }
 
     protected override void MonsterBehaviour()
@@ -78,8 +98,9 @@ public class BossKhchsingh : Monster
 
     IEnumerator Attack()
     {
+        while (!ThisAnimation.IsPlaying("Idle"))
+            yield return null;
         ThisAnimation.CrossFade(nextBossKhchsinghState.ToString());
         GateBarController.GateCount -= BossKhchsinghStateUseGateDic[nextBossKhchsinghState];
-        yield return new WaitForSeconds(ThisAnimation[nextBossKhchsinghState.ToString()].length);
     }
 }
