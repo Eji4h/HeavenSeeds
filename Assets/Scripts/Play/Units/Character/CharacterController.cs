@@ -559,12 +559,6 @@ public class CharacterController : Unit
             ThisAnimation.Play(idleStr);
         }
 
-        while (SceneController.ChooseMonster.QueueElementIsRunning)
-            yield return null;
-
-        while (SceneController.ChooseMonster.NowBurning)
-            yield return null;
-
         if (isBurn)
         {
             ReceiveDamageByPercentOfSumMaxHp(4f);
