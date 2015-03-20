@@ -11,7 +11,8 @@ public class GateBarController : UIProgressBar
         valuePerGate,
         totalValueElapsedToGateUp;
 
-    Predicate<int> checkGateCountIsTarget;
+    int gateCountTarget;
+    Func<int, int, bool> checkGateCountIsTarget;
     Action gateCountTargetAction;
 
     public int GateCount
@@ -27,7 +28,7 @@ public class GateBarController : UIProgressBar
             this.value += deltaGate * valuePerGate;
             this.value = Mathf.Clamp01(this.value);
             if (checkGateCountIsTarget != null &&
-                checkGateCountIsTarget(gateCount))
+                checkGateCountIsTarget(gateCount, gateCountTarget))
             {
                 gateCountTargetAction();
                 StopCoroutine(UpdateGateValue());
@@ -54,10 +55,10 @@ public class GateBarController : UIProgressBar
         set { changePerSecond = value / MaxGate; }
     }
 
-    public Predicate<int> CheckGateCountIsTarget
+    public int GateCountTarget
     {
-        get { return checkGateCountIsTarget; }
-        set { checkGateCountIsTarget = value; }
+        get { return gateCountTarget; }
+        set { gateCountTarget = value; }
     }
 
     public Action GateCountTargetAction
@@ -72,6 +73,24 @@ public class GateBarController : UIProgressBar
         transform.localScale = Vector3.one;
         MaxGate = maxGate;
         ChangePerSecond = changePerSecond;
+    }
+
+    public void SetCheckGateCountIsTarget(bool isMoreThan)
+    {
+        if (isMoreThan)
+            checkGateCountIsTarget = CheckGateCountIsHigherThan;
+        else
+            checkGateCountIsTarget = CheckGateCountIsLowerThan;
+    }
+
+    bool CheckGateCountIsHigherThan(int gateCount, int gateCountTarget)
+    {
+        return gateCount >= gateCountTarget;
+    }
+
+    bool CheckGateCountIsLowerThan(int gateCount, int gateCountTarget)
+    {
+        return gateCount <= gateCountTarget;
     }
 
     // Use this for initialization

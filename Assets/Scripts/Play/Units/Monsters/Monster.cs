@@ -292,13 +292,7 @@ public class Monster : Unit
 
     public void RunBehaviour()
     {
-        if (Hp > 0)
-        {
-            if (!isStun)
-                MonsterBehaviour();
-            else
-                StartCoroutine(RunWaitTimeToEndTurn(3f));
-        }
+        MonsterBehaviour();
     }
 
     protected virtual void EndTurn()
@@ -402,7 +396,8 @@ public class Monster : Unit
     #region MonsterBehaviour
     protected virtual void MonsterBehaviour()
     {
-        GateBarController.CheckGateCountIsTarget = CheckGateCountMoreThanOne;
+        GateBarController.GateCountTarget = 1;
+        GateBarController.SetCheckGateCountIsTarget(true);
         GateBarController.GateCountTargetAction = NormalAttack;
     }
 

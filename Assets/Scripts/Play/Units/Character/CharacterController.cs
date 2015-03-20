@@ -518,7 +518,8 @@ public class CharacterController : Unit
         gateBarController.transform.position = OftenMethod.NGUITargetWorldPoint(
             ThisTransform.position, new Vector2(0f, -0.05f),
             SceneController.MainCamera, SceneController.UICamera);
-        gateBarController.CheckGateCountIsTarget = CheckGateCountMoreThanOne;
+        gateBarController.GateCountTarget = 1;
+        gateBarController.SetCheckGateCountIsTarget(true);
         gateBarController.GateCountTargetAction = SetMoreThanFullOneGateToTrue;
         base.SetGateBarController(gateBarController);
     }
