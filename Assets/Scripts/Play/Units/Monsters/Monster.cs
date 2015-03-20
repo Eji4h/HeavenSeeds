@@ -291,7 +291,7 @@ public class Monster : Unit
         base.SetGateBarController(gateBarController);
     }
 
-    public void StartState()
+    public void RunBehaviour()
     {
         if (Hp > 0)
         {
@@ -403,13 +403,21 @@ public class Monster : Unit
     #region MonsterBehaviour
     protected virtual void MonsterBehaviour()
     {
-        NormalAttack();
+        GateBarController.CheckGateCountIsTarget = CheckGateCountMoreThanOne;
+        GateBarController.GateCountTargetAction = NormalAttack;
     }
 
     protected void NormalAttack()
     {
+        StartCoroutine(Attack());
+    }
+
+    IEnumerator Attack()
+    {
         ThisAnimation.CrossFade("Attack");
-        StartCoroutineRunWaitTimeToEndTurn(ThisAnimation["Attack"].length);
+        GateBarController.GateCount--;
+        yield return new WaitForSeconds(ThisAnimation["Attack"].length);
+        ThisAnimation.CrossFade("Idle");
     }
 
     protected void ResetLocalPositionToZero()

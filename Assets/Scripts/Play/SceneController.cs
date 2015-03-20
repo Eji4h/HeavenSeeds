@@ -176,7 +176,7 @@ public class SceneController : MonoBehaviour
 
         listCurrentLineMonster = queueLineMonster.Dequeue();
         listCurrentLineMonster.ForEach(monster =>
-            monster.StartState());
+            monster.RunBehaviour());
         chooseMonsterController.ChooseMonster = listCurrentLineMonster[0];
     }
 
