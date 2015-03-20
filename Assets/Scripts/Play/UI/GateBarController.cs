@@ -85,19 +85,24 @@ public class GateBarController : UIProgressBar
     {
         for (; ; )
         {
-            float valueChange = Time.deltaTime * changePerSecond;
-
-            value += valueChange;
-
-            totalValueElapsedToGateUp += valueChange;
-            if (totalValueElapsedToGateUp >= valuePerGate)
+            if (value < 1f)
             {
-                if (changePerSecond >= 0f)
-                    GateCount++;
-                else
-                    GateCount--;
-                totalValueElapsedToGateUp -= valuePerGate;
+                float valueChange = Time.deltaTime * changePerSecond;
+
+                value += valueChange;
+
+                totalValueElapsedToGateUp += valueChange;
+                if (totalValueElapsedToGateUp >= valuePerGate)
+                {
+                    if (changePerSecond >= 0f)
+                        GateCount++;
+                    else
+                        GateCount--;
+                    totalValueElapsedToGateUp -= valuePerGate;
+                }
             }
+            else
+                totalValueElapsedToGateUp = 0f;
             yield return null;
         }
     }
