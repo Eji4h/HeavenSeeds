@@ -61,8 +61,7 @@ public class Monster : Unit
         spellParticleLocalPosition = new Vector3(0f, 0.05f, 0f);
 
     Queue<IEnumerator> queueElementReceive = new Queue<IEnumerator>(4);
-    bool queueElementIsRunning = false,
-        nowBurning = false;
+    bool queueElementIsRunning = false;
 
     GameObject slashParticle,
         arrowHitParticle,
