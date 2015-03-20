@@ -97,7 +97,11 @@ public class SceneController : MonoBehaviour
         if (listCurrentLineMonster.Count == 0)
         {
             if (queueLineMonster.Count > 0)
+            {
                 listCurrentLineMonster = queueLineMonster.Dequeue();
+                listCurrentLineMonster.ForEach(_monster =>
+                    _monster.RunBehaviour());
+            }
             else
             {
                 ;//End Scene
