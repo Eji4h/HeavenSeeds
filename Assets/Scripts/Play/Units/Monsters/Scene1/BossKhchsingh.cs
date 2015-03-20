@@ -93,10 +93,10 @@ public class BossKhchsingh : Monster
 
     void BossKhchsinghAttack()
     {
-        StartCoroutine(Attack());
+        StartCoroutine(Action());
     }
 
-    IEnumerator Attack()
+    IEnumerator Action()
     {
         while (!ThisAnimation.IsPlaying("Idle"))
             yield return null;

@@ -298,17 +298,17 @@ public class Monster : Unit
 
     }
 
-    protected virtual void EndTurn()
+    protected virtual void FinishAction()
     {
-        EndTurnBehaviour(true);
+        FinishActionBehaviour(true);
     }
 
-    protected virtual void EndTurnNoCrossFadeToIdle()
+    protected virtual void FinishActionNoCrossFadeToIdle()
     {
-        EndTurnBehaviour(false);
+        FinishActionBehaviour(false);
     }
 
-    protected virtual void EndTurnBehaviour(bool isCrossFadeToIdle)
+    protected virtual void FinishActionBehaviour(bool isCrossFadeToIdle)
     {
         if (Hp > 0)
         {
@@ -424,15 +424,15 @@ public class Monster : Unit
         ThisAnimation.CrossFade(animationNameToCrossFade);
     }
 
-    protected void StartCoroutineRunWaitTimeToEndTurn(float timeToWait)
+    protected void StartCoroutineRunWaitTimeToFinishAction(float timeToWait)
     {
-        StartCoroutine(RunWaitTimeToEndTurn(timeToWait));
+        StartCoroutine(RunWaitTimeToFinishAction(timeToWait));
     }
 
-    IEnumerator RunWaitTimeToEndTurn(float timeToWait)
+    IEnumerator RunWaitTimeToFinishAction(float timeToWait)
     {
         yield return new WaitForSeconds(timeToWait);
-        EndTurn();
+        FinishAction();
     }
 
     IEnumerator WaitingDieAnimationToDestroy()
@@ -585,13 +585,13 @@ public class Monster : Unit
             Random.Range(-maxNum, -minNum) : Random.Range(minNum, maxNum);
     }
 
-    public void RandomCharacterFall(int turnFall)
+    public void RandomCharacterFall(float fallTime)
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
         {
             if (ListCharacterControllerIsFall.Count < 5)
             {
-                turnFall++;
+                fallTime++;
                 CharacterController selectedCharacterController;
                 List<CharacterController> listUnFallCharacterController =
                     new List<CharacterController>(5);
@@ -604,7 +604,7 @@ public class Monster : Unit
                 selectedCharacterController = listUnFallCharacterController
                     [Random.Range(0, listUnFallCharacterController.Count)];
 
-                selectedCharacterController.SetToFall(turnFall);
+                selectedCharacterController.SetToFall(fallTime);
             }
         }
     }

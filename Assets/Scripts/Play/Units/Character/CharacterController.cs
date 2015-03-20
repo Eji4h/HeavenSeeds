@@ -570,9 +570,9 @@ public class CharacterController : Unit
         }
     }
 
-    public void SetToFall(int turnFall)
+    public void SetToFall(float turnFall)
     {
         IsFall = true;
-        TurnFall = turnFall;
+        TurnFall = (int)turnFall;
     }
 }
