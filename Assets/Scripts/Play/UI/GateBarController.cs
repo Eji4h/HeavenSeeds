@@ -24,15 +24,17 @@ public class GateBarController : UIProgressBar
                 deltaGate;
 
             gateCount = Mathf.Clamp(value, 0, maxGate);
-            deltaGate = gateCount - oldGateCount;
-            this.value += deltaGate * valuePerGate;
-            this.value = Mathf.Clamp01(this.value);
+            if (gateCount != (int)(this.value / valuePerGate))
+            {
+                deltaGate = gateCount - oldGateCount;
+                this.value += deltaGate * valuePerGate;
+                this.value = Mathf.Clamp01(this.value);
+                gateCount = (int)(this.value / valuePerGate);
+            }
+
             if (checkGateCountIsTarget != null &&
                 checkGateCountIsTarget(gateCount, gateCountTarget))
-            {
                 gateCountTargetAction();
-                StopCoroutine(UpdateGateValue());
-            }
         }
     }
 
