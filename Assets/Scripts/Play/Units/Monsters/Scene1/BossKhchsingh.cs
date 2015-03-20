@@ -23,13 +23,17 @@ public class BossKhchsingh : Monster
         set
         {
             base.Hp = value;
+            CheckToAddUltimateSkillToListStateCanUse(Hp, MaxHp);
+        }
+    }
 
-            if (!addUltimateSkillToListStateCanUse &&
-                Hp <= (int)(MaxHp * 0.2))
-            {
-                listBossKhchsinghStateCanUse.Add(BossKhchsinghState.IvoryBeam);
-                addUltimateSkillToListStateCanUse = true;
-            }
+    void CheckToAddUltimateSkillToListStateCanUse(int hp, int maxHp)
+    {
+        if (!addUltimateSkillToListStateCanUse &&
+            hp <= (int)(maxHp * 0.2))
+        {
+            listBossKhchsinghStateCanUse.Add(BossKhchsinghState.IvoryBeam);
+            addUltimateSkillToListStateCanUse = true;
         }
     }
 
