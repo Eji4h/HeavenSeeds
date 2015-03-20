@@ -44,8 +44,8 @@ public class GateBarController : UIProgressBar
             maxGate = value;
             valuePerGate = 1f / maxGate;
 
-            var bgSprite = backgroundWidget.GetComponent<UISprite>();
-            bgSprite.spriteName = "ShortBar" + maxGate + "Split";
+            var frameSprite = transform.Find("Frame").GetComponent<UISprite>();
+            frameSprite.spriteName = "ShortBar" + maxGate + "Split";
         }
     }
 
