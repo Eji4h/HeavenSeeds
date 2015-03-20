@@ -182,24 +182,17 @@ public class Monster : Unit
         isImmortal = false;
     }
 
-    public bool QueueElementIsRunning
-    {
-        get { return queueElementIsRunning; }
-    }
-
-    public bool NowBurning
-    {
-        get { return nowBurning; }
-    }
-
     float BurnRemainTime
     {
         get { return burnRemainTime / NumberSecurity.RandomNumSecurity; }
         set
         {
-            burnRemainTime = value * NumberSecurity.RandomNumSecurity;
+            burnRemainTime = Mathf.Clamp(value, 0f, 10f) * NumberSecurity.RandomNumSecurity;
+            bool oldIsBurn = isBurn;
             isBurn = BurnRemainTime > 0;
             burnParticle.SetActive(isBurn);
+            if(!oldIsBurn && isBurn)
+                StartCoroutine(UpdateBurnBehaviour());
         }
     }
 
@@ -208,7 +201,7 @@ public class Monster : Unit
         get { return lowAttackDamageCount / NumberSecurity.RandomNumSecurity; }
         set
         {
-            lowAttackDamageCount = value * NumberSecurity.RandomNumSecurity;
+            lowAttackDamageCount = Mathf.Clamp(value, 0, 10) * NumberSecurity.RandomNumSecurity;
             isLowAttackDamage = LowAttackDamageCount > 0;
             vortexParticle.SetActive(isLowAttackDamage);
         }
@@ -219,9 +212,12 @@ public class Monster : Unit
         get { return stunRemainTime / NumberSecurity.RandomNumSecurity; }
         set
         {
-            stunRemainTime = value * NumberSecurity.RandomNumSecurity;
+            stunRemainTime = Mathf.Clamp(value, 0f, 10f) * NumberSecurity.RandomNumSecurity;
+            bool oldIsStun = isStun;
             isStun = StunRemainTime > 0;
             stunParticle.SetActive(isStun);
+            if (!oldIsStun && isStun)
+                StartCoroutine(UpdateStunBehaviour());
         }
     }
 
@@ -230,7 +226,7 @@ public class Monster : Unit
         get { return moreReceiveDamageCount / NumberSecurity.RandomNumSecurity; }
         set
         {
-            moreReceiveDamageCount = value * NumberSecurity.RandomNumSecurity;
+            moreReceiveDamageCount = Mathf.Clamp(value, 0, 10) * NumberSecurity.RandomNumSecurity;
             isMoreReceiveDamage = MoreReceiveDamageCount > 0;
             rootParticle.SetActive(isMoreReceiveDamage);
         }
@@ -318,15 +314,16 @@ public class Monster : Unit
 
     protected virtual IEnumerator EndTurnBehaviour(bool isCrossFadeToIdle)
     {
+        yield return null;
         if (Hp > 0)
         {
             if (isCrossFadeToIdle)
                 ThisAnimation.CrossFade("Idle");
 
-            if (isBurn)
-                yield return StartCoroutine(BurnReceiveBehaviour());
-            LowAttackDamageCount--;
-            StunRemainTime--;
+            //if (isBurn)
+            //    yield return StartCoroutine(BurnReceiveBehaviour());
+            //LowAttackDamageCount--;
+            //StunRemainTime--;
         }
     }
 
@@ -375,6 +372,8 @@ public class Monster : Unit
         CharacterController.ReceiveDamage(
             OftenMethod.ProbabilityDistribution(damageBaseCal * damageBaseMultiply *
             (isLowAttackDamage ? 0.8f : 1f), DamageMinimumMultiply, DamageMaximumMultiply, 3));
+        if (isLowAttackDamage)
+            LowAttackDamageCount--;
     }
 
     #region AttackUp
@@ -488,17 +487,16 @@ public class Monster : Unit
         while(queueElementReceive.Count > 0)
             yield return StartCoroutine(queueElementReceive.Dequeue());
         queueElementIsRunning = false;
-        if (isBurn)
-            StartCoroutine(BurnReceiveBehaviour());
     }
 
     IEnumerator FireReceiveBehaviour()
     {
         int damage = elementDamageBase * (weaknessElement == ElementType.Fire ? 2 : 1);
         ReuseGameObject(fireParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(2.5f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 1f, 1.2f, 3));
-        BurnRemainTime = 5;
+        yield return new WaitForSeconds(1f);
+        BurnRemainTime = 10f;
     }
 
     IEnumerator WaterReceiveBehaviour()
@@ -506,10 +504,10 @@ public class Monster : Unit
         int damagePerReceive = (elementDamageBase / 4) * 
             (weaknessElement == ElementType.Water ? 2 : 1);
         ReuseGameObject(waterParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         for (int i = 0; i < 4; i++)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
             ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.75f, 1.1f, 3));
         }
         LowAttackDamageCount = 2;
@@ -517,34 +515,45 @@ public class Monster : Unit
 
     IEnumerator EarthReceiveBehaviour()
     {
-        int damagePerReceive = (elementDamageBase / 14) * 
+        int damagePerReceive = (elementDamageBase / 6) * 
             (weaknessElement == ElementType.Earth ? 2 : 1);
         ReuseGameObject(earthParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 14; i++)
+        yield return new WaitForSeconds(1.25f);
+        for (int i = 0; i < 6; i++)
         {
             ReceiveDamage(OftenMethod.ProbabilityDistribution(damagePerReceive, 0.9f, 1.1f, 3));
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.2f);
         }
-        StunRemainTime = 1;
+        StunRemainTime = 10f;
     }
 
     IEnumerator WoodReceiveBehaviour()
     {
         int damage = elementDamageBase * (weaknessElement == ElementType.Wood ? 2 : 1);
         ReuseGameObject(woodParticle, Vector3.zero, true);
-        yield return new WaitForSeconds(6.5f);
+        yield return new WaitForSeconds(3.5f);
         ReceiveDamage(OftenMethod.ProbabilityDistribution(damage, 0.95f, 1.05f, 3));
         MoreReceiveDamageCount = 3;
+        yield return new WaitForSeconds(1f);
     }
 
-    IEnumerator BurnReceiveBehaviour()
+    IEnumerator UpdateBurnBehaviour()
     {
-        nowBurning = true;
-        yield return new WaitForSeconds(1f);
-        ReceiveDamage(OftenMethod.ProbabilityDistribution(MaxHp * 0.01f, 0.5f, 1.5f, 3));
-        BurnRemainTime--;
-        nowBurning = false;
+        while (isBurn)
+        {
+            ReceiveDamage(OftenMethod.ProbabilityDistribution(MaxHp * 0.01f, 0.5f, 1.5f, 3));
+            yield return new WaitForSeconds(1f);
+            BurnRemainTime--;
+        }
+    }
+
+    IEnumerator UpdateStunBehaviour()
+    {
+        while(isStun)
+        {
+            StunRemainTime -= Time.deltaTime;
+            yield return null;
+        }
     }
     #endregion
 
