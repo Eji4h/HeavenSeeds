@@ -523,11 +523,6 @@ public class CharacterController : Unit
         base.SetGateBarController(gateBarController);
     }
 
-    bool CheckGateCountMoreThanOne(int gateCount)
-    {
-        return gateCount >= 1;
-    }
-
     void SetMoreThanFullOneGateToTrue()
     {
         moreThanFullOneGate = true;

@@ -130,4 +130,9 @@ public abstract class Unit : MonoBehaviour
         gameObject.SetActive(false);
         gameObject.SetActive(true);
     }
+
+    protected bool CheckGateCountMoreThanOne(int gateCount)
+    {
+        return gateCount >= 1;
+    }
 }
