@@ -26,7 +26,7 @@ public class GateBarController : UIProgressBar
                 deltaGate;
 
             gateCount = Mathf.Clamp(value, 0, maxGate);
-            if (gateCount != (int)(this.value / valuePerGate))
+            if (Mathf.Abs(gateCount - (this.value / valuePerGate)) > 0.1f)
             {
                 deltaGate = gateCount - oldGateCount;
                 this.value += deltaGate * valuePerGate;
