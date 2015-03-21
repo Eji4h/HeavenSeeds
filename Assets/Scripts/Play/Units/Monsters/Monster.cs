@@ -188,7 +188,7 @@ public class Monster : Unit
         {
             burnRemainTime = Mathf.Clamp(value, 0f, 10f) * NumberSecurity.RandomNumSecurity;
             bool oldIsBurn = isBurn;
-            isBurn = BurnRemainTime > 0;
+            isBurn = BurnRemainTime > 0f;
             burnParticle.SetActive(isBurn);
             if(!oldIsBurn && isBurn)
                 StartCoroutine(UpdateBurnBehaviour());
@@ -213,7 +213,7 @@ public class Monster : Unit
         {
             stunRemainTime = Mathf.Clamp(value, 0f, 10f) * NumberSecurity.RandomNumSecurity;
             bool oldIsStun = isStun;
-            isStun = StunRemainTime > 0;
+            isStun = StunRemainTime > 0f;
             stunParticle.SetActive(isStun);
             if (!oldIsStun && isStun)
                 StartCoroutine(UpdateStunBehaviour());
@@ -588,25 +588,8 @@ public class Monster : Unit
     public void RandomCharacterFall(float fallTime)
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
-        {
-            if (ListCharacterControllerIsFall.Count < 5)
-            {
-                fallTime++;
-                CharacterController selectedCharacterController;
-                List<CharacterController> listUnFallCharacterController =
-                    new List<CharacterController>(5);
-
-                ListCharacterController.ForEach(characterController =>
-                    listUnFallCharacterController.Add(characterController));
-
-                ListCharacterControllerIsFall.ForEach(characterController =>
-                    listUnFallCharacterController.Remove(characterController));
-                selectedCharacterController = listUnFallCharacterController
-                    [Random.Range(0, listUnFallCharacterController.Count)];
-
-                selectedCharacterController.SetToFall(fallTime);
-            }
-        }
+            ListCharacterController[
+                Random.Range(0, ListCharacterController.Count)].SetToFall(fallTime);
     }
 
     public void MagicFieldRandomAction(int randomCount)
@@ -618,19 +601,19 @@ public class Monster : Unit
     public void CharacterBurn(int burnTurn)
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
-            CharacterController.BurnTurn = burnTurn;
+            CharacterController.BurnTime = burnTurn;
     }
 
     public void CharacterPoison(int poisonTurn)
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
-            CharacterController.PoisonTurn = poisonTurn;
+            CharacterController.PoisonTime = poisonTurn;
     }
 
     public void CharacterStun(int stunTurn)
     {
         if (OftenMethod.RandomPercent(percentDebuffToCharacter))
-            CharacterController.StunTurn = stunTurn;
+            CharacterController.StunTime = stunTurn;
     }
 
     public void CharacterFreeze(int freezeTurn)

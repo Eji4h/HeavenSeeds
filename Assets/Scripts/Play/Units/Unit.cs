@@ -36,11 +36,6 @@ public abstract class Unit : MonoBehaviour
         get { return SceneController.ScrollCharacterController; }
     }
 
-    protected static List<CharacterController> ListCharacterControllerIsFall
-    {
-        get { return SceneController.ListCharacterControllerIsFall; }
-    }
-
     protected static MagicFieldController MagicFieldController
     {
         get { return SceneController.MagicFieldController; }

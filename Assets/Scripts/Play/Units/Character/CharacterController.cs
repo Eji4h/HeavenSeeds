@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CharacterController : Unit
 {
     static int sumHp, maxSumHp,
-        barrierHp, barrierTurn;
+        barrierHp, barrierRound;
 
     static float blockPercentPerTimeDefence;
     static float atkPercentIncrease,
@@ -23,10 +23,11 @@ public class CharacterController : Unit
         isPoison,
         isStun, 
         isFreeze;
-    static int burnTurn,
-        poisonTurn,
-        stunTurn,
-        freezeTurn;
+    static float burnTime,
+        poisonTime,
+        stunTime;
+
+    static int freezeTurn;
 
     static int SumHp
     {
@@ -61,19 +62,19 @@ public class CharacterController : Unit
         }
     }
 
-    static int BarrierTurn
+    static int BarrierRound
     {
-        get { return CharacterController.barrierTurn; }
+        get { return CharacterController.barrierRound; }
         set 
         {
-            CharacterController.barrierTurn = value;
+            CharacterController.barrierRound = value;
             CheckBarrierActive();
         }
     }
 
     static void CheckBarrierActive()
     {
-        barrierGameObject.SetActive(BarrierTurn > 0 && BarrierHp > 0);
+        barrierGameObject.SetActive(BarrierRound > 0 && BarrierHp > 0);
     }
 
     static float BlockPercentPerTimeDefence
@@ -154,33 +155,33 @@ public class CharacterController : Unit
         get { return isFreeze; }
     }
 
-    public static int BurnTurn
+    public static float BurnTime
     {
-        get { return burnTurn / NumberSecurity.RandomNumSecurity; }
+        get { return burnTime / NumberSecurity.RandomNumSecurity; }
         set
         {
-            burnTurn = value * NumberSecurity.RandomNumSecurity;
-            isBurn = BurnTurn > 0;
+            burnTime = value * NumberSecurity.RandomNumSecurity;
+            isBurn = BurnTime > 0f;
         }
     }
 
-    public static int PoisonTurn
+    public static float PoisonTime
     {
-        get { return poisonTurn / NumberSecurity.RandomNumSecurity; }
+        get { return poisonTime / NumberSecurity.RandomNumSecurity; }
         set 
         {
-            poisonTurn = value * NumberSecurity.RandomNumSecurity;
-            isPoison = PoisonTurn > 0;
+            poisonTime = value * NumberSecurity.RandomNumSecurity;
+            isPoison = PoisonTime > 0f;
         }
     }
 
-    public static int StunTurn
+    public static float StunTime
     {
-        get { return stunTurn / NumberSecurity.RandomNumSecurity; }
+        get { return stunTime / NumberSecurity.RandomNumSecurity; }
         set
         {
-            stunTurn = value * NumberSecurity.RandomNumSecurity;
-            isStun = StunTurn > 0;
+            stunTime = value * NumberSecurity.RandomNumSecurity;
+            isStun = StunTime > 0f;
         }
     }
 
@@ -236,6 +237,7 @@ public class CharacterController : Unit
             }
             UIController.ShowHpPopUp(blockDmg, barrierHpPopUpPos, barrierHpPopUpColor);
             dmg -= blockDmg;
+            BarrierRound--;
         }
         if (dmg > 0)
         {
@@ -270,7 +272,7 @@ public class CharacterController : Unit
 
     public static void BarrierDefence(int barrierHp, float blockPercentPerTimeDefence)
     {
-        BarrierTurn = 3;
+        BarrierRound = 3;
         BarrierHp = Mathf.RoundToInt(barrierHp * (1f + BarrierHpPercentIncrease));
         BlockPercentPerTimeDefence = blockPercentPerTimeDefence;
     }
@@ -289,19 +291,17 @@ public class CharacterController : Unit
 
     public static void ClearDebuff()
     {
-        BurnTurn = 0;
-        PoisonTurn = 0;
-        int listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
+        BurnTime = 0;
+        PoisonTime = 0;
+        StunTime = 0;
+        FreezeTurn = 0;
 
-        for (int i = 0; i < ListCharacterControllerIsFall.Count; i++)
-        {
-            ListCharacterControllerIsFall[i].TurnFall = 0;
-            if (ListCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
+        ListCharacterController.ForEach(characterController =>
             {
-                i--;
-                listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
-            }
-        }
+                if (characterController.IsFall)
+                    characterController.FallTime = 0f;
+            });
+
         MagicFieldController.RandomChaActionStateCount = 0;
         MagicFieldController.listMagicPoints.ForEach(magicPoint =>
                 magicPoint.IsSkull = false);
@@ -312,25 +312,6 @@ public class CharacterController : Unit
         AtkPercentIncrease = 0f;
         BarrierHpPercentIncrease = 0f;
         HealPercentIncrease = 0f;
-    }
-
-    public static void TurnEffectDecrease()
-    {
-        ClearBuff();
-
-        int listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
-
-        for(int i = 0; i < ListCharacterControllerIsFall.Count; i++)
-        {
-            ListCharacterControllerIsFall[i].TurnFall--;
-            if (ListCharacterControllerIsFall.Count != listCharacterControllerIsFallCount)
-            {
-                i--;
-                listCharacterControllerIsFallCount = ListCharacterControllerIsFall.Count;
-            }
-        }
-
-        BarrierTurn--;
     }
 
     CharacterStatus characterStatus;
@@ -349,7 +330,7 @@ public class CharacterController : Unit
         timeAfterMonsterListShowParticleReceiveDamage;
 
     bool isFall = false;
-    int turnFall = 0;
+    float fallTime = 0;
 
     public bool CanAction
     {
@@ -362,28 +343,31 @@ public class CharacterController : Unit
         set
         {
             isFall = value;
-            if (isFall)
-            {
-                ListCharacterControllerIsFall.Add(this);
-                ThisAnimation.CrossFade(fallStr);
-            }
-            else
-            {
-                ListCharacterControllerIsFall.Remove(this);
-                ThisAnimation.CrossFade(idleStr);
-            }
+            ThisAnimation.CrossFade(isFall ? fallStr : idleStr);
         }
     }
 
-    public int TurnFall
+    public float FallTime
     {
-        get { return turnFall; }
+        get { return fallTime; }
         set
         {
-            turnFall = value;
-            if (turnFall <= 0)
-                IsFall = false;
+            fallTime = value;
+            bool oldIsFall = isFall;
+            IsFall = FallTime > 0f;
+            if (!oldIsFall && isFall)
+                StartCoroutine(UpdateFallBehaviour());
         }
+    }
+
+    IEnumerator UpdateFallBehaviour()
+    {
+        while(isFall)
+        {
+            FallTime -= Time.deltaTime;
+            yield return null;
+        }
+        Debug.ClearDeveloperConsole();
     }
 
     public void SetStatus()
@@ -559,20 +543,19 @@ public class CharacterController : Unit
         {
             ReceiveDamageByPercentOfSumMaxHp(4f);
             yield return new WaitForSeconds(1f);
-            BurnTurn--;
+            BurnTime--;
         }
 
         if (isPoison)
         {
             ReceiveDamageByPercentOfSumMaxHp(4f);
             yield return new WaitForSeconds(1f);
-            PoisonTurn--;
+            PoisonTime--;
         }
     }
 
-    public void SetToFall(float turnFall)
+    public void SetToFall(float fallTime)
     {
-        IsFall = true;
-        TurnFall = (int)turnFall;
+        FallTime = fallTime;
     }
 }

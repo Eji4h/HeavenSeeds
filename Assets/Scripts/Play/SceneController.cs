@@ -15,8 +15,7 @@ public class SceneController : MonoBehaviour
         shieldCharacterController,
         scrollCharacterController;
 
-    static List<CharacterController> listCharacterController = new List<CharacterController>(5),
-        listCharacterControllerIsFall = new List<CharacterController>(5);
+    static List<CharacterController> listCharacterController = new List<CharacterController>(5);
 
     static Transform monstersParentTransform;
     static ChooseMonsterController chooseMonsterController;
@@ -68,11 +67,6 @@ public class SceneController : MonoBehaviour
     public static List<CharacterController> ListCharacterController
     {
         get { return SceneController.listCharacterController; }
-    }
-
-    public static List<CharacterController> ListCharacterControllerIsFall
-    {
-        get { return SceneController.listCharacterControllerIsFall; }
     }
 
     public static Monster ChooseMonster
