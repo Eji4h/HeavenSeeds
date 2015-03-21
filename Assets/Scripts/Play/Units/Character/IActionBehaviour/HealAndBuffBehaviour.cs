@@ -22,7 +22,7 @@ public class HealAndBuffBehaviour : IActionBehaviour
     public void Action()
     {
         CharacterController.ReceiveHeal(healValue);
-        CharacterController.GetBuff(atkPercentIncrease, barrierHpPercentIncrease, healPercentIncrease);
+        SceneController.ListCharacterController[0].GetBuff(60f, atkPercentIncrease, barrierHpPercentIncrease, healPercentIncrease);
         CharacterController.ClearDebuff();
     }
 }

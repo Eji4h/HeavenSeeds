@@ -11,6 +11,7 @@ public class CharacterController : Unit
     static float atkPercentIncrease,
         barrierHpPercentIncrease,
         healPercentIncrease;
+    static float buffTime;
 
     static GameObject barrierGameObject, 
         healGameObject;
@@ -103,6 +104,16 @@ public class CharacterController : Unit
     {
         get { return CharacterController.healPercentIncrease / NumberSecurity.RandomNumSecurity; }
         set { CharacterController.healPercentIncrease = value * NumberSecurity.RandomNumSecurity; }
+    }
+
+    public float BuffTime
+    {
+        get { return CharacterController.buffTime; }
+        set
+        {
+            CharacterController.buffTime = value;
+            StartCoroutine(WaitToClearBuff());
+        }
     }
 
     public static float GetHealPercentIncrease
@@ -277,16 +288,24 @@ public class CharacterController : Unit
         BlockPercentPerTimeDefence = blockPercentPerTimeDefence;
     }
 
-    public static void GetBuff(float atkPercentIncrease, 
+    public void GetBuff(float buffTime,
+        float atkPercentIncrease, 
         float barrierHpPercentIncrease, 
         float healPercentIncrease)
     {
+        BuffTime = buffTime;
         AtkPercentIncrease = atkPercentIncrease;
         BarrierHpPercentIncrease = barrierHpPercentIncrease;
         HealPercentIncrease = healPercentIncrease;
 
         if (BarrierHp > 0)
             BarrierHp *= Mathf.RoundToInt(1f + BarrierHpPercentIncrease);
+    }
+
+    IEnumerator WaitToClearBuff()
+    {
+        yield return new WaitForSeconds(BuffTime);
+        ClearBuff();
     }
 
     public static void ClearDebuff()
