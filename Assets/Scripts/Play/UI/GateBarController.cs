@@ -15,6 +15,8 @@ public class GateBarController : UIProgressBar
     Func<int, int, bool> checkGateCountIsTarget;
     Action gateCountTargetAction;
 
+    bool isUpdateGateValue;
+
     public int GateCount
     {
         get { return gateCount; }
@@ -69,6 +71,12 @@ public class GateBarController : UIProgressBar
         set { gateCountTargetAction = value; }
     }
 
+    public bool IsUpdateGateValue
+    {
+        get { return isUpdateGateValue; }
+        set { isUpdateGateValue = value; }
+    }
+
     public void SetInit(int maxGate, float changePerSecond)
     {
         transform.parent = UIController.BarsTransform;
@@ -99,6 +107,7 @@ public class GateBarController : UIProgressBar
     new void Start()
     {
         base.Start();
+        isUpdateGateValue = true;
         StartCoroutine(UpdateGateValue());
     }
 
@@ -106,24 +115,27 @@ public class GateBarController : UIProgressBar
     {
         for (; ; )
         {
-            if (value < 1f)
+            if (isUpdateGateValue)
             {
-                float valueChange = Time.deltaTime * changePerSecond;
-
-                value += valueChange;
-
-                totalValueElapsedToGateUp += valueChange;
-                if (totalValueElapsedToGateUp >= valuePerGate)
+                if (value < 1f)
                 {
-                    if (changePerSecond >= 0f)
-                        GateCount++;
-                    else
-                        GateCount--;
-                    totalValueElapsedToGateUp -= valuePerGate;
+                    float valueChange = Time.deltaTime * changePerSecond;
+
+                    value += valueChange;
+
+                    totalValueElapsedToGateUp += valueChange;
+                    if (totalValueElapsedToGateUp >= valuePerGate)
+                    {
+                        if (changePerSecond >= 0f)
+                            GateCount++;
+                        else
+                            GateCount--;
+                        totalValueElapsedToGateUp -= valuePerGate;
+                    }
                 }
+                else
+                    totalValueElapsedToGateUp = 0f;
             }
-            else
-                totalValueElapsedToGateUp = 0f;
             yield return null;
         }
     }

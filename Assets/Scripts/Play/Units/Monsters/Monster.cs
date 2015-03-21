@@ -545,11 +545,13 @@ public class Monster : Unit
 
     IEnumerator UpdateStunBehaviour()
     {
+        GateBarController.IsUpdateGateValue = false;
         while(isStun)
         {
             StunRemainTime -= Time.deltaTime;
             yield return null;
         }
+        GateBarController.IsUpdateGateValue = true;
     }
     #endregion
 
