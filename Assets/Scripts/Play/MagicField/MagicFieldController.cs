@@ -130,6 +130,11 @@ public class MagicFieldController : MonoAndCoroutinePauseBehaviour
         }
     }
 
+    public void Stop()
+    {
+        StopAllCoroutines();
+    }
+
     // Use this for initialization
     void Start()
     {

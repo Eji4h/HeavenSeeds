@@ -98,11 +98,17 @@ public class SceneController : MonoBehaviour
             }
             else
             {
-                ;//End Scene
+                StopGame();
+                //End Scene
                 return;
             }
         }
         chooseMonsterController.ChooseMonster = listCurrentLineMonster[0];
+    }
+
+    public static void StopGame()
+    {
+        magicFieldController.Stop();
     }
 
     void Awake()

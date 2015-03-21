@@ -42,7 +42,7 @@ public class CharacterController : Unit
             UIController.PlayerHpBar.Value = SumHp;
 
             if (CharacterController.SumHp <= 0)
-                ;
+                SceneController.StopGame();
         }
     }
 
