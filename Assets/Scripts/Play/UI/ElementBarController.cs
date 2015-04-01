@@ -5,7 +5,7 @@ public class ElementBarController : UIProgressBar
 {
     new static int numberOfSteps = 26;
 
-    public ElementType element;
+    ElementType element;
     float oneStepValue;
     int count = 0;
 
@@ -27,6 +27,21 @@ public class ElementBarController : UIProgressBar
     new void Start()
     {
         oneStepValue = 1f / numberOfSteps;
+        switch(name.Substring(0, 2))
+        {
+            case "Fi":
+                element = ElementType.Fire;
+                break;
+            case "Wa":
+                element = ElementType.Water;
+                break;
+            case "Ea":
+                element = ElementType.Earth;
+                break;
+            case "Wo":
+                element = ElementType.Wood;
+                break;
+        }
         base.Start();
     }
 
