@@ -96,7 +96,7 @@ public abstract class Unit : MonoBehaviour
     protected virtual void Awake()
     {
         thisTransform = transform;
-        thisAnimation = animation;
+        thisAnimation = GetComponent<Animation>();
     }
 
     // Use this for initialization

@@ -238,7 +238,7 @@ public class Monster : Unit
         if (damageMaximumMultiply == 0f)
             damageMaximumMultiply = 1.1f;
 
-        Collider thisCollider = collider;
+        Collider thisCollider = GetComponent<Collider>();
         slashParticleLocalPosition =
             new Vector3(0f, thisCollider.bounds.center.y, thisCollider.bounds.extents.z + 0.5f);
         arrowHitParticleLocalPosition =

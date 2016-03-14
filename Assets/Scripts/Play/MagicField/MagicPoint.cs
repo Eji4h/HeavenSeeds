@@ -99,10 +99,10 @@ public class MagicPoint : MonoBehaviour
 
     public bool Collider2DEnabled
     {
-        get { return collider2D.enabled; }
+        get { return GetComponent<Collider2D>().enabled; }
         set
         {
-            collider2D.enabled = value;
+            GetComponent<Collider2D>().enabled = value;
             uiSprite.color = value ? Color.white : Color.gray;
         }
     }
